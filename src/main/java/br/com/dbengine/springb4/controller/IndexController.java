@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 //@RequestMapping(path="/")
 public class IndexController {
 
-    private static final Logger log = Logger.getLogger(IndexController.class.getName());
+    //private static final Logger log = Logger.getLogger(IndexController.class.getName());
 
     @GetMapping("/index/{name}")
     public String indexMethod(@PathVariable String name) {

@@ -11,11 +11,11 @@ import java.util.logging.Logger;
 @RequestMapping(path="/api/test")
 public class HelloController {
 
-    private static final Logger log = Logger.getLogger(HelloController.class.getName());
+    //private static final Logger log = Logger.getLogger(HelloController.class.getName());
 
     @GetMapping("/dog/{name}")
     public String hello(@PathVariable String name) {
-        log.info("Dog: " + name);
+        //log.info("Dog: " + name);
         return "Hello World - " + name;
     }
 

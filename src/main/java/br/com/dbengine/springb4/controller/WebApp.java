@@ -56,4 +56,9 @@ public class WebApp {
     //    return "periodos/allPeriodos";
     //}
 
+    @GetMapping("/harper1")
+    public String harper1() {
+        return "harper1";
+    }
+
 }
