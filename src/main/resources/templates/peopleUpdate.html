@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>People - ADD</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+  jQuery(document).ready(
+  function($) {
+
+		$("#btn-save-hdb").click(function(event) {
+
+            // respeitando Case
+		    var data = {}
+		    data["id"] = $("#peopleId").val()
+			data["codigoInterno"] = $("#codigoInterno").val();
+			data["Nome"] = $("#Nome").val();
+			//data["DataNascimento"] = $("#DataNascimento").val();
+			//data["Observacao"] = $("#Observacao").val();
+
+            console.log(data);
+
+            var settings = {
+              "url": "https://cloud-dbe-bisterco.harperdbcloud.com",
+              "method": "POST",
+              "timeout": 0,
+              "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Basic YmlzdGVyY286Q2FsbTA2MjNA"
+              },
+              "data": JSON.stringify({
+                "operation": "update",
+                "schema": "rep1",
+                "table": "people",
+                "records": [ data ]
+              }),
+            };
+
+            $.ajax(settings).done(function (response) {
+              console.log(response);
+            });
+		});
+
+	});
+
+</script>
+</head>
+<body>
+Peole UPDATE
+<br>
+<input type="hidden" id="peopleId" th:value="${peopleId}"></input>
+Codigo Interno :
+<input type=text class="form-control" id="codigoInterno" th:value="${codigoInterno}"><br>
+Nome
+<input type=text class="form-control" id="Nome" th:value="${name}"><br>
+Data Nascimento
+<input type=text class="form-control" id="DataNascimento"><br>
+Observação
+<input type=text class="form-control" id="Observacao"><br>
+<br>
+<button type="submit" id="btn-save-hdb"
+        class="btn btn-primary btn-lg">Update HDB</button>
+<br>
+<a href="/people">Voltar</a>
+</body>
+</html>

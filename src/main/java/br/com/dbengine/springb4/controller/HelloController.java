@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 @RequestMapping(path="/api/test")
 public class HelloController {
 
+    // FUNCIONA, MAS GEROU CUSTO NO GAE - Google Cloud Storage
     //private static final Logger log = Logger.getLogger(HelloController.class.getName());
 
     @GetMapping("/dog/{name}")

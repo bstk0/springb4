@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>People - ADD</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+  jQuery(document).ready(
+  function($) {
+  		$("#btn-save").click(function(event) {
+
+            // Case minúsculo
+			var data = {}
+			data["codigoInterno"] = $("#codigoInterno").val();
+			data["nome"] = $("#Nome").val();
+			data["dataNascimento"] = $("#DataNascimento").val();
+			data["observacao"] = $("#Observacao").val();
+
+			//data["cdn"] = $("#cdn").prop("checked") ? true : false;
+			console.log(data);
+
+			$("#btn-save").prop("disabled", true);
+
+			$.ajax({
+		             type: "POST",
+		             contentType: "application/json",
+		             url: "/people/save",
+		             data: JSON.stringify(data),
+		             dataType: 'json',
+		             timeout: 600000,
+		             success: function (data) {
+		                 $("#btn-update").prop("disabled", false);
+		                 //...
+		             },
+		             error: function (e) {
+		                 $("#btn-save").prop("disabled", false);
+		                 //...
+		             }
+			});
+
+
+		});
+
+		$("#btn-save-hdb").click(function(event) {
+
+            // respeitando Case
+		    var data = {}
+			data["codigoInterno"] = $("#codigoInterno").val();
+			data["Nome"] = $("#Nome").val();
+			data["DataNascimento"] = $("#DataNascimento").val();
+			data["Observacao"] = $("#Observacao").val();
+
+
+            var settings = {
+              "url": "https://cloud-dbe-bisterco.harperdbcloud.com",
+              "method": "POST",
+              "timeout": 0,
+              "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Basic YmlzdGVyY286Q2FsbTA2MjNA"
+              },
+              "data": JSON.stringify({
+                "operation": "insert",
+                "schema": "rep1",
+                "table": "people",
+                "records": [ data ]
+              }),
+            };
+
+            $.ajax(settings).done(function (response) {
+              console.log(response);
+            });
+		});
+
+	});
+
+//	    window.onload=function() {
+//        let myButton = document.getElementById("btn-save");
+//        myButton.addEventListener('click', getData);
+//    }
+
+</script>
+</head>
+<body>
+Peole ADD : teste acentuação ...
+<br>
+Codigo Interno :
+<input type=text class="form-control" id="codigoInterno"><br>
+Nome
+<input type=text class="form-control" id="Nome"><br>
+Data Nascimento
+<input type=text class="form-control" id="DataNascimento"><br>
+Observação
+<input type=text class="form-control" id="Observacao"><br>
+<br>
+<button type="submit" id="btn-save"
+        class="btn btn-primary btn-lg">Save MVC</button>
+<button type="submit" id="btn-save-hdb"
+        class="btn btn-primary btn-lg">Save HDB</button>
+<br>
+<a href="/people">Voltar</a>
+</body>
+</html>

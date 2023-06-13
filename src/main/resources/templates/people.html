@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> PEOPLE :  ... 1 </title>
+    <script>
+
+function getData() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Basic YmlzdGVyY286Q2FsbTA2MjNA");
+
+    var operation = {
+        operation : 'sql',
+        sql : document.getElementById('sqlCmd').value
+    };
+
+    var raw = JSON.stringify(operation);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    let html='<table border=1>';
+    html+= '<tr><td>codigoInterno</td><td>Nome</td><td>DataNascimento</td><Observacao</td></tr>';
+
+    fetch("https://cloud-dbe-bisterco.harperdbcloud.com", requestOptions)
+      .then(response => { //response.json()
+          if (response.ok) {
+              return response.json();
+            }
+        return response.text().then((text) => { throw new Error(text) });
+      })
+      .then(data => {
+                console.log(data);
+                //console.log(response.data);
+                //console.log(response.text());
+                let updateLink
+                for (var key in data) {
+                    updateLink = '/people/update?codigoInterno=' + data[key].codigoInterno  +
+                                 '&Nome=' + data[key].Nome +
+                                 '&id=' + data[key].id;
+                    html += '<tr>';
+                    html += '<td><a href=' + updateLink + '>' + data[key].codigoInterno + '</a></td>';
+                    html += '<td>' + data[key].Nome + '</td>';
+                    html += '<td>' + data[key].DataNascimento + '</td>';
+                    html += '<td>' + data[key].Observacao + '</td>';
+                    html += '</tr>';
+                }
+            html += '</table>';
+            document.getElementById('results').innerHTML = html;
+        })
+      .catch(error => {
+                //console.log('error', error)
+                //console.log('PASSOU AQUI');
+                    html += '<tr>';
+                    html += '<td> ERRO: ' + error + '</td>';
+                    html += '</tr>';
+            html += '</table>';
+            document.getElementById('results').innerHTML = html;
+      });
+}
+    window.onload=function() {
+        let myButton = document.getElementById("getData");
+        myButton.addEventListener('click', getData);
+    }
+</script>
+</head>
+<body>
+<h1> People:  ... 1 </h1>
+<br>
+<textarea rows="5" cols="50"  id="sqlCmd">select * FROM rep1.people</textarea>
+<br>
+<a th:href="@{/people/add}">Add People</a>
+<br>
+<input type="button" id='getData' value="Get Data"></input>
+<br>
+<div id="results"></div>
+<br>
+<a href="/">Voltar</a>
+</body>
+</html>

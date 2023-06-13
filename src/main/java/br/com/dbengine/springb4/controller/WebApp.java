@@ -17,6 +17,11 @@ public class WebApp {
         return "homePage";
     }
 
+    @GetMapping("/versions")
+    public String versions() {
+        return "versions";
+    }
+
     //@GetMapping("/books")
     //public String books(Model m) {
     //    m.addAttribute("msg", "Books");
