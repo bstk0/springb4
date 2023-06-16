@@ -12,11 +12,11 @@
 
             // respeitando Case
 		    var data = {}
-		    data["id"] = $("#peopleId").val()
+		    data["id"] = $("#peopleId").val();
 			data["codigoInterno"] = $("#codigoInterno").val();
-			data["Nome"] = $("#Nome").val();
-			//data["DataNascimento"] = $("#DataNascimento").val();
-			//data["Observacao"] = $("#Observacao").val();
+			data["Nome"] = $("#nome").val();
+			data["DataNascimento"] = $("#dataNascimento").val();
+			data["Observacao"] = $("#observacao").val();
 
             console.log(data);
 
@@ -38,6 +38,7 @@
 
             $.ajax(settings).done(function (response) {
               console.log(response);
+              alert("Alteração realizada com sucesso");
             });
 		});
 
@@ -52,15 +53,16 @@ Peole UPDATE
 Codigo Interno :
 <input type=text class="form-control" id="codigoInterno" th:value="${codigoInterno}"><br>
 Nome
-<input type=text class="form-control" id="Nome" th:value="${name}"><br>
+<input type=text class="form-control" id="nome" th:value="${name}"><br>
 Data Nascimento
-<input type=text class="form-control" id="DataNascimento"><br>
+<input type=text class="form-control" id="dataNascimento" th:value="${dataNascimento}"><br>
 Observação
-<input type=text class="form-control" id="Observacao"><br>
+<input type=text class="form-control" id="observacao" th:value="${observacao}"><br>
 <br>
 <button type="submit" id="btn-save-hdb"
         class="btn btn-primary btn-lg">Update HDB</button>
 <br>
-<a href="/people">Voltar</a>
+<a href="/people/refresh">Voltar</a>
+
 </body>
 </html>

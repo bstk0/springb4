@@ -24,7 +24,7 @@ function getData() {
     };
 
     let html='<table border=1>';
-    html+= '<tr><td>codigoInterno</td><td>Nome</td><td>DataNascimento</td><Observacao</td></tr>';
+    html+= '<tr><td>codigoInterno</td><td>Nome</td><td>DataNascimento</td><td>Observacao</td></tr>';
 
     fetch("https://cloud-dbe-bisterco.harperdbcloud.com", requestOptions)
       .then(response => { //response.json()
@@ -39,11 +39,16 @@ function getData() {
                 //console.log(response.text());
                 let updateLink
                 for (var key in data) {
-                    updateLink = '/people/update?codigoInterno=' + data[key].codigoInterno  +
-                                 '&Nome=' + data[key].Nome +
-                                 '&id=' + data[key].id;
+                    updateLink = '/people/update?id=' + data[key].id +
+                                 '&codigoInterno=' + data[key].codigoInterno  +
+                                 '&nome=' + data[key].Nome +
+                                 '&dataNascimento=' + data[key].DataNascimento +
+                                 '&observacao='+ data[key].Observacao;
+
+                    const encodedLink = encodeURI(updateLink);
+
                     html += '<tr>';
-                    html += '<td><a href=' + updateLink + '>' + data[key].codigoInterno + '</a></td>';
+                    html += '<td><a href=' + encodedLink + '>' + data[key].codigoInterno + '</a></td>';
                     html += '<td>' + data[key].Nome + '</td>';
                     html += '<td>' + data[key].DataNascimento + '</td>';
                     html += '<td>' + data[key].Observacao + '</td>';
@@ -65,13 +70,30 @@ function getData() {
     window.onload=function() {
         let myButton = document.getElementById("getData");
         myButton.addEventListener('click', getData);
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.has('refresh')) {
+            getData();
+        }
     }
+
 </script>
 </head>
 <body>
 <h1> People:  ... 1 </h1>
 <br>
-<textarea rows="5" cols="50"  id="sqlCmd">select * FROM rep1.people</textarea>
+<table>
+    <tr>
+        <td>
+<textarea rows="5" cols="50"  id="sqlCmd">select *, CAST(codigoInterno as int) as CI FROM rep1.people order by CI</textarea>
+    </td>
+    <td>
+select *, UPPER(Nome) AS uName FROM rep1.people order by uName<br>
+select id, codigoInterno, Nome, Observacao, DATE_FORMAT(DataNascimento,'DD/MM/YY') as DataNascimento, CAST(DataNascimento as date) as CI FROM rep1.people order by CI desc
+    </td>
+    </tr>
+</table>
 <br>
 <a th:href="@{/people/add}">Add People</a>
 <br>
