@@ -1,7 +1,6 @@
 package br.com.dbengine.springb4.form;
 
 public class PeopleForm {
-    // html+= '<tr><td></td><td></td><td></td><</td></tr>';
     private String codigoInterno;
     private String Nome;
     private String DataNascimento;

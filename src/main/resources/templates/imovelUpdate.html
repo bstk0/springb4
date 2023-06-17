@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>People - UPDATE</title>
+    <title>Imovel - Update</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
   jQuery(document).ready(
@@ -51,22 +51,22 @@
 </script>
 </head>
 <body>
-Peole UPDATE
+Imovel UPDATE
 <br>
 <input type="hidden" id="peopleId" th:value="${peopleId}"></input>
 Codigo Interno :
 <input type=text class="form-control" id="codigoInterno" th:value="${codigoInterno}"><br>
 Nome
-<input type=text class="form-control" id="nome" th:value="${name}"><br>
+<input type=text class="form-control" id="nome" th:value="${imovel}"><br>
 Data Nascimento
-<input type=text class="form-control" id="dataNascimento" th:value="${dataNascimento}"><br>
+<input type=text class="form-control" id="dataNascimento" th:value="${apelido}"><br>
 Observação
 <input type=text class="form-control" id="observacao" th:value="${observacao}"><br>
 <br>
 <button type="submit" id="btn-save-hdb"
         class="btn btn-primary btn-lg">Update HDB</button>
 <br>
-<a href="/people/refresh">Voltar</a>
+<a href="/imovel/refresh">Voltar</a>
 
 </body>
 </html>

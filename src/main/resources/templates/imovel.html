@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> IMOVEL :  ... 1 </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+
+    let imovelDTO = [];
+
+    function imovelUpdate(id) {
+
+                console.log("imovelUpdate: " + id);
+
+    			$.ajax({
+		             type: "POST",
+		             contentType: "application/json",
+		             url: "/imovelupdate",
+		             data: JSON.stringify(imovelDTO[id]),
+		             dataType: 'json',
+		             timeout: 600000,
+		             success: function (data) {
+		                 //$("#btn-update").prop("disabled", false);
+		                 //...
+		                 console.log("redirecting...");
+		                 window.location.href = "/imovel/update";
+		             },
+		             error: function (e) {
+		                 //$("#btn-save").prop("disabled", false);
+		                 //...
+		             }
+			}).done(function(data){
+   		                 console.log("redirecting...");
+		                 //window.location.href = "/imovel/update";
+		                 //$.redirect("/imovel/update");
+            });
+            //window.location.href = "/imovel/update";
+    }
+
+    // TRAVOU TUDO ...
+//    $.when(imovelUpdate(id)).done(function(
+//  		                 console.log("redirecting...");
+//		                 window.location.href = "/imovel/update";
+//    });
+
+function getData() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Basic YmlzdGVyY286Q2FsbTA2MjNA");
+
+    var operation = {
+        operation : 'sql',
+        sql : document.getElementById('sqlCmd').value
+    };
+
+    var raw = JSON.stringify(operation);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    let html='<table border=1>';
+    // id	inscricao	 apelido	tipo	imovel	imobiliaria	bairro observacoes
+
+    html+= '<tr><td>&nbsp;</td><td>id</td><td>inscricao</td><td>apelido</td><td>tipo</td>';
+    html+= '<td>imovel</td><td>imobiliaria</td><td>bairro</td><td>observacoes</td></tr>';
+
+    fetch("https://cloud-dbe-bisterco.harperdbcloud.com", requestOptions)
+      .then(response => { //response.json()
+          if (response.ok) {
+              return response.json();
+            }
+        return response.text().then((text) => { throw new Error(text) });
+      })
+      .then(data => {
+                console.log(data);
+                //console.log(response.data);
+                //console.log(response.text());
+                let updateLink;
+                imovelDTO = data;
+                for (var key in data) {
+                    updateLink = '/imovel/update?imovelDTO=' + data[key]; // +
+                                 //'&codigoInterno=' + data[key].codigoInterno  +
+                                 //'&nome=' + data[key].Nome +
+                                 //'&dataNascimento=' + data[key].DataNascimento +
+                                 //'&observacao='+ data[key].Observacao;
+
+                    updateLink='/imovel/update?imovelForm=' + JSON.stringify(data[key]);
+
+                    const encodedLink = encodeURI(updateLink);
+
+                    // id	inscricao	 apelido	tipo	imovel	imobiliaria	bairro observacoes
+                    html += '<tr>';
+                    html += '<td><button onclick="imovelUpdate('+ key + ')">Click me</button>';
+                    //html += '<td><a href=javascript:imovelUpdate(' + key + ')>' + data[key].id + '</a></td>';
+                    html += '<td><a href=' + encodedLink + '>' + data[key].id + '</a></td>';
+                    html += '<td>' + data[key].inscricao + '</td>';
+                    html += '<td>' + data[key].apelido + '</td>';
+                    html += '<td>' + data[key].tipo + '</td>';
+                    html += '<td>' + data[key].imovel + '</td>';
+                    html += '<td>' + data[key].imobiliaria + '</td>';
+                    html += '<td>' + data[key].bairro + '</td>';
+                    html += '<td>' + data[key].observacoes + '</td>';
+                    html += '</tr>';
+                    //console.log('key :' + key);
+                }
+            html += '</table>';
+            document.getElementById('results').innerHTML = html;
+        })
+      .catch(error => {
+                //console.log('error', error)
+                //console.log('PASSOU AQUI');
+                    html += '<tr>';
+                    html += '<td> ERRO: ' + error + '</td>';
+                    html += '</tr>';
+            html += '</table>';
+            document.getElementById('results').innerHTML = html;
+      });
+}
+    window.onload=function() {
+        let myButton = document.getElementById("getData");
+        myButton.addEventListener('click', getData);
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.has('refresh')) {
+            getData();
+        }
+    }
+
+</script>
+</head>
+<body>
+<h1> Imovel:  ... 1 </h1>
+<br>
+<table>
+    <tr>
+        <td>
+<textarea rows="5" cols="50"  id="sqlCmd">select * FROM rep1.imovel order by id</textarea>
+    </td>
+    <td>
+select * FROM rep1.imovel where tipo = 'casa'<br>
+select * FROM rep1.imovel where tipo like 'sala%'
+    </td>
+    </tr>
+</table>
+<br>
+<a th:href="@{/imovel/add}">Add People</a>
+<br>
+<input type="button" id='getData' value="Get Data"></input>
+<br>
+<div id="results"></div>
+<br>
+<a href="/">Voltar</a>
+</body>
+</html>

@@ -44,8 +44,12 @@
 
 		$("#btn-save-hdb").click(function(event) {
 
+            let internalId = $("#id").val();
             // respeitando Case
 		    var data = {}
+		    if(internalId) {
+		         data["id"] = parseInt(internalId);
+		    }
 			data["codigoInterno"] = $("#codigoInterno").val();
 			data["Nome"] = $("#Nome").val();
 			data["DataNascimento"] = $("#DataNascimento").val();
@@ -86,6 +90,8 @@
 <body>
 Peole ADD : teste acentuação ...
 <br>
+Id (se não informar vai gerar um hash) :
+<input type=text class="form-control" id="id"><br>
 Codigo Interno :
 <input type=text class="form-control" id="codigoInterno"><br>
 Nome
@@ -96,7 +102,7 @@ Observação
 <input type=text class="form-control" id="Observacao"><br>
 <br>
 <button type="submit" id="btn-save"
-        class="btn btn-primary btn-lg">Save MVC</button>
+        class="btn btn-primary btn-lg">Save REST MVC</button>
 <button type="submit" id="btn-save-hdb"
         class="btn btn-primary btn-lg">Save HDB</button>
 <br>
