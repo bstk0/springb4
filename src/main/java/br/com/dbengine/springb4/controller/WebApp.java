@@ -66,4 +66,11 @@ public class WebApp {
         return "harper1";
     }
 
+    @GetMapping("/datastax")
+    public String datastax() {
+        return "datastax";
+    }
+
+
+
 }

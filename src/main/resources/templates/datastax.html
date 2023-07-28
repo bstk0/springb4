@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<!-- Include from a free CDN -->
+<script src="https://cdn.rawgit.com/caldwell/renderjson/master/renderjson.js"></script>
+<h1>TESTE FETCH DATASTAX - APACHE CASSANDRA</h1>
+<h2>** VER CONSOLE </h2>
+<br>
+<h3><a href="/">Voltar</a></h3><br>
+<body>
+<br>
+<p id="demo">Fetch a file to change this text.</p>
+<br>
+<div id="container"></div>
+<script>
+function to_ul (obj) {
+  // --------v create an <ul> element
+  var f, li, ul = document.createElement ("ul");
+  // --v loop through its children
+  for (f = 0; f < obj.folder.length; f++) {
+    li = document.createElement ("li");
+    li.appendChild (document.createTextNode (obj.folder[f].title));
+    // if the child has a 'folder' prop on its own, call me again
+    if (obj.folder[f].folder) {
+      li.appendChild (to_ul (obj.folder[f].folder));
+    }
+    ul.appendChild (li);
+  }
+  return ul;
+}
+
+fetch("https://3314ff2e-9e45-4859-a800-fcc718f8d04d-southcentralus.apps.astra.datastax.com/api/rest/v2/namespaces/k1/collections/user?page-size=20&profile=true&raw=true", {
+  headers: {
+    Accept: "application/json",
+    "X-Cassandra-Token": "AstraCS:mSmEwRgAeOZLGlXiCwJMkHGM:df77bfe9b1a9505547bf82274384f27544f3b22c393af7690a01965519bdfef4"
+  }
+})
+.then(response => response.json())
+.then((myJson) => {
+    console.log(myJson);
+	document.getElementById("demo").innerHTML = JSON.stringify(myJson); //el;
+	// Render toggable list in the container element
+    document.getElementById("container").appendChild(
+        renderjson(myJson));
+  });
+</script>
+</body>
+</html>
