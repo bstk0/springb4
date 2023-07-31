@@ -1,5 +1,9 @@
 package br.com.dbengine.springb4.controller;
 
+import br.com.dbengine.springb4.DAO.CulturaDAO;
+import br.com.dbengine.springb4.DAO.ImovelDAO;
+import br.com.dbengine.springb4.entity.Cultura;
+import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.form.ImovelForm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,8 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class ImovelController {
+
+    private ImovelDAO dao = new ImovelDAO();
 
     @GetMapping("/imovel")
     public String imovel() {
@@ -81,5 +90,15 @@ public class ImovelController {
         //return "redirect:/imovel/update";
         System.out.println("Redirecting from Controller ... ");
         return "imovelUpdate";
+    }
+
+    // v2 - 31.08
+    @GetMapping("/imovelList")
+    public String imovelList(Model model) {
+        List<Imovel> imovelList = new ArrayList<Imovel>();
+        imovelList = dao.getList();
+        //System.out.println("imovelList size: " + imovelList.size());
+        model.addAttribute("imovelList",imovelList);
+        return "imovel/list";
     }
 }

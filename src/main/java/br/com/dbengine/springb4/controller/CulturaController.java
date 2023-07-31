@@ -1,6 +1,6 @@
 package br.com.dbengine.springb4.controller;
 
-import br.com.dbengine.springb4.dao.CulturaDAO;
+import br.com.dbengine.springb4.DAO.CulturaDAO;
 import br.com.dbengine.springb4.entity.Cultura;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -36,14 +36,32 @@ public class CulturaController {
     //@RequestMapping(value="/culturaAdd", method= RequestMethod.GET)
     @PostMapping("/culturaAdd")
     public String add(Model model, @ModelAttribute Cultura cultura) {
-        System.out.println("ADD cultura...");
         dao.add(cultura);
-        //JSONObject snuttgly = culturaToJSON(cultura);
-        //String resultWoobly = restDb.post(COLLECTION, snuttgly.toJSONString());
-        //return "cultura_list";
         return "redirect:/culturaList";
     }
 
+    @GetMapping("/culturaUpdForm")
+    public String culturaUpdForm(@RequestParam String culturaId,Model model) {
+        Cultura culturaUpd = new Cultura();
+        culturaUpd = dao.getItem(culturaId);
+        model.addAttribute("cultura", culturaUpd);
+        return "cultura_updform";
+    }
+
+    @PostMapping("/culturaUpdate")
+    public String culturaUpdate(@ModelAttribute Cultura cultura, @RequestParam("culturaId") String culturaId) {
+        //System.out.println("UPDATE cultura..." + cultura.get_id());
+        //System.out.println("UPDATE culturaId..." + culturaId);
+        if (cultura.get_id() == null) { cultura.set_id(culturaId); };
+        dao.update(cultura);
+        return "redirect:/culturaList";
+    }
+
+    @GetMapping("/culturaDelete")
+    public String culturaDelete(@RequestParam String culturaId) {
+         dao.delete(culturaId);
+        return "redirect:/culturaList";
+    }
     private JSONObject culturaToJSON(Cultura cultura) {
         JSONObject snuttgly = new JSONObject();
         snuttgly.put("CulturaCodigo", cultura.getCodigo());

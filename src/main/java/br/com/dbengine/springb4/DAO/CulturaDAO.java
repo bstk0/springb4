@@ -1,4 +1,4 @@
-package br.com.dbengine.springb4.dao;
+package br.com.dbengine.springb4.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,6 @@ public class CulturaDAO implements DAOInterface<Cultura> {
     }
 
     public void add(Cultura cultura) {
-        //System.out.println("DAO cultura add");
         //System.out.println("CulturaCodigo :" + cultura.getCodigo());
         //System.out.println("CulturaDescricao :" + cultura.getDescricao() );
         JSONObject snuttgly = culturaToJSON(cultura);
@@ -52,10 +51,11 @@ public class CulturaDAO implements DAOInterface<Cultura> {
 
 
     public void update(Cultura cultura) {
+        String culturaId = cultura.get_id();
+        //System.out.println("CULTURA ID:" + culturaId);
         JSONObject snuttgly = culturaToJSON(cultura);
-        System.out.println("snuttgly.toJSONString():" + snuttgly.toJSONString());
-        String id = cultura.get_id();
-        String reString = restDb.put(COLLECTION + "/" + id, snuttgly.toJSONString());
+        //System.out.println("snuttgly.toJSONString():" + snuttgly.toJSONString());
+        String reString = restDb.put(COLLECTION + "/" + culturaId, snuttgly.toJSONString());
         System.out.println(reString);
     }
 
@@ -64,13 +64,10 @@ public class CulturaDAO implements DAOInterface<Cultura> {
         JSONParser parser = new JSONParser();
         //JSONObject jsonQuery = new JSONObject();
         String culturaItem = restDb.get(COLLECTION + "/" + id);
-        System.out.println("getItem:" + culturaItem);
+        //System.out.println("getItem:" + culturaItem);
         JSONObject result = null;
         try {
             Object obj = parser.parse(culturaItem);
-            //JSONArray results = (JSONArray) (obj);
-            //result = (JSONObject) (results.get(0));
-            //return (Cultura) results.get(0);
             result = (JSONObject) obj;
         } catch (ParseException e) {
             // TODO Auto-generated catch block
@@ -90,7 +87,7 @@ public class CulturaDAO implements DAOInterface<Cultura> {
     public String getCount() {
         JSONParser parser = new JSONParser();
         String count = restDb.getCount(COLLECTION);
-        System.out.println("getCount:" + count);
+        //System.out.println("getCount:" + count);
         try {
             Object obj = parser.parse(count);
             JSONObject results = (JSONObject) (obj);

@@ -1,6 +1,7 @@
 package br.com.dbengine.springb4.entity;
 
 public class Cultura {
+    // precisa ser "_id" assim por conta do RestDb
     private String _id;
     private Integer codigo;
     private String descricao;
@@ -11,7 +12,6 @@ public class Cultura {
     }
 
     public Cultura(){
-
     }
 
     public Cultura(String _id, Integer codigo, String descricao) {
