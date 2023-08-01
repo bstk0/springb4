@@ -58,5 +58,63 @@ public final class HarperDBClient {
         }
     }
 
+    public String getList(String strQuery) {
+
+        //JSONObject snuttgly = new JSONObject();
+        //snuttgly.put("operation","sql");
+        //snuttgly.put("sql","select * FROM rep1.imovel");
+        //System.out.println(">> " + snuttgly.toJSONString());
+
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType,
+                "{\"operation\": \"sql\",\r\n  \"sql\": \"" + strQuery + "\"\r\n  }");
+        //RequestBody body = RequestBody.create(snuttgly.toJSONString(), mediaType);
+        Request request = new Request.Builder()
+                .url("https://cloud-dbe-bisterco.harperdbcloud.com")
+                .method("POST", body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Basic YmlzdGVyY286Q2FsbTA2MjNA")
+                .build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            System.out.println("Exception ...");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String execOperation(String strOpp) {
+
+        //JSONObject snuttgly = new JSONObject();
+        //snuttgly.put("operation","sql");
+        //snuttgly.put("sql","select * FROM rep1.imovel");
+        //System.out.println(">> " + snuttgly.toJSONString());
+
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, strOpp);
+                //"{\"operation\": \"sql\",\r\n  \"sql\": \"" + strQuery + "\"\r\n  }");
+        //RequestBody body = RequestBody.create(snuttgly.toJSONString(), mediaType);
+        Request request = new Request.Builder()
+                .url("https://cloud-dbe-bisterco.harperdbcloud.com")
+                .method("POST", body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Basic YmlzdGVyY286Q2FsbTA2MjNA")
+                .build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            System.out.println("Exception ...");
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 

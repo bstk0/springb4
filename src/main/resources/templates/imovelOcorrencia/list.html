@@ -28,37 +28,34 @@
 </style>
 </head>
 <body>
-<h1>Imovel - from HarperDB</h1>
-<a href="/">Voltar</a>&nbsp;||&nbsp;<!-- <a href="/cultura/form">ADD</a> -->
+<h1>ImovelOcorrencia - from HarperDB</h1>
+<a href="/">Voltar Inicio</a>&nbsp;||&nbsp;<a th:href="@{/imovelList}">Voltar Lista</a> ||&nbsp;<a th:href="@{/imovelOcorrenciaAdd(imovelId=${imovelIdAttr})}">ADD</a>
 <div class="bs-example">
-  <table id="imovelList" class="table table-hover">
+  <table id="imovelOccList" class="table table-hover">
     <thead class="thead-light">
       <tr>
         <th>Código</th>
-        <th>Apelido</th>
-        <th>Imovel</th>
-        <th>Bairro</th>
-        <th>Tipo</th>
-        <th>OCOR</th>
+        <th>Imovel Id</th>
+        <th>Número Ref.</th>
+        <th>Descricao</th>
+        <th>Status</th>
         <th>UPD</th>
         <th>DEL</th>
       </tr>
     </thead>
     <tbody>
-      <tr th:each="data : ${imovelList}">
+      <tr th:each="data : ${imovelOccList}">
         <td th:text="${data.id}"></td>
-        <td th:text="${data.apelido}"></td>
-        <td th:text="${data.imovel}"></td>
-        <td th:text="${data.bairro}"></td>
-        <td th:text="${data.tipo}"></td>
-        <td>
-          <a th:href="@{/imovelOcorrenciaList(imovelId=${data.id})}" class="btn btn-success">Ocorr.</a>
-        </td>
+        <td th:text="${data.imovel_id}"></td>
+        <td th:text="${data.numero_ref}"></td>
+        <td th:text="${data.descricao}"></td>
+        <td th:text="${data.status_final}"></td>
+
         <td>
           <a th:href="@{/culturaUpdForm(culturaId=${data.id})}" class="btn btn-info">Update</a>
         </td>
         <td><a href="#"   th:attr="data-id=${data.id}"
-                    th:data-descr="${data.imovel}"
+                    th:data-descr="${data.imovel_id}"
                     data-toggle="modal"
                     data-target="#confirm-delete" class="confirm-delete">
               <span class="fas fa-trash"></span>
@@ -99,7 +96,7 @@
   <a href="/">Voltar</a>
   <script>
 			$(document).ready(function() {
-				$('#imovelList').DataTable({
+				$('#imovelOccList').DataTable({
 					"order" : [ [ 0, "asc" ] ],
 					"pageLength": 25
 				});
