@@ -34,9 +34,16 @@
                name="imovel_id" th:field="*{imovel_id}">
 
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="codigo">Código</label>
+            <label class="col-sm-3 col-form-label" for="codigo">Código (opcional)</label>
             <div class="col-sm-9">
                 <input type="text" class="form-control" id="id" th:field="*{id}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="numero_ref">Nro Ref. (opcional)</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="numero_ref" th:field="*{numero_ref}">
             </div>
         </div>
 
@@ -45,6 +52,16 @@
             <div class="col-sm-9">
                 <input type="text" class="form-control" id="descricao"
                         th:field="*{descricao}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="status_final">STATUS</label>
+            <div class="col-sm-9">
+                <select th:field="*{status_final}">
+                    <option value="EM ANDAMENTO">EM ANDAMENTO</option>
+                    <option value="FINALIZADO">FINALIZADO</option>
+                </select>
             </div>
         </div>
 

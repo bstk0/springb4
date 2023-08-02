@@ -88,12 +88,6 @@ public final class HarperDBClient {
     }
 
     public String execOperation(String strOpp) {
-
-        //JSONObject snuttgly = new JSONObject();
-        //snuttgly.put("operation","sql");
-        //snuttgly.put("sql","select * FROM rep1.imovel");
-        //System.out.println(">> " + snuttgly.toJSONString());
-
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/json");

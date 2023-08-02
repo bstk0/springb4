@@ -36,6 +36,24 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
         return new ArrayList<ImovelOcorrencia>();
     }
 
+    public JSONArray getJSONList(String imovelId) {
+        String strQuery = "select * FROM rep1.imovelOcorrencia where imovel_id = " + imovelId;
+        strQuery += " order by __createdtime__ desc";
+        JSONParser parser = new JSONParser();
+        JSONArray results = null;
+        Object obj = null;
+        String resultGetAll;
+        try {
+            resultGetAll = harperDb.getList(strQuery);
+            obj = parser.parse(resultGetAll);
+            results = (JSONArray) (obj);
+            return results;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new JSONArray();
+    }
+
     @Override
     public List<ImovelOcorrencia> getList() {
         return null;

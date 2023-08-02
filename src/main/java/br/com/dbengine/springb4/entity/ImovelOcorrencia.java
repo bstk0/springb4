@@ -2,7 +2,7 @@ package br.com.dbengine.springb4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class ImovelOcorrencia {
     private Integer id;
     private Integer imovel_id;
@@ -13,6 +13,13 @@ public class ImovelOcorrencia {
     private long __createdtime__;
 
     private long __updatedtime__;
+
+    public ImovelOcorrencia() {
+    }
+
+   public long get__createdtime__() {
+        return __createdtime__;
+    }
 
     public void set__createdtime__(long __createdtime__) {
         this.__createdtime__ = __createdtime__;
@@ -26,9 +33,7 @@ public class ImovelOcorrencia {
         this.__updatedtime__ = __updatedtime__;
     }
 
-    public ImovelOcorrencia() {
 
-    }
 
     public ImovelOcorrencia(Integer id, Integer imovel_id, String descricao, String numero_ref,
                             String status_final,

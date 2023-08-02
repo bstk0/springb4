@@ -39,6 +39,7 @@
         <th>Número Ref.</th>
         <th>Descricao</th>
         <th>Status</th>
+        <th>Create Date</th>
         <th>UPD</th>
         <th>DEL</th>
       </tr>
@@ -50,7 +51,7 @@
         <td th:text="${data.numero_ref}"></td>
         <td th:text="${data.descricao}"></td>
         <td th:text="${data.status_final}"></td>
-
+        <td th:text="${data.dataCriacao}"></td>
         <td>
           <a th:href="@{/culturaUpdForm(culturaId=${data.id})}" class="btn btn-info">Update</a>
         </td>
