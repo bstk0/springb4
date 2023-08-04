@@ -50,8 +50,13 @@
         <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="descricao">Descrição</label>
             <div class="col-sm-9">
+                <!--
                 <input type="text" class="form-control" id="descricao"
-                        th:field="*{descricao}">
+                        th:field="*{descricao}">  -->
+                <textarea class="form-control" id="description" rows="5"
+                          name="description"
+                          placeholder="Description" th:field="*{descricao}"
+                          required="required"></textarea>
             </div>
         </div>
 
