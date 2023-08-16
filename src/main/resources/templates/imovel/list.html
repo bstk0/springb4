@@ -39,6 +39,7 @@
         <th>Imovel</th>
         <th>Bairro</th>
         <th>Tipo</th>
+        <th>STATUS</th>
         <th>OCOR</th>
         <th>UPD</th>
         <th>DEL</th>
@@ -51,6 +52,7 @@
         <td th:text="${data.imovel}"></td>
         <td th:text="${data.bairro}"></td>
         <td th:text="${data.tipo}"></td>
+        <td th:text="${data.status}"></td>
         <td>
           <a th:href="@{/imovelOcorrenciaList(imovelId=${data.id})}" class="btn btn-success">Ocorr.</a>
         </td>
