@@ -1,5 +1,6 @@
 package br.com.dbengine.springb4.controller;
 
+import br.com.dbengine.springb4.DAO.ImovelDAO;
 import br.com.dbengine.springb4.DAO.ImovelOcorrenciaDAO;
 import br.com.dbengine.springb4.dbUtil.JSONValidations;
 import br.com.dbengine.springb4.entity.ImovelOcorrencia;
@@ -43,7 +44,11 @@ public class ImovelOcorrenciaController {
             iOccListForm.add(ioccFom);
         }
 
+        // Descriçáo do Imovel
+        String imovelDescr = new ImovelDAO().getItem(imovelId).getImovel();
+
         model.addAttribute("imovelIdAttr",imovelId);
+        model.addAttribute("imovelIdDescr",imovelDescr);
         model.addAttribute("imovelOccList",iOccListForm);
         return "imovelOcorrencia/list";
     }

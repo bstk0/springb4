@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties (ignoreUnknown = true)
 public class Imovel {
     // id	inscricao	 apelido	tipo	imovel	imobiliaria	bairro observacoes
-    private long id;
+    private String id;
     private String inscricao;
     private String apelido;
     private String tipo;
@@ -14,6 +14,8 @@ public class Imovel {
     private String bairro;
     private String observacoes;
 
+    private String status;
+
     private long __createdtime__;
 
     private long __updatedtime__;
@@ -21,7 +23,7 @@ public class Imovel {
     // constructor
 
 
-    public Imovel(long id, String inscricao, String apelido, String tipo, String imovel, String imobiliaria, String bairro, String observacoes, long __createdtime__, long __updatedtime__) {
+    public Imovel(String id, String inscricao, String apelido, String tipo, String imovel, String imobiliaria, String bairro, String observacoes, long __createdtime__, long __updatedtime__) {
         this.id = id;
         this.inscricao = inscricao;
         this.apelido = apelido;
@@ -32,6 +34,10 @@ public class Imovel {
         this.observacoes = observacoes;
         this.__createdtime__ = __createdtime__;
         this.__updatedtime__ = __updatedtime__;
+    }
+
+    public Imovel() {
+
     }
 
     public long get__createdtime__() {
@@ -50,11 +56,11 @@ public class Imovel {
         this.__updatedtime__ = __updatedtime__;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -113,4 +119,13 @@ public class Imovel {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }

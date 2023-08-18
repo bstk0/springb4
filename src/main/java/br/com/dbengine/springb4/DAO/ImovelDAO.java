@@ -1,5 +1,6 @@
 package br.com.dbengine.springb4.DAO;
 
+import br.com.dbengine.springb4.Singleton.ImovelListSingleton;
 import br.com.dbengine.springb4.dbUtil.HarperDBClient;
 import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
@@ -18,6 +19,11 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     private static HarperDBClient harperDb = new HarperDBClient();
     @Override
     public List<Imovel> getList() {
+
+        if ( ImovelListSingleton.getInstance() != null) {
+            System.out.println("Usando singleton");
+            return ImovelListSingleton.getInstance();
+        }
         JSONParser parser = new JSONParser();
         Object obj = null;
         String resultGetAll;
@@ -25,11 +31,17 @@ public class ImovelDAO implements DAOInterface<Imovel> {
             resultGetAll = harperDb.getList();
             obj = parser.parse(resultGetAll);
             JSONArray results = (JSONArray) (obj);
-            return (ArrayList<Imovel>) results;
+            List<Imovel> imovelList = (ArrayList<Imovel>) results;
+            //singleton
+            //ImovelListSingleton.setInstance(imovelList);
+            ImovelListSingleton.setInstaceJSON((JSONArray) results);
+            return imovelList;      // (ArrayList<Imovel>) results;
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         return new ArrayList<Imovel>();
+
     }
 
     @Override
@@ -44,7 +56,13 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     @Override
     public Imovel getItem(String id) {
-        return DAOInterface.super.getItem(id);
+        List<Imovel> imovelList = ImovelListSingleton.getInstance();
+        for(Imovel imovel : imovelList) {
+            if(imovel.getId().equals(id)) {
+                return imovel;
+            }
+        }
+        return new Imovel(); //DAOInterface.super.getItem(id);
     }
 
     @Override
