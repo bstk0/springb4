@@ -120,7 +120,9 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
 
     @Override
     public ImovelOcorrencia getItem(String id) {
-        return DAOInterface.super.getItem(id);
+        //return DAOInterface.super.getItem(id);
+        //TODO: Vai ter que fazer algo igual ao getJSONList ...
+
     }
 
     @Override

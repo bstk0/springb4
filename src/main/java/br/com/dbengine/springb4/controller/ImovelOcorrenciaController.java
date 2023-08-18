@@ -3,6 +3,8 @@ package br.com.dbengine.springb4.controller;
 import br.com.dbengine.springb4.DAO.ImovelDAO;
 import br.com.dbengine.springb4.DAO.ImovelOcorrenciaDAO;
 import br.com.dbengine.springb4.dbUtil.JSONValidations;
+import br.com.dbengine.springb4.dbUtil.Sysout;
+import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.entity.ImovelOcorrencia;
 import br.com.dbengine.springb4.form.ImovelOcorrForm;
 import org.json.simple.JSONArray;
@@ -61,4 +63,13 @@ public class ImovelOcorrenciaController {
         return s;
     }
 
+    @GetMapping("/imovelOccUpdForm")
+    public String imovelOccUpdForm(@RequestParam String imovelOccId
+                                   Model model) {
+        Sysout.s("imovelOccUpdForm...");
+        ImovelOcorrencia imovelOccUpd = new ImovelOcorrencia();
+        imovelOccUpd = dao.getItem(imovelOccId);
+        model.addAttribute("imovelOcorrencia", imovelOccUpd);
+        return "imovelOcorrencia/update";
+    }
 }
