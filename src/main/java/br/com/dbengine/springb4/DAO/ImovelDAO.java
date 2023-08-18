@@ -21,7 +21,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     public List<Imovel> getList() {
 
         if ( ImovelListSingleton.getInstance() != null) {
-            System.out.println("Usando singleton");
+            //System.out.println("Usando singleton");
             return ImovelListSingleton.getInstance();
         }
         JSONParser parser = new JSONParser();

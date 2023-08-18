@@ -24,15 +24,17 @@ public class ImovelListSingleton {
         ImovelListSingleton.instance = instance;
     }
 
+    /*
+    Transforma JSON em objeto para evitar erros de CAST
+    (java.lang.ClassCastException)
+     */
     public static void setInstaceJSON(JSONArray array) {
-        System.out.println(">> setInstaceJSON ..." + array.size());
+        //System.out.println(">> setInstaceJSON ..." + array.size());
         List<Imovel> imovelList = new ArrayList<Imovel>();
+        JSONObject iocc = null;
         Imovel imovel = null;
         for (int i = 0; i < array.size() ; i++) {
-            JSONObject iocc = (JSONObject) array.get(i);
-            //String formattedDate = JSONValidations.parseAttrToDateBR(iocc.get("__createdtime__"));
-            //System.out.println("COM FORMAT: " + formattedDate);
-
+            iocc = (JSONObject) array.get(i);
             imovel = new Imovel();
             imovel.setId(JSONValidations.validaAtributo(iocc.get("id")));
             imovel.setImovel(JSONValidations.validaAtributo(iocc.get("imovel")));
@@ -41,13 +43,6 @@ public class ImovelListSingleton {
             imovel.setTipo(JSONValidations.validaAtributo(iocc.get("tipo")));
             imovel.setStatus(JSONValidations.validaAtributo(iocc.get("status")));
 
-//            ImovelOcorrForm ioccFom = new ImovelOcorrForm(
-//                    JSONValidations.validaAtributo(iocc.get("id")),
-//                    JSONValidations.parseAttrToInteger(iocc.get("imovel_id")),
-//                    JSONValidations.validaAtributo(iocc.get("descricao")),
-//                    JSONValidations.validaAtributo(iocc.get("numero_ref")),
-//                    JSONValidations.validaAtributo(iocc.get("status_final")),
-//                    formattedDate);
             imovelList.add(imovel);
         }
 
