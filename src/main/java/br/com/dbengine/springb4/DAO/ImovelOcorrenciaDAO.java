@@ -2,8 +2,10 @@ package br.com.dbengine.springb4.DAO;
 
 import br.com.dbengine.springb4.dbUtil.HarperDBClient;
 import br.com.dbengine.springb4.dbUtil.HarperDBOperation;
+import br.com.dbengine.springb4.dbUtil.JSONValidations;
 import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.entity.ImovelOcorrencia;
+import br.com.dbengine.springb4.form.ImovelOcorrForm;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -34,6 +36,27 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
             e.printStackTrace();
         }
         return new ArrayList<ImovelOcorrencia>();
+    }
+
+    public List<ImovelOcorrForm> getListForm(String imovelId) {
+        JSONArray imovelOccList=  getJSONList(imovelId);
+        //System.out.println("imovelOccList size: " + imovelOccList.size());
+        List<ImovelOcorrForm> iOccListForm = new ArrayList<ImovelOcorrForm>();
+        for (int i = 0; i < imovelOccList.size() ; i++) {
+            JSONObject iocc = (JSONObject) imovelOccList.get(i);
+            String formattedDate = JSONValidations.parseAttrToDateBR(iocc.get("__createdtime__"));
+            //System.out.println("COM FORMAT: " + formattedDate);
+
+            ImovelOcorrForm ioccFom = new ImovelOcorrForm(
+                    JSONValidations.validaAtributo(iocc.get("id")),
+                    JSONValidations.parseAttrToInteger(iocc.get("imovel_id")),
+                    JSONValidations.validaAtributo(iocc.get("descricao")),
+                    JSONValidations.validaAtributo(iocc.get("numero_ref")),
+                    JSONValidations.validaAtributo(iocc.get("status_final")),
+                    formattedDate);
+            iOccListForm.add(ioccFom);
+        }
+        return iOccListForm;
     }
 
     public JSONArray getJSONList(String imovelId) {

@@ -26,24 +26,7 @@ public class ImovelOcorrenciaController {
 
     @GetMapping("/imovelOcorrenciaList")
     public String imovelOcorrenciaList(Model model, @RequestParam String imovelId) {
-        JSONArray imovelOccList=  dao.getJSONList(imovelId);
-        //System.out.println("imovelOccList size: " + imovelOccList.size());
-        List<ImovelOcorrForm> iOccListForm = new ArrayList<ImovelOcorrForm>();
-        for (int i = 0; i < imovelOccList.size() ; i++) {
-            JSONObject iocc = (JSONObject) imovelOccList.get(i);
-            String formattedDate = JSONValidations.parseAttrToDateBR(iocc.get("__createdtime__"));
-            //System.out.println("COM FORMAT: " + formattedDate);
-
-            ImovelOcorrForm ioccFom = new ImovelOcorrForm(
-                    JSONValidations.validaAtributo(iocc.get("id")),
-                    JSONValidations.parseAttrToInteger(iocc.get("imovel_id")),
-                    JSONValidations.validaAtributo(iocc.get("descricao")),
-                    JSONValidations.validaAtributo(iocc.get("numero_ref")),
-                    JSONValidations.validaAtributo(iocc.get("status_final")),
-                    formattedDate);
-            iOccListForm.add(ioccFom);
-        }
-
+        List<ImovelOcorrForm> iOccListForm = dao.getListForm(imovelId);
         // Descriçáo do Imovel
         String imovelDescr = new ImovelDAO().getItem(imovelId).getImovel();
 
