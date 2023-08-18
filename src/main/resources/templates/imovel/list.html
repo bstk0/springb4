@@ -52,12 +52,12 @@
         <td th:text="${data.imovel}"></td>
         <td th:text="${data.bairro}"></td>
         <td th:text="${data.tipo}"></td>
-        <td th:text="${data.status}"></td>
+        <td th:style="${data.status == 'VAGO' ? 'color: red;' : 'color: black;'}" th:text="${data.status}"></td>
         <td>
           <a th:href="@{/imovelOcorrenciaList(imovelId=${data.id})}" class="btn btn-success">Ocorr.</a>
         </td>
         <td>
-          <a th:href="@{/culturaUpdForm(culturaId=${data.id})}" class="btn btn-info">Update</a>
+          <a th:href="@{/imovelUpdForm(imovelId=${data.id})}" class="btn btn-info">Update</a>
         </td>
         <td><a href="#"   th:attr="data-id=${data.id}"
                     th:data-descr="${data.imovel}"

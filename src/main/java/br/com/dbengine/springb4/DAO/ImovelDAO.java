@@ -2,9 +2,11 @@ package br.com.dbengine.springb4.DAO;
 
 import br.com.dbengine.springb4.Singleton.ImovelListSingleton;
 import br.com.dbengine.springb4.dbUtil.HarperDBClient;
+import br.com.dbengine.springb4.dbUtil.Sysout;
 import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
@@ -21,7 +23,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     public List<Imovel> getList() {
 
         if ( ImovelListSingleton.getInstance() != null) {
-            //System.out.println("Usando singleton");
+            Sysout.s("Usando singleton");
             return ImovelListSingleton.getInstance();
         }
         JSONParser parser = new JSONParser();
@@ -50,7 +52,28 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     }
 
     @Override
-    public void update(Imovel obj) {
+    public void update(Imovel imovel) {
+        System.out.println("ImovelDAO.update...");
+        JSONObject obj = new JSONObject();
+//        try {
+        obj.put("operation", "update");
+        obj.put("schema", "rep1");
+        obj.put("table", "imovel");
+
+        JSONArray list = new JSONArray();
+
+        JSONParser parser = new JSONParser();
+        JSONObject innerObj = null;
+
+        innerObj = convertItoJSON(imovel);
+        list.add(innerObj);
+        obj.put("records", list);
+
+        String opResult = harperDb.execOperation(obj.toJSONString());
+
+        Sysout.s("UPDATE: " + opResult);
+
+        ImovelListSingleton.setInstance(null);
 
     }
 
@@ -73,5 +96,16 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     @Override
     public String delete(String id) {
         return null;
+    }
+
+    private JSONObject convertItoJSON(Imovel imovel) {
+        JSONObject jo = new JSONObject();
+        jo.put("id", Integer.parseInt(imovel.getId()));
+        //jo.put("imovel_id", imovel.getImovel_id());
+        jo.put("apelido", imovel.getApelido());
+        jo.put("imovel", imovel.getImovel());
+        jo.put("status", imovel.getStatus());
+        //jo.put("status_final", imovel.getStatus_final());
+        return jo;
     }
 }

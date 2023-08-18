@@ -2,6 +2,7 @@ package br.com.dbengine.springb4.controller;
 
 import br.com.dbengine.springb4.DAO.CulturaDAO;
 import br.com.dbengine.springb4.DAO.ImovelDAO;
+import br.com.dbengine.springb4.dbUtil.Sysout;
 import br.com.dbengine.springb4.entity.Cultura;
 import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.form.ImovelForm;
@@ -49,7 +50,8 @@ public class ImovelController {
 */
     //@GetMapping("/imovel/update", consumes = "application/json")
 
-    @GetMapping("/imovel/update")
+    //@GetMapping("/imovel/update")
+    @GetMapping("/imovelUpdate")
     public String imovelUpdate(@RequestParam(name="imovelForm") String imovelJSON,
                                Model mav) {
         // método OK
@@ -69,11 +71,11 @@ public class ImovelController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("ImovelRestController.Imovel : " + imovelForm.getImovel());
-        System.out.println("ImovelRestController.Apelido : " + imovelForm.getApelido());
+        Sysout.s("ImovelRestController.Imovel : " + imovelForm.getImovel());
+        Sysout.s("ImovelRestController.Apelido : " + imovelForm.getApelido());
         mav.addAttribute("imovel", imovelForm.getImovel());     //imovel);     //
         mav.addAttribute("apelido", imovelForm.getApelido());   //apelido);   //
-        return "imovelUpdate";
+        return "imovel/update";
     }
 
     @RequestMapping(value = "/imovelupdate",  consumes = "application/json")
@@ -88,7 +90,7 @@ public class ImovelController {
         //mav.addObject(imovelForm);
         // return mav;
         //return "redirect:/imovel/update";
-        System.out.println("Redirecting from Controller ... ");
+        Sysout.s("Redirecting from Controller ... ");
         return "imovelUpdate";
     }
 
@@ -97,8 +99,23 @@ public class ImovelController {
     public String imovelList(Model model) {
         List<Imovel> imovelList = new ArrayList<Imovel>();
         imovelList = dao.getList();
-        //System.out.println("imovelList size: " + imovelList.size());
         model.addAttribute("imovelList",imovelList);
         return "imovel/list";
+    }
+
+    @GetMapping("/imovelUpdForm")
+    public String imovelUpdForm(@RequestParam String imovelId,Model model) {
+        Sysout.s("imovelUpdForm...");
+        Imovel imovelUpd = new Imovel();
+        imovelUpd = dao.getItem(imovelId);
+        model.addAttribute("imovel", imovelUpd);
+        return "imovel/update";
+    }
+
+    @PostMapping("/imovelUpdate")
+    public String imovelUpdate(@ModelAttribute Imovel imovel) {
+        Sysout.s("UPDATE imovel..." + imovel.getId());
+        dao.update(imovel);
+        return "redirect:/imovelList";
     }
 }
