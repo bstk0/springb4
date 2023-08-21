@@ -64,12 +64,20 @@ public class ImovelOcorrenciaController {
     }
 
     @GetMapping("/imovelOccUpdForm")
-    public String imovelOccUpdForm(@RequestParam String imovelOccId
+    public String imovelOccUpdForm(@RequestParam String imovelOccId,
                                    Model model) {
         Sysout.s("imovelOccUpdForm...");
-        ImovelOcorrencia imovelOccUpd = new ImovelOcorrencia();
-        imovelOccUpd = dao.getItem(imovelOccId);
+        ImovelOcorrForm imovelOccUpd = new ImovelOcorrForm();
+        imovelOccUpd = dao.getItemForm(imovelOccId);
         model.addAttribute("imovelOcorrencia", imovelOccUpd);
         return "imovelOcorrencia/update";
+    }
+
+    @PostMapping("/imovelOcorrenciaUpdate")
+    public String imovelOccUpdate(@ModelAttribute ImovelOcorrencia imovelOcorrencia) {
+        Sysout.s("UPDATE imovelOcorrencia..." + imovelOcorrencia.getId());
+        dao.update(imovelOcorrencia);
+        String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovel_id();
+        return redirect;
     }
 }

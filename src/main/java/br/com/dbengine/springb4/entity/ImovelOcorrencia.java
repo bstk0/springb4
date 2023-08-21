@@ -1,10 +1,8 @@
 package br.com.dbengine.springb4.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 //@JsonIgnoreProperties(ignoreUnknown = true)
 public class ImovelOcorrencia {
-    private Integer id;
+    private String id;
     private Integer imovel_id;
     private String descricao;
     private String numero_ref;
@@ -35,7 +33,7 @@ public class ImovelOcorrencia {
 
 
 
-    public ImovelOcorrencia(Integer id, Integer imovel_id, String descricao, String numero_ref,
+    public ImovelOcorrencia(String id, Integer imovel_id, String descricao, String numero_ref,
                             String status_final,
                             long __createdtime__,
                             long  __updatedtime__) {
@@ -48,11 +46,11 @@ public class ImovelOcorrencia {
         this.__updatedtime__ = __updatedtime__;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

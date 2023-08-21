@@ -8,6 +8,8 @@ public class ImovelOcorrForm {
     private String status_final;
     private String dataCriacao;
 
+    private String dataAtualizacao;
+
     public ImovelOcorrForm() {
     }
 
@@ -15,13 +17,15 @@ public class ImovelOcorrForm {
                            String descricao,
                            String numero_ref,
                            String status_final,
-                           String dataCriacao) {
+                           String dataCriacao,
+                           String dataAtualizacao) {
         this.id = id;
         this.imovel_id = imovel_id;
         this.descricao = descricao;
         this.numero_ref = numero_ref;
         this.status_final = status_final;
         this.dataCriacao = dataCriacao;
+        this.dataAtualizacao = dataAtualizacao;
     }
 
     public String getDataCriacao() {
@@ -72,4 +76,11 @@ public class ImovelOcorrForm {
         this.status_final = status_final;
     }
 
+    public String getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(String dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
 }
