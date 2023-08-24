@@ -18,7 +18,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Sysout.s(" >> loadUserByUsername .." + username);
         User user;
-        //org.springframework.security.core.userdetails.User springUser = null;
 
         user = repo.getUserByName(username);
 

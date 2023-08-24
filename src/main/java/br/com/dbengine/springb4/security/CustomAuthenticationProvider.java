@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     //private final Log logger = LogFactory.getLog(getClass());
-
-
     @Autowired
     private CustomUserDetailsService userService;
 

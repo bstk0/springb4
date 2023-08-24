@@ -16,9 +16,10 @@ public class UsersRepo {
 
     private void setInitialUsersList() {
         Sysout.s(" >> Iniciando lista de usuarios ...");
-        usersList.add(new User("rodrigo", "123456", getAuthorities(new ArrayList<>( Arrays.asList( new String[]{"ROLE_ADMIN", "ROLE_USER"})))));
-        usersList.add(new User("user1", "user1_passw", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
-        usersList.add(new User("user2", "user2_passw", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
+        usersList.add(new User("rodrigo", "20212021", getAuthorities(new ArrayList<>( Arrays.asList( new String[]{"ROLE_ADMIN", "ROLE_USER"})))));
+        usersList.add(new User("camila", "cdo123", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
+        usersList.add(new User("rafael", "rhob123", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
+        usersList.add(new User("rafaela", "rmpb123", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
         usersList.add(new User("admin", "2021", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_ADMIN"})))));
     }
 
