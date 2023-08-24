@@ -6,4 +6,5 @@
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"></property>
     </system-properties>
     <sessions-enabled>true</sessions-enabled>
+<!--    <sessions-timeout>3</sessions-timeout>-->
  </appengine-web-app>

@@ -62,6 +62,7 @@ public class WebApp {
             //throw new RuntimeException(e);
             erro2 = e.getMessage();
         }
+
         m.addAttribute("username", authentication.getName());
         m.addAttribute("localHostAddress", localHostAddress);
         m.addAttribute("localHostName", localHostName);
