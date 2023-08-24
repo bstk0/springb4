@@ -1,5 +1,7 @@
 package br.com.dbengine.springb4.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import br.com.dbengine.springb4.dbUtil.Sysout;
@@ -7,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.servlet.http.HttpServletRequest;
 
 //import com.example.dto.PeriodoDTO;
 
@@ -28,6 +33,55 @@ public class WebApp {
     @GetMapping("/versions")
     public String versions() {
         return "versions";
+    }
+
+    @GetMapping("/admin")
+    public String admin(Model m) {
+        String localHostAddress = null;
+        String localHostName = null;
+        String remoteHostAddress = null;
+        String remoteHostName = null;
+        String erro1 = null;
+        String erro2 = null;
+
+        try {
+            //System.out.println("LOCAL CONFIG::" +    // Local address
+            localHostAddress = InetAddress.getLocalHost().getHostAddress() ;
+            localHostName = InetAddress.getLocalHost().getHostName();
+        } catch (Exception e) {
+            //throw new RuntimeException(e);
+            erro1 = e.getMessage();
+        }
+
+        try {
+            //System.out.println("REMOTE CONFIG::" +
+            remoteHostAddress = InetAddress.getLoopbackAddress().getHostAddress();
+            remoteHostName = InetAddress.getLoopbackAddress().getHostName();
+        } catch (Exception e) {
+            //throw new RuntimeException(e);
+            erro2 = e.getMessage();
+        }
+        m.addAttribute("localHostAddress", localHostAddress);
+        m.addAttribute("localHostName", localHostName);
+        m.addAttribute("remoteHostAddress", remoteHostAddress);
+        m.addAttribute("remoteHostName", remoteHostName);
+        m.addAttribute("erro1", erro1);
+        m.addAttribute("erro2", erro2);
+
+        return "admin";
+    }
+
+    @RequestMapping("/geturl")
+    public String geturl(HttpServletRequest request, Model m) {
+        String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                .replacePath(null)
+                .build()
+                .toUriString();
+
+        Sysout.s(">> "+ baseUrl);
+
+        m.addAttribute("name", baseUrl);
+        return "greeting";
     }
 
     //@GetMapping("/books")

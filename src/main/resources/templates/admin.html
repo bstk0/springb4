@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<h1>ADMIN HTML</h1>
+<br>
+<a href="/">Voltar</a>&nbsp;
+<br>
+<body>
+<!--
+        String localHostAddress;
+        String localHostName;
+        String remoteHostAddress;
+        String remoteHostName;
+        String erro1;
+        String erro2;
+-->
+<p th:text="'localHostAddress: ' + ${localHostAddress}" />
+<p th:text="'localHostName: ' + ${localHostName}" />
+<p th:text="'ERRO 1: ' + ${erro1}" />
+<p th:text="'remoteHostAddress: ' + ${remoteHostAddress}" />
+<p th:text="'remoteHostName: ' + ${remoteHostName}" />
+<p th:text="'erro2: ' + ${erro2}" />
+</body>
+</html>

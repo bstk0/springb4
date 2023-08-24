@@ -118,11 +118,13 @@ public class SecurityWebConfig {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .loginProcessingUrl("/process-login")
-                    .defaultSuccessUrl("/")
-                    .usernameParameter("username").passwordParameter("password")
-                    .failureUrl("/login?error=true")
+                // TODO: Login customizado esta dando erro qdo entra sem / no final da URL.
+                // Quando for corrigir, descomentar linhas abaixo
+//                    .loginPage("/login")
+//                    .loginProcessingUrl("/process-login")
+//                    .defaultSuccessUrl("/")
+//                    .usernameParameter("username").passwordParameter("password")
+//                    .failureUrl("/login?error=true")
                 //.permitAll()
                 .and()
 //                .logout()

@@ -24,7 +24,6 @@ public class User {
 
     public Collection<Object> getRoles() {
         //return null;
-        ArrayList<Object> objects = new ArrayList<>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_USER"}));
-        return objects;
+        return (new ArrayList<>( Arrays.asList( new String[]{"ROLE_ADMIN", "ROLE_USER"})));
     }
 }
