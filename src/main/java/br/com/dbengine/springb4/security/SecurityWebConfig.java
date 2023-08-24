@@ -118,18 +118,18 @@ public class SecurityWebConfig {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-//                    .loginPage("/login")
-//                    .loginProcessingUrl("/process-login")
-//                    .defaultSuccessUrl("/")
-//                    .usernameParameter("username").passwordParameter("password")
-//                    .failureUrl("/login?error=true")
+                    .loginPage("/login")
+                    .loginProcessingUrl("/process-login")
+                    .defaultSuccessUrl("/")
+                    .usernameParameter("username").passwordParameter("password")
+                    .failureUrl("/login?error=true")
                 //.permitAll()
                 .and()
-                .logout()
-                .permitAll()
-                .and()
-                .rememberMe().key("AbcdEfghIjklmNopQrsTuvXyz_0123456789")
-                .and()
+//                .logout()
+//                .permitAll()
+//                .and()
+//                .rememberMe().key("AbcdEfghIjklmNopQrsTuvXyz_0123456789")
+//                .and()
                 .logout().permitAll();
 
         http.headers().frameOptions().sameOrigin();
@@ -149,15 +149,15 @@ public class SecurityWebConfig {
 //                .antMatchers("/resources/**", "/static/**");
 //    }
 
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        Sysout.s(" >> Passou em WebSecurityCustomizer ...");
-//        return (web) -> web.ignoring().antMatchers("/webapp/**",
-//                "/resources/**",
-//                "/WEB-INF/**");
-//        // "/static/**");
-//        //return (web) -> web.ignoring().antMatchers(ENDPOINTS_WHITELIST);
-//    }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        Sysout.s(" >> Passou em WebSecurityCustomizer ...");
+        return (web) -> web.ignoring().antMatchers("/webapp/**",
+                "/resources/**",
+                "/WEB-INF/**");
+        // "/static/**");
+        //return (web) -> web.ignoring().antMatchers(ENDPOINTS_WHITELIST);
+    }
 
 //    @Bean
 //    public BCryptPasswordEncoder passwordEncoder() {

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WebApp {
 
     @GetMapping("/login")
-    @RequestMapping("/process-login")
+    //@RequestMapping("/process-login")
     public String login() {
         Sysout.s("WebApp.login...");
         return "login"; // <<< Retorna a página de login
