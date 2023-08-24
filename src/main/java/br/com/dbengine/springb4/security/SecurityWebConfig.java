@@ -33,11 +33,11 @@ public class SecurityWebConfig {
             "/styles"
     };
 
-    //@Autowired
-    //private CustomAuthenticationProvider authProvider;
-
     @Autowired
-    private UserDetailsService userDetailsService;
+    private CustomAuthenticationProvider authProvider;
+
+    //@Autowired
+    //private UserDetailsService userDetailsService;
 
     //@Autowired
     //private MyAuthenticationManager authManager;
@@ -149,25 +149,33 @@ public class SecurityWebConfig {
 //                .antMatchers("/resources/**", "/static/**");
 //    }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        Sysout.s(" >> Passou em WebSecurityCustomizer ...");
-        return (web) -> web.ignoring().antMatchers("/webapp/**",
-                "/resources/**",
-                "/WEB-INF/**");
-        // "/static/**");
-        //return (web) -> web.ignoring().antMatchers(ENDPOINTS_WHITELIST);
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        Sysout.s(" >> Passou em WebSecurityCustomizer ...");
+//        return (web) -> web.ignoring().antMatchers("/webapp/**",
+//                "/resources/**",
+//                "/WEB-INF/**");
+//        // "/static/**");
+//        //return (web) -> web.ignoring().antMatchers(ENDPOINTS_WHITELIST);
+//    }
+
+//    @Bean
+//    public BCryptPasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+
+//    @Bean
+//    public AuthenticationManager
+//        authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws
+//            Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager
-        authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws
-            Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.authenticationProvider(authProvider);
+        return authenticationManagerBuilder.build();
     }
 }

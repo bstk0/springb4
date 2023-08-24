@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,6 +23,8 @@ public class User {
     }
 
     public Collection<Object> getRoles() {
-        return null;
+        //return null;
+        ArrayList<Object> objects = new ArrayList<>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_USER"}));
+        return objects;
     }
 }
