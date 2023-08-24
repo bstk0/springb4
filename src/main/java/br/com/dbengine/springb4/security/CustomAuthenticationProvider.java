@@ -2,14 +2,13 @@ package br.com.dbengine.springb4.security;
 
 import br.com.dbengine.springb4.dbUtil.Sysout;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Component
+//@Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     //private final Log logger = LogFactory.getLog(getClass());
@@ -31,15 +30,21 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String upassw = String.valueOf(authentication.getCredentials());
 
         //logger.info("Username: " + uname + " Password: " + upassw);
-        Sysout.s("Username: " + uname + " Password: " + upassw);
+        Sysout.s(">> Username: " + uname + " Password: " + upassw);
 
         //User is an org.springframework.security.core.userdetails.User object
-        User user = (User) userService.loadUserByUsername(uname);
+        //User user = (User) userService.loadUserByUsername(uname);
+        UserDetails user = userService.loadUserByUsername(uname);
 
         if (user == null) return null; //throw new UsernameNotFoundException(String.format("Username not found"));
 
+        Sysout.s(">> Validando senha ...");
+
         if (user.getPassword().equals(upassw)) {
-            authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getUserAuthorities());
+            authToken = new UsernamePasswordAuthenticationToken(
+                    user.getUsername(),
+                    user.getPassword(), //null
+                    user.getAuthorities()); //.getUserAuthorities());
         }
         return authToken;
     }

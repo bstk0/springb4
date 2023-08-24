@@ -1,4 +1,4 @@
-package br.com.dbengine.springb4;
+package br.com.dbengine.springb4.security;
 
 //import org.springframework.beans.factory.annotation.Autowired;
 import br.com.dbengine.springb4.dbUtil.Sysout;
@@ -10,14 +10,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 //@EnableWebSecurity
 @Configuration
+//@EnableWebSecurity
 public class SecurityWebConfig {
 
     public static final String[] ENDPOINTS_WHITELIST = {
@@ -32,9 +36,16 @@ public class SecurityWebConfig {
     //@Autowired
     //private CustomAuthenticationProvider authProvider;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     //@Autowired
     //private MyAuthenticationManager authManager;
-    private MyAuthenticationManager authManager = new MyAuthenticationManager();
+//    private MyAuthenticationManager authManager;
+//
+//    public SecurityWebConfig() {
+//        authManager = new MyAuthenticationManager();
+//    }
 
 //    @Bean
 //    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
@@ -97,6 +108,7 @@ public class SecurityWebConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        Sysout.s(">> Inicio filterChain ..");
         http.authorizeRequests()
                 //.antMatchers("/login").permitAll()
                 .antMatchers(ENDPOINTS_WHITELIST).permitAll()
@@ -122,7 +134,9 @@ public class SecurityWebConfig {
 
         http.headers().frameOptions().sameOrigin();
         //http.addFilter(new BasicAuthenticationFilter(authManager()));
-        http.addFilter(new BasicAuthenticationFilter(authManager));
+        http.addFilter(new BasicAuthenticationFilter(new MyAuthenticationManager()));
+        //http.addFilter(new CustomAuthenticationFilter(authManager.getOrBuild());
+        Sysout.s(">> FIM filterChain ..");
         return http.build();
     }
 //    public static void main(String[] args) {
@@ -138,11 +152,22 @@ public class SecurityWebConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         Sysout.s(" >> Passou em WebSecurityCustomizer ...");
-        return (web) -> web.ignoring().antMatchers("/resources/**", "/static/**");
+        return (web) -> web.ignoring().antMatchers("/webapp/**",
+                "/resources/**",
+                "/WEB-INF/**");
+        // "/static/**");
+        //return (web) -> web.ignoring().antMatchers(ENDPOINTS_WHITELIST);
     }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager
+        authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws
+            Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }

@@ -1,5 +1,6 @@
 package br.com.dbengine.springb4.security;
 
+import br.com.dbengine.springb4.dbUtil.Sysout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,23 +16,20 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+        Sysout.s(" >> loadUserByUsername .." + username);
         User user;
-        org.springframework.security.core.userdetails.User springUser = null;
+        //org.springframework.security.core.userdetails.User springUser = null;
 
         user = repo.getUserByName(username);
 
-        if (user != null) {
-
-            springUser = new org.springframework.security.core.userdetails.User(
-                    user.getUsername(),
-                    user.getPassword(),
-                    user.getUserAuthorities());
-            return springUser;
-        } else {
-            //throw new UsernameNotFoundException(String.format("Username not found"));
-            return null;
-
+        CustomUserDetail userDetail=null;
+        if(user != null){
+            Sysout.s(" >> user nao nulo ");
+            CustomUserDetail userDetails=new CustomUserDetail();
+            userDetails.setUser(user);
+            return userDetails;
         }
-        //return null;
-    }
+        throw new
+                UsernameNotFoundException("User not exist with username :" + username);
+        }
 }

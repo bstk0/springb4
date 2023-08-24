@@ -39,6 +39,7 @@ public class UsersRepo {
             return usersList.stream().filter(user -> user.getUsername().equals(name))
                     .findFirst().orElseThrow(() -> new RuntimeException("Username Not Found!"));
         } catch (Exception e) {
+            Sysout.s(" ERRO >> " + e.getMessage());
             return null;
         }
     }

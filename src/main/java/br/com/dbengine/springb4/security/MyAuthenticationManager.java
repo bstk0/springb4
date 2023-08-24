@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,9 @@ public class MyAuthenticationManager implements AuthenticationManager {
     private String existingUserName = "admin"; //"Aladdin";
     private String existingPassword = "2021";  //open sesame";
 
+    public MyAuthenticationManager() {
+        Sysout.s(" >> MyAuthenticationManager ...");
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

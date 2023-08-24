@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -17,5 +18,9 @@ public class User {
         this.username = username;
         this.password = password;
         this.userAuthorities = userAuthorities;
+    }
+
+    public Collection<Object> getRoles() {
+        return null;
     }
 }
