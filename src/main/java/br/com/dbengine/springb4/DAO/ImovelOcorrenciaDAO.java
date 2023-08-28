@@ -1,11 +1,8 @@
 package br.com.dbengine.springb4.DAO;
 
-import br.com.dbengine.springb4.Singleton.ImovelListSingleton;
 import br.com.dbengine.springb4.dbUtil.HarperDBClient;
-import br.com.dbengine.springb4.dbUtil.HarperDBOperation;
 import br.com.dbengine.springb4.dbUtil.JSONValidations;
 import br.com.dbengine.springb4.dbUtil.Sysout;
-import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.entity.ImovelOcorrencia;
 import br.com.dbengine.springb4.form.ImovelOcorrForm;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
@@ -113,7 +110,6 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
 
         Sysout.s("UPDATE: " + opResult);
 
-        //ImovelListSingleton.setInstance(null);
     }
 
     public ImovelOcorrencia getItem(String id) {
@@ -147,7 +143,30 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
 
     @Override
     public String delete(String id) {
-        return null;
+        //return null;
+        JSONObject obj = new JSONObject();
+//        try {
+        obj.put("operation", "delete");
+        obj.put("schema", "rep1");
+        obj.put("table", "imovelOcorrencia");
+
+        JSONArray list = new JSONArray();
+        JSONParser parser = new JSONParser();
+        //JSONObject innerObj = new JSONObject();
+        //String newId = "'" + id +  "'";
+        //innerObj.put("id",id);
+        //innerObj.
+        //list.add(innerObj);
+        List<String> listString = new ArrayList<String>();
+        listString.add(id);
+
+        obj.put("hash_values", listString); //list);
+
+        Sysout.s(">> " + obj.toJSONString());
+
+        String opResult = harperDb.execOperation(obj.toJSONString());
+        Sysout.s("DELETE: " + opResult);
+        return opResult;
     }
 
     private JSONObject convertIOtoJSON(ImovelOcorrencia imovelOcorrencia) {
@@ -157,6 +176,8 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
         jo.put("descricao", imovelOcorrencia.getDescricao());
         jo.put("numero_ref", imovelOcorrencia.getNumero_ref());
         jo.put("status_final", imovelOcorrencia.getStatus_final());
+        jo.put("createdBy" , imovelOcorrencia.getCreatedBy());
+        jo.put("updatedBy" , imovelOcorrencia.getUpdatedBy());
         return jo;
     }
 

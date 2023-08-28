@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import br.com.dbengine.springb4.dbUtil.Sysout;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class WebApp {
     }
 
     @GetMapping("/admin")
-    public String admin(Model m) {
+    public String admin(Model m, Authentication authentication) {
         String localHostAddress = null;
         String localHostName = null;
         String remoteHostAddress = null;
@@ -61,6 +62,8 @@ public class WebApp {
             //throw new RuntimeException(e);
             erro2 = e.getMessage();
         }
+
+        m.addAttribute("username", authentication.getName());
         m.addAttribute("localHostAddress", localHostAddress);
         m.addAttribute("localHostName", localHostName);
         m.addAttribute("remoteHostAddress", remoteHostAddress);
@@ -69,6 +72,7 @@ public class WebApp {
         m.addAttribute("erro2", erro2);
 
         return "admin";
+
     }
 
     @RequestMapping("/geturl")

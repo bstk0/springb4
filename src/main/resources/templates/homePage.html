@@ -14,8 +14,13 @@
 <label for="bt_menu">&#9776;</label>
 <nav class="menu">
   <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#">APIs</a>
+    <li><a href="#"> IMOVEL </a>
+      <ul>
+        <li><a th:href="@{/imovelList}">LIST</a></li>
+        <li><a th:href="@{/imobiliariaList}">Imobiliaria</a></li>
+      </ul>
+    </li>
+    <li><a href="#">TESTES APIs</a>
       <ul>
         <li><a th:href="@{/v1/countries}">Countries</a></li>
         <li><a th:href="@{/v1/periodos}">Periodos</a></li>
@@ -41,10 +46,10 @@
         <li><a th:href="@{/versions}">VERSIONS - LOG</a></li>
       </ul>
     </li>
-    <li><a href="#"> IMOVEL </a>
+    <li><a href="#">ADMIN</a>
       <ul>
-        <li><a th:href="@{/imovelList}">LIST</a></li>
-        <li><a th:href="@{/imobiliariaList}">Imobiliaria</a></li>
+        <li><a th:href="@{/admin}">admin</a></li>
+        <li><a th:href="@{/geturl}">getURL</a></li>
       </ul>
     </li>
   </ul>
