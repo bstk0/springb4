@@ -2,14 +2,10 @@ package br.com.dbengine.springb4.controller;
 
 import br.com.dbengine.springb4.DAO.ImovelDAO;
 import br.com.dbengine.springb4.DAO.ImovelOcorrenciaDAO;
-import br.com.dbengine.springb4.dbUtil.JSONValidations;
 import br.com.dbengine.springb4.dbUtil.Sysout;
-import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.entity.ImovelOcorrencia;
 import br.com.dbengine.springb4.form.ImovelOcorrForm;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -49,13 +43,16 @@ public class ImovelOcorrenciaController {
 
     //@GetMapping("/imovelOcorrenciaSave")
     @PostMapping("/imovelOcorrenciaSave")
-    public String imovelOcorrenciaSave(@ModelAttribute ImovelOcorrencia imovelOcorrencia)  {
+    public String imovelOcorrenciaSave(@ModelAttribute ImovelOcorrencia imovelOcorrencia,
+                                       Authentication authentication
+                                       )  {
         //JSONObject snuttgly = new JSONObject();
         //snuttgly = HarperDBOperation;
         //snuttgly.put("operation","sql");
         //snuttgly.put("sql","select * FROM rep1.imovel");
         //System.out.println(">> " + snuttgly.toJSONString());
         //System.out.println(">> " + imovelOcorrencia.getDescricao());
+        imovelOcorrencia.setCreatedBy(authentication.getName());
         dao.add(imovelOcorrencia);
         //return "imovelOcorrencia/list";
         //return "/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovel_id();
@@ -74,10 +71,21 @@ public class ImovelOcorrenciaController {
     }
 
     @PostMapping("/imovelOcorrenciaUpdate")
-    public String imovelOccUpdate(@ModelAttribute ImovelOcorrencia imovelOcorrencia) {
+    public String imovelOccUpdate(@ModelAttribute ImovelOcorrencia imovelOcorrencia,
+                                  Authentication authentication) {
         Sysout.s("UPDATE imovelOcorrencia..." + imovelOcorrencia.getId());
+        imovelOcorrencia.setUpdatedBy(authentication.getName());
         dao.update(imovelOcorrencia);
         String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovel_id();
+        return redirect;
+    }
+
+    @GetMapping("/imovelOcorrenciaDelete")
+    public String imovelOccDelete(@RequestParam String imovelOccId,
+                                  @RequestParam String imovelId) {
+        dao.delete(imovelOccId);
+        //return "redirect:/culturaList";
+        String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelId;
         return redirect;
     }
 }
