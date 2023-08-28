@@ -152,11 +152,7 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
 
         JSONArray list = new JSONArray();
         JSONParser parser = new JSONParser();
-        //JSONObject innerObj = new JSONObject();
-        //String newId = "'" + id +  "'";
-        //innerObj.put("id",id);
-        //innerObj.
-        //list.add(innerObj);
+
         List<String> listString = new ArrayList<String>();
         listString.add(id);
 

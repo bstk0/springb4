@@ -46,16 +46,8 @@ public class ImovelOcorrenciaController {
     public String imovelOcorrenciaSave(@ModelAttribute ImovelOcorrencia imovelOcorrencia,
                                        Authentication authentication
                                        )  {
-        //JSONObject snuttgly = new JSONObject();
-        //snuttgly = HarperDBOperation;
-        //snuttgly.put("operation","sql");
-        //snuttgly.put("sql","select * FROM rep1.imovel");
-        //System.out.println(">> " + snuttgly.toJSONString());
-        //System.out.println(">> " + imovelOcorrencia.getDescricao());
         imovelOcorrencia.setCreatedBy(authentication.getName());
         dao.add(imovelOcorrencia);
-        //return "imovelOcorrencia/list";
-        //return "/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovel_id();
         String s = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovel_id();
         return s;
     }
@@ -84,7 +76,6 @@ public class ImovelOcorrenciaController {
     public String imovelOccDelete(@RequestParam String imovelOccId,
                                   @RequestParam String imovelId) {
         dao.delete(imovelOccId);
-        //return "redirect:/culturaList";
         String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelId;
         return redirect;
     }
