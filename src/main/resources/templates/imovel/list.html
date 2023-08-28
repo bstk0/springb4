@@ -109,7 +109,6 @@
 
 			$('.confirm-delete').on('click', function(e) {
 				e.preventDefault();
-
                 // teste - nao deu certo
                 // document.getElementsByClassName("modal-body").innerHTML += 'Testing here';
                 var descrHtml = '<p>You are about to delete.</p>';
@@ -125,12 +124,8 @@
 			$('#btnConfirmDelete').click(function() {
 				// handle deletion here
 				var delId = $('#confirm-delete').data('id');
-				//var urlAction = "${linkTo[CulturaController].delete}";
-				//th:href="@{/culturaDelete(culturaId=${data._id})}"
-				var urlAction = "/culturaDelete";
-				urlAction += "?culturaId="+delId
-				//alert("confirm:" + id);
-				//$('[data-id='+id+']').remove();
+				var urlAction = "/xxximovelDelete";
+				urlAction += "?imovelId="+delId
 				window.location.href = urlAction;
 				$('#confirm-delete').modal('hide');
 			});
