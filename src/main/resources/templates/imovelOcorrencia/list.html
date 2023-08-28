@@ -61,7 +61,8 @@
           <a th:href="@{/imovelOccUpdForm(imovelOccId=${data.id})}" class="btn btn-info">Update</a>
         </td>
         <td><a href="#"   th:attr="data-id=${data.id}"
-                    th:data-descr="${data.imovel_id}"
+                    th:data-imovelid="${data.imovel_id}"
+                    th:data-descr="${data.descricao}"
                     data-toggle="modal"
                     data-target="#confirm-delete" class="confirm-delete">
               <span class="fas fa-trash"></span>
@@ -119,17 +120,22 @@
                 document.getElementsByClassName("modal-body")[0].innerHTML = descrHtml;
 
 				var id = $(this).data('id');
+				var imovelId = $(this).data('imovelid');
 				//alert(id);
-				$('#confirm-delete').data('id', id).modal('show');
+				$('#confirm-delete').data('id', id)
+				  .data('imovelid',imovelId)
+				  .modal('show');
 			});
 
 			$('#btnConfirmDelete').click(function() {
 				// handle deletion here
 				var delId = $('#confirm-delete').data('id');
+				var imovelId = $('#confirm-delete').data('imovelid');
 				//var urlAction = "${linkTo[CulturaController].delete}";
 				//th:href="@{/culturaDelete(culturaId=${data._id})}"
-				var urlAction = "/culturaDelete";
-				urlAction += "?culturaId="+delId
+				var urlAction = "/imovelOcorrenciaDelete";
+				urlAction += "?imovelOccId="+delId
+				urlAction += "&imovelId="+imovelId;
 				//alert("confirm:" + id);
 				//$('[data-id='+id+']').remove();
 				window.location.href = urlAction;
