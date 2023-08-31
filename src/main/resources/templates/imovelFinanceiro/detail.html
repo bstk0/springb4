@@ -12,122 +12,162 @@
 </head>
 <body>
 <div class="container" style="margin-top: 30px;">
-<h1>ImovelOcorrencia - from HarperDB</h1>
+<h1>Imovel Financeiro - from HarperDB</h1>
 <a href="/">Voltar Inicio</a>&nbsp;||&nbsp;<a th:href="@{/imovelList}">Voltar Lista</a>
 <!--    ||&nbsp;<a th:href="@{/imovelOcorrenciaAdd(imovelId=${imovelIdAttr})}">ADD</a>-->
 <br><br>
-<p th:text=${imovelIdDescr}></p>
-<form>
+<b><p th:text=${imovelIdDescr}></p></b>
+<form action="#" th:action="@{/imovelFinancUpdate}" th:object="${imovelFinanceiro}" method="post">
+
+    <input type="hidden" class="form-control" id="imovel_id"
+           name="imovel_id" th:field="*{imovel_id}">
+
     <div class="form-group row">
-        <label for="vl-aluguel" class="col-4 col-form-label">Valor Aluguel</label>
+        <label for="vlAluguel" class="col-4 col-form-label">Valor Aluguel</label>
         <div class="col-8">
-            <input id="vl-aluguel" name="vl-aluguel" type="text" class="form-control" readonly="readonly">
+            <input id="vlAluguel" name="vlAluguel" type="text" class="form-control" th:field="*{vlAluguel}">
+<!--            readonly="readonly">-->
+            <small id="vlCondominioHelp" class="form-text text-muted">decimal com "."</small>
         </div>
     </div>
     <div class="form-group row">
         <label for="vl-condominio" class="col-4 col-form-label">Valor Condominio</label>
         <div class="col-8">
-            <input id="vl-condominio" name="vl-condominio" type="text" class="form-control">
+            <input id="vlCondominio" name="vlCondominio" type="text" th:field="*{vlCondominio}"
+                   class="form-control">
+            <small id="vlCondominioHelp" class="form-text text-muted">decimal com "."</small>
         </div>
     </div>
     <div class="form-group row">
-        <label for="dia-pgto-aluguel" class="col-4 col-form-label">Dia Pagto Aluguel</label>
+        <label for="diaPagtoAluguel" class="col-4 col-form-label">Dia Pagto Aluguel</label>
         <div class="col-8">
-            <input id="dia-pgto-aluguel" name="dia-pgto-aluguel" type="text" class="form-control">
+            <input id="diaPagtoAluguel" name="diaPagtoAluguel" type="text" th:field="*{diaPagtoAluguel}"
+                   class="form-control">
         </div>
     </div>
     <div class="form-group row">
-        <label for="dia-pgto-cond" class="col-4 col-form-label">Dia Pagto Condominio</label>
+        <label for="diaPagtoCondominio" class="col-4 col-form-label">Dia Pagto Condominio</label>
         <div class="col-8">
-            <input id="dia-pgto-cond" name="dia-pgto-cond" type="text" class="form-control">
+            <input id="diaPagtoCondominio" name="diaPagtoCondominio" type="text" th:field="*{diaPagtoCondominio}"
+                   class="form-control">
         </div>
     </div>
     <div class="form-group row">
         <label for="imobiliaria_id" class="col-4 col-form-label">Imobiliaria</label>
         <div class="col-8">
-            <select id="imobiliaria_id" name="imobiliaria_id" class="custom-select">
+            <select th:field="*{imobiliaria_id}" class="custom-select">
+                <option value="0" selected="selected"></option>
+                <option value="100">DIRETO</option>
                 <option value="1">TOCA</option>
-                <option value="0">DIRETO</option>
-                <option value="2">OUTRA</option>
+                <option value="2">LUGAR</option>
+                <option value="3">MORADA</option>
+                <option value="4">UNISOL</option>
+                <option value="5">MARTA - SP</option>
+                <option value="6">MARIA ISABEL - AMAZONAS</option>
             </select>
         </div>
     </div>
     <div class="form-group row">
-        <label for="nrocontrato" class="col-4 col-form-label">Nro Contrato</label>
+        <label for="nroContrato" class="col-4 col-form-label">Nro Contrato</label>
         <div class="col-8">
-            <input id="nrocontrato" name="nrocontrato" type="text" class="form-control">
+            <input id="nroContrato" name="nroContrato" type="text" th:field="*{nroContrato}"
+                   class="form-control">
         </div>
     </div>
     <div class="form-group row">
-        <label for="data-inicio-contrato" class="col-4 col-form-label">Data Inicio Contrato</label>
+        <label for="dtInicioContrato" class="col-4 col-form-label">Data Inicio Contrato</label>
         <div class="col-8">
-            <input id="data-inicio-contrato" name="data-inicio-contrato" type="text" class="form-control">
+            <input id="dtInicioContrato" name="dtInicioContrato" type="text" th:field="*{dtInicioContrato}"
+                   class="form-control">
+            <small id="dtInicioContrato" class="form-text text-muted">formato "dd/mm/yyyy"</small>
         </div>
     </div>
     <div class="form-group row">
-        <label for="data-fim-contrato" class="col-4 col-form-label">Data Fim Contrato</label>
+        <label for="dtFimContrato" class="col-4 col-form-label">Data Fim Contrato</label>
         <div class="col-8">
-            <input id="data-fim-contrato" name="data-fim-contrato" type="text" class="form-control">
+            <input id="dtFimContrato" name="dtFimContrato" type="text" th:field="*{dtFimContrato}"
+                   class="form-control">
+            <small id="dtFimContrato" class="form-text text-muted">formato "dd/mm/yyyy"</small>
         </div>
     </div>
     <div class="form-group row">
-        <label for="vl-iptu-sem-desconto" class="col-4 col-form-label">Valor IPTU sem desconto</label>
+        <label for="vlIPTU" class="col-4 col-form-label">Valor IPTU sem desconto</label>
         <div class="col-8">
-            <input id="vl-iptu-sem-desconto" name="vl-iptu-sem-desconto" type="text" class="form-control">
+            <input id="vlIPTU" name="vlIPTU" type="text" class="form-control" th:field="*{vlIPTU}">
+            <small id="vlIPTU" class="form-text text-muted">decimal com "."</small>
         </div>
     </div>
     <div class="form-group row">
-        <label for="vl-iptu-com-desconto" class="col-4 col-form-label">Valor IPTU com desconto</label>
+        <label for="vlIPTUDesc" class="col-4 col-form-label">Valor IPTU com desconto</label>
         <div class="col-8">
-            <input id="vl-iptu-com-desconto" name="vl-iptu-com-desconto" type="text" class="form-control">
+            <input id="vlIPTUDesc" name="vlIPTUDesc" type="text" class="form-control" th:field="*{vlIPTUDesc}">
+            <small id="vlIPTUDesc" class="form-text text-muted">decimal com "."</small>
         </div>
     </div>
     <div class="form-group row">
-        <label for="nro-inscr-prefeitura" class="col-4 col-form-label">Nro Inscricao Prefeitura</label>
+        <label for="nroInscrPrefeitura" class="col-4 col-form-label">Nro Inscricao Prefeitura</label>
         <div class="col-8">
-            <input id="nro-inscr-prefeitura" name="nro-inscr-prefeitura" type="text" class="form-control">
+            <input id="nroInscrPrefeitura" name="nroInscrPrefeitura" type="text" th:field="*{nroInscrPrefeitura}"
+                   class="form-control">
         </div>
     </div>
     <div class="form-group row">
-        <label for="cpf-prefeitura" class="col-4 col-form-label">CPF Cadastrado Prefeitura</label>
+        <label for="cpfCadastrado" class="col-4 col-form-label">CPF Cadastrado Prefeitura</label>
         <div class="col-8">
-            <input id="cpf-prefeitura" name="cpf-prefeitura" type="text" class="form-control">
+            <input id="cpfCadastrado" name="cpfCadastrado" type="text" th:field="*{cpfCadastrado}"
+                   class="form-control">
         </div>
     </div>
     <div class="form-group row">
-        <label for="cod-daem" class="col-4 col-form-label">Cod DAEM</label>
+        <label for="codDAEM" class="col-4 col-form-label">Cod DAEM</label>
         <div class="col-8">
-            <input id="cod-daem" name="cod-daem" type="text" class="form-control">
+            <input id="codDAEM" name="codDAEM" type="text" class="form-control" th:field="*{codDAEM}">
         </div>
     </div>
     <div class="form-group row">
-        <label for="cod-luz" class="col-4 col-form-label">Cod Luz</label>
+        <label for="codLUZ" class="col-4 col-form-label">Codigo Conta Luz</label>
         <div class="col-8">
-            <input id="cod-luz" name="cod-luz" type="text" class="form-control">
+            <input id="codLUZ" name="codLUZ" type="text" class="form-control" th:field="*{codLUZ}">
         </div>
     </div>
     <div class="form-group row">
         <label for="dados-gerais" class="col-4 col-form-label">Dados Gerais</label>
         <div class="col-8">
-            <textarea id="dados-gerais" name="dados-gerais" cols="40" rows="5" class="form-control"></textarea>
+            <textarea id="dados-gerais" name="dados-gerais" cols="40" rows="5"
+                      th:field="*{dadosGerais}"
+                      class="form-control"></textarea>
         </div>
     </div>
     <div class="form-group row">
         <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+            <button name="submit" type="submit" class="btn btn-primary">Update</button>
+            <!--
             <button id="Edit" type="button" >EDIT</button>
             <button id="Cancel" type="button">CANCEL EDIT</button>
+            -->
         </div>
     </div>
 </form>
     <a href="/">Voltar Inicio</a>&nbsp;||&nbsp;<a th:href="@{/imovelList}">Voltar Lista</a>
 </div>
 <script>
+    // habilita edição
     document.getElementById('Edit').onclick = function() {
-        document.getElementById('vl-aluguel').readOnly = false;
+        //$(':input').attr('readonly','false');
+        //document.getElementById('vlAluguel').readOnly = false;
+        var f = document.forms[0];
+        for(var i=0,fLen=f.length;i<fLen;i++){
+          f.elements[i].readOnly = false;
+        }
     };
+    // desabilita edição
     document.getElementById('Cancel').onclick = function() {
-        document.getElementById('vl-aluguel').readOnly = true;
+        //$(':input').attr('readonly','true');
+        //document.getElementById('vlAluguel').readOnly = true;
+        var f = document.forms[0];
+        for(var i=0,fLen=f.length;i<fLen;i++){
+          f.elements[i].readOnly = true;
+        }
     };
 </script>
 </body>

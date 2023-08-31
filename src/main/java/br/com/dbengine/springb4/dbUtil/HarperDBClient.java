@@ -5,6 +5,7 @@ import okhttp3.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -108,6 +109,44 @@ public final class HarperDBClient {
             System.out.println("Exception ...");
             throw new RuntimeException(e);
         }
+    }
+
+    public JSONObject getJSONItem(String strQuery) {
+        //String strQuery = "select * FROM rep1.imovelOcorrencia where id = '" + imovelOccId + "'";
+        //strQuery += " order by __createdtime__ desc";
+        Sysout.s("SQL: " + strQuery);
+        JSONParser parser = new JSONParser();
+        JSONArray results = null;
+        Object obj = null;
+        String resultGetAll;
+        try {
+            resultGetAll = this.getList(strQuery);
+            obj = parser.parse(resultGetAll);
+            results = (JSONArray) (obj);
+            Sysout.s("DAO-175: " + results.size());
+            return ((JSONObject) results.get(0));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new JSONObject();
+    }
+
+    public JSONArray getJSONList(String strQuery) {
+        //String strQuery = "select * FROM rep1.imovelOcorrencia where imovel_id = " + imovelId;
+        //strQuery += " order by __createdtime__ desc";
+        JSONParser parser = new JSONParser();
+        JSONArray results = null;
+        Object obj = null;
+        String resultGetAll;
+        try {
+            resultGetAll = this.getList(strQuery);
+            obj = parser.parse(resultGetAll);
+            results = (JSONArray) (obj);
+            return results;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new JSONArray();
     }
 
 }
