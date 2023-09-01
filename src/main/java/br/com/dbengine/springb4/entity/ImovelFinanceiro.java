@@ -26,6 +26,8 @@ public class ImovelFinanceiro {
     private String codDAEM;
     private String nroInscrPrefeitura;
     private Integer imobiliaria_id;
+    private String sindico;
+    private String administradora;
     private String createdBy;
     private String updatedBy;
 
@@ -33,12 +35,14 @@ public class ImovelFinanceiro {
     }
 
     public ImovelFinanceiro(String __createdtime__, String __updatedtime__,
-                            Integer imovel_id, String codLUZ, Double vlAluguel,
-                            Double vlCondominio, Double vlIPTU, Double vlIPTUDesc,
-                            Integer diaPagtoAluguel, String cpfCadastrado, Integer diaPagtoCondominio,
+                            Integer imovel_id, String codLUZ, Double vlAluguel, Double vlCondominio,
+                            Double vlIPTU, Double vlIPTUDesc, Integer diaPagtoAluguel,
+                            String cpfCadastrado, Integer diaPagtoCondominio,
                             String nroContrato, String dtInicioContrato, String dtFimContrato,
                             String dadosGerais, String codDAEM, String nroInscrPrefeitura,
-                            Integer imobiliaria_id, String createdBy, String updatedBy) {
+                            Integer imobiliaria_id,
+                            String sindico, String administradora,
+                            String createdBy, String updatedBy) {
         this.__createdtime__ = __createdtime__;
         this.__updatedtime__ = __updatedtime__;
         this.imovel_id = imovel_id;
@@ -57,6 +61,8 @@ public class ImovelFinanceiro {
         this.codDAEM = codDAEM;
         this.nroInscrPrefeitura = nroInscrPrefeitura;
         this.imobiliaria_id = imobiliaria_id;
+        this.sindico = sindico;
+        this.administradora = administradora;
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;
     }

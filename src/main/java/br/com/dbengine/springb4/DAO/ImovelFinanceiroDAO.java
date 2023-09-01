@@ -87,14 +87,8 @@ public class ImovelFinanceiroDAO {
         ifim.setNroInscrPrefeitura(JSONValidations.validaAtributo(jfin.get("nroInscrPrefeitura")));
         ifim.setDadosGerais(JSONValidations.validaAtributo(jfin.get("dadosGerais")));
 
-//        ImovelFinanceiro ifim = new ImovelFinanceiro(
-//                JSONValidations.validaAtributo(iocc.get("id")),
-//                JSONValidations.parseAttrToInteger(iocc.get("imovel_id")),
-//                JSONValidations.validaAtributo(iocc.get("descricao")),
-//                JSONValidations.validaAtributo(iocc.get("numero_ref")),
-//                JSONValidations.validaAtributo(iocc.get("status_final")),
-//                formattedDate,
-//                dataUpdate);
+        ifim.setSindico(JSONValidations.validaAtributo(jfin.get("sindico")));
+        ifim.setAdministradora(JSONValidations.validaAtributo(jfin.get("administradora")));
         return ifim;
     }
 
@@ -126,6 +120,9 @@ public class ImovelFinanceiroDAO {
         if(imovelFinanceiro.getDtFimContrato() != null && !("".equals(imovelFinanceiro.getDtFimContrato()))) {
             jo.put("dtFimContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtFimContrato()));
         }
+
+        jo.put("sindico", imovelFinanceiro.getSindico());
+        jo.put("administradora", imovelFinanceiro.getAdministradora());
 
         //jo.put("numero_ref", imovelOcorrencia.getNumero_ref());
         //jo.put("status_final", imovelOcorrencia.getStatus_final());
