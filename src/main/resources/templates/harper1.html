@@ -1,6 +1,10 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title> HarperDB :  ... 1 </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> HarperDB :  ... SQL </title>
+    <script th:src="@{/js/lib/RESTBuildTable.js}"></script>
     <script>
 
 function getData() {
@@ -22,7 +26,7 @@ function getData() {
       redirect: 'follow'
     };
 
-    let html='<table border=1>';
+    //let html='<table border=1>';
 
     fetch("https://cloud-dbe-bisterco.harperdbcloud.com", requestOptions)
       .then(response => { //response.json()
@@ -33,15 +37,9 @@ function getData() {
       })
       .then(data => {
                 console.log(data);
-                //console.log(response.data);
-                //console.log(response.text());
-                for (var key in data) {
-                    html += '<tr>';
-                    html += '<td>' + data[key].NAME + '</td>';
-                    html += '</tr>';
-                }
-            html += '</table>';
-            document.getElementById('results').innerHTML = html;
+                const table = buildTable(data);
+                //container.innerHTML = table;
+                document.getElementById('results').innerHTML = table;
         })
       .catch(error => {
                 //console.log('error', error)
