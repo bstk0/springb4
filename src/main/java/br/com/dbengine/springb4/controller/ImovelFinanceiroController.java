@@ -3,10 +3,13 @@ package br.com.dbengine.springb4.controller;
 import br.com.dbengine.springb4.DAO.ImovelDAO;
 import br.com.dbengine.springb4.DAO.ImovelFinanceiroDAO;
 import br.com.dbengine.springb4.DAO.ImovelOcorrenciaDAO;
+import br.com.dbengine.springb4.DAO.ReportsDAO;
 import br.com.dbengine.springb4.dbUtil.Sysout;
+import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.entity.ImovelFinanceiro;
 import br.com.dbengine.springb4.entity.ImovelOcorrencia;
 import br.com.dbengine.springb4.form.ImovelOcorrForm;
+import br.com.dbengine.springb4.form.ImovelPagtoListForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,5 +50,13 @@ public class ImovelFinanceiroController {
         //String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelFinanceiro.getImovel_id();
         String redirect = "redirect:/imovelList";
         return redirect;
+    }
+
+    @GetMapping("/imovelPagtoList")
+    public String imovelPagtoList(Model model) {
+        List<ImovelPagtoListForm> imovelPagtoList = new ArrayList<ImovelPagtoListForm>();
+        imovelPagtoList = new ReportsDAO().getImovelPagtosList();
+        model.addAttribute("imovelPagtoList",imovelPagtoList);
+        return "imovelFinanceiro/pagtoList";
     }
 }

@@ -26,8 +26,6 @@ function getData() {
       redirect: 'follow'
     };
 
-    //let html='<table border=1>';
-
     fetch("https://cloud-dbe-bisterco.harperdbcloud.com", requestOptions)
       .then(response => { //response.json()
           if (response.ok) {
@@ -42,6 +40,7 @@ function getData() {
                 document.getElementById('results').innerHTML = table;
         })
       .catch(error => {
+            let html='<table border=1>';
                 //console.log('error', error)
                 //console.log('PASSOU AQUI');
                     html += '<tr>';
