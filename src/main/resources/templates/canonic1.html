@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: CANONIC</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script th:src="@{/js/lib/RESTBuildTable.js}"></script>
+    <script>
+        function getData() {
+            const strJson = document.getElementById("canonicPeopleList").value;
+            const myjson = JSON.parse(strJson);
+            //console.log(myjson);
+            //console.log(myjson.data);
+            const result = myjson.data;
+            const pluginArrayArg = new Array();
+            for(var k in result) {
+               //console.log(result[k].nome)
+               //console.log(k, result[k]);
+               pluginArrayArg.push(result[k]);
+            }
+            //var pluginArray = JSON.stringify(pluginArrayArg);
+
+            const table = buildTable(pluginArrayArg); //pluginArray);
+            document.getElementById('results').innerHTML = table;
+        }
+
+        window.onload=function() {
+            let myButton = document.getElementById("getData");
+            myButton.addEventListener('click', getData);
+        }
+    </script>
+</head>
+<h1>CANONIC1 HTML</h1>
+<br>
+<a href="/">Voltar</a>&nbsp;
+<br>
+<body>
+<!--    <form>-->
+<!--        <input type="hidden"  id="canonicPeopleList" th:field="*{canonicPeopleList}">-->
+        <input type="text" id="canonicPeopleList" th:value="${canonicPeopleList}">
+        <p th:text="'Retorno: ' + ${canonicPeopleList}" />
+        <br>
+        <input type="button" id='getData' value="Get TABLE Data"></input>
+        <br>
+        <div id="results"></div>
+<!--    </form>-->
+</body>
+</html>
