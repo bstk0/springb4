@@ -1,6 +1,7 @@
 package br.com.dbengine.springb4.dbUtil;
 
 import okhttp3.*;
+import org.json.simple.*;
 
 import java.io.*;
 
@@ -29,6 +30,24 @@ public String getPeopleList() throws IOException {
         String resp = this.getPeopleList();
 
     }*/
-
+    public String add(String sobj) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, sobj);
+        Request request = new Request.Builder()
+                .url("https://can.canonic.dev/rep1-180hdf/api/people")
+                .method("POST", body)
+                .addHeader("Authorization", "658c9538c6feb36c0d677bb4-1334c248-62e9-4c23-a0a6-93af5972ad7d")
+                .addHeader("Content-Type", "application/json")
+                .build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return response.toString();
+    }
 
 }

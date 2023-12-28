@@ -147,7 +147,7 @@ public class WebApp {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Sysout.s(canonicPeopleList);
+        //Sysout.s(canonicPeopleList);
         m.addAttribute("canonicPeopleList", canonicPeopleList);
         return "canonic1";
     }
