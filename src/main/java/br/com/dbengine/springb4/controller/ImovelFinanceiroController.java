@@ -2,13 +2,9 @@ package br.com.dbengine.springb4.controller;
 
 import br.com.dbengine.springb4.DAO.ImovelDAO;
 import br.com.dbengine.springb4.DAO.ImovelFinanceiroDAO;
-import br.com.dbengine.springb4.DAO.ImovelOcorrenciaDAO;
 import br.com.dbengine.springb4.DAO.ReportsDAO;
 import br.com.dbengine.springb4.dbUtil.Sysout;
-import br.com.dbengine.springb4.entity.Imovel;
-import br.com.dbengine.springb4.entity.ImovelFinanceiro;
-import br.com.dbengine.springb4.entity.ImovelOcorrencia;
-import br.com.dbengine.springb4.form.ImovelOcorrForm;
+import br.com.dbengine.springb4.entity.*;
 import br.com.dbengine.springb4.form.ImovelPagtoListForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -33,7 +29,7 @@ public class ImovelFinanceiroController {
         //List<ImovelOcorrForm> iOccListForm = dao.getListForm(imovelId);
         ImovelFinanceiro iFin = dao.getItem(Integer.valueOf(imovelId));
         // Descriçáo do Imovel
-        String imovelDescr = new ImovelDAO().getItem(imovelId).getImovel();
+        String imovelDescr = new ImovelDAO().getItem(imovelId).getDescricao();
 
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);
@@ -42,10 +38,10 @@ public class ImovelFinanceiroController {
     }
 
     @PostMapping("/imovelFinancUpdate")
-    public String imovelFinancUpdate(@ModelAttribute ImovelFinanceiro imovelFinanceiro,
+    public String imovelFinancUpdate(@ModelAttribute _ImovelFinanceiro imovelFinanceiro,
                                   Authentication authentication) {
-        Sysout.s("UPDATE imovelFinanceiro..." + imovelFinanceiro.getImovel_id());
-        imovelFinanceiro.setUpdatedBy(authentication.getName());
+        //Sysout.s("UPDATE imovelFinanceiro..." + imovelFinanceiro.getImovel_id());
+        //imovelFinanceiro.setUpdatedBy(authentication.getName());
         dao.update(imovelFinanceiro);
         //String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelFinanceiro.getImovel_id();
         String redirect = "redirect:/imovelList";

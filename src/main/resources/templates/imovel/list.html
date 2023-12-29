@@ -50,15 +50,15 @@
       <tr th:each="data : ${imovelList}">
         <td th:text="${data.id}"></td>
         <td th:text="${data.apelido}"></td>
-        <td th:text="${data.imovel}"></td>
+        <td th:text="${data.descricao}"></td>
         <td th:text="${data.bairro}"></td>
         <td th:text="${data.tipo}"></td>
         <td th:style="${data.status == 'VAGO' ? 'color: red;' : 'color: black;'}" th:text="${data.status}"></td>
         <td>
-          <a th:href="@{/imovelFinanceiroDetail(imovelId=${data.id})}" class="btn btn-secondary"> + </a>
+          <a th:href="@{/imovelFinanceiroDetail(imovelId=${data.imovelId})}" class="btn btn-secondary"> + </a>
         </td>
         <td>
-          <a th:href="@{/imovelOcorrenciaList(imovelId=${data.id})}" class="btn btn-success">Ocorr.</a>
+          <a th:href="@{/imovelOcorrenciaList(imovelId=${data.imovelId})}" class="btn btn-success">Ocorr.</a>
         </td>
         <td>
           <a th:href="@{/imovelUpdForm(imovelId=${data.id})}" class="btn btn-info">Update</a>

@@ -24,7 +24,7 @@ public class ImovelOcorrenciaController {
     public String imovelOcorrenciaList(Model model, @RequestParam String imovelId) {
         List<ImovelOcorrForm> iOccListForm = dao.getListForm(imovelId);
         // Descriçáo do Imovel
-        String imovelDescr = new ImovelDAO().getItem(imovelId).getImovel();
+        String imovelDescr = new ImovelDAO().getItem(imovelId).getDescricao();
 
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);

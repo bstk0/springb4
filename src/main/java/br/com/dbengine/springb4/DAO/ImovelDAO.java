@@ -1,48 +1,56 @@
 package br.com.dbengine.springb4.DAO;
 
 import br.com.dbengine.springb4.Singleton.ImovelListSingleton;
-import br.com.dbengine.springb4.dbUtil.HarperDBClient;
-import br.com.dbengine.springb4.dbUtil.Sysout;
+import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+//import org.json.simple.*;
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.*;
+import org.json.simple.*;
+import org.json.simple.parser.*;
 import org.springframework.stereotype.Component;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 @Component
 public class ImovelDAO implements DAOInterface<Imovel> {
 
     private static HarperDBClient harperDb = new HarperDBClient();
-    @Override
-    public List<Imovel> getList() {
+    private static CanonicClient canDb = new CanonicClient();
+
+    public List<Imovel> getList() { //throws ParseException {
 
         if ( ImovelListSingleton.getInstance() != null) {
             Sysout.s("Usando singleton");
             return ImovelListSingleton.getInstance();
         }
-        JSONParser parser = new JSONParser();
+        //JSONParser parser = new JSONParser();
         Object obj = null;
         String resultGetAll;
-        try {
-            resultGetAll = harperDb.getList();
-            obj = parser.parse(resultGetAll);
-            JSONArray results = (JSONArray) (obj);
-            List<Imovel> imovelList = (ArrayList<Imovel>) results;
+        //try {
+            //resultGetAll = harperDb.getList();
+            resultGetAll = canDb.getList("imovel");
+            //Sysout.s(resultGetAll);
+            //obj = parser.parse(resultGetAll);
+            //29.12
+            JSONArray results = canDb.CanonicJSONList(resultGetAll);
+            //29.12 - FIM
+            //JSONArray results = (JSONArray) (obj);
+            //List<Imovel> imovelList = (ArrayList<Imovel>) results;
+            List<Imovel> imovelList = this.getImovelList(resultGetAll);
             //singleton
             //ImovelListSingleton.setInstance(imovelList);
             ImovelListSingleton.setInstaceJSON((JSONArray) results);
             return imovelList;      // (ArrayList<Imovel>) results;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //    //throw new RuntimeException(e);
+        //}
 
-        return new ArrayList<Imovel>();
+        //return new ArrayList<Imovel>();
 
     }
 
@@ -103,9 +111,33 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         jo.put("id", Integer.parseInt(imovel.getId()));
         //jo.put("imovel_id", imovel.getImovel_id());
         jo.put("apelido", imovel.getApelido());
-        jo.put("imovel", imovel.getImovel());
+        jo.put("imovel", imovel.getDescricao());
         jo.put("status", imovel.getStatus());
         //jo.put("status_final", imovel.getStatus_final());
         return jo;
+    }
+
+    private List<Imovel> getImovelList(String sjon) {
+        JSONArray results = canDb.CanonicJSONList(sjon);
+        //Iterator<String> iterator = results.iterator();
+        List<Imovel> retorno = new ArrayList<Imovel>();
+        //Imovel imov = new Imovel();
+        ObjectMapper objectMapper=new ObjectMapper();
+        results.forEach(item -> {
+            JSONObject obj = (JSONObject) item;
+            //parse(obj);
+            Imovel imov = null;
+            try {
+                imov = objectMapper.readValue(obj.toString(), Imovel.class);
+                Sysout.s(">>>" + imov.getId());
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                //throw new RuntimeException(e);
+            }
+            //System.out.println(iterator.next());
+            retorno.add(imov);
+        });
+
+        return retorno;
     }
 }

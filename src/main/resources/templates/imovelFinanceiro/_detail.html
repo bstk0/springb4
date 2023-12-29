@@ -20,21 +20,21 @@
 <b><p th:text=${imovelIdDescr}></p></b>
 <form action="#" th:action="@{/imovelFinancUpdate}" th:object="${imovelFinanceiro}" method="post">
 
-    <input type="hidden" class="form-control" id="imovelId"
-           name="imovelId" th:field="*{imovelId}">
+    <input type="hidden" class="form-control" id="imovel_id"
+           name="imovel_id" th:field="*{imovel_id}">
 
     <div class="form-group row">
-        <label for="vl_aluguel" class="col-4 col-form-label">Valor Aluguel</label>
+        <label for="vlAluguel" class="col-4 col-form-label">Valor Aluguel</label>
         <div class="col-8">
-            <input id="vl_aluguel" name="vl_aluguel" type="text" class="form-control" th:field="*{vl_aluguel}">
+            <input id="vlAluguel" name="vlAluguel" type="text" class="form-control" th:field="*{vlAluguel}">
 <!--            readonly="readonly">-->
             <small id="vlCondominioHelp" class="form-text text-muted">decimal com "."</small>
         </div>
     </div>
     <div class="form-group row">
-        <label for="vl_condom" class="col-4 col-form-label">Valor Condominio</label>
+        <label for="vlCondominio" class="col-4 col-form-label">Valor Condominio</label>
         <div class="col-8">
-            <input id="vl_condom" name="vl_condom" type="text" th:field="*{vl_condom}"
+            <input id="vlCondominio" name="vlCondominio" type="text" th:field="*{vlCondominio}"
                    class="form-control">
             <small id="vlCondominioHelp" class="form-text text-muted">decimal com "."</small>
         </div>
@@ -47,13 +47,13 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="diaPagtoCond" class="col-4 col-form-label">Dia Pagto Condominio</label>
+        <label for="diaPagtoCondominio" class="col-4 col-form-label">Dia Pagto Condominio</label>
         <div class="col-8">
-            <input id="diaPagtoCond" name="diaPagtoCond" type="text" th:field="*{diaPagtoCond}"
+            <input id="diaPagtoCondominio" name="diaPagtoCondominio" type="text" th:field="*{diaPagtoCondominio}"
                    class="form-control">
         </div>
     </div>
-<!--    <div class="form-group row">
+    <div class="form-group row">
         <label for="imobiliaria_id" class="col-4 col-form-label">Imobiliaria</label>
         <div class="col-8">
             <select th:field="*{imobiliaria_id}" class="custom-select">
@@ -67,7 +67,7 @@
                 <option value="6">MARIA ISABEL - AMAZONAS</option>
             </select>
         </div>
-    </div>-->
+    </div>
     <div class="form-group row">
         <label for="sindico" class="col-4 col-form-label">Contato Síndico</label>
         <div class="col-8">
@@ -85,46 +85,46 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="nr_contrato" class="col-4 col-form-label">Nro Contrato</label>
+        <label for="nroContrato" class="col-4 col-form-label">Nro Contrato</label>
         <div class="col-8">
-            <input id="nr_contrato" name="nr_contrato" type="text" th:field="*{nr_contrato}"
+            <input id="nroContrato" name="nroContrato" type="text" th:field="*{nroContrato}"
                    class="form-control">
         </div>
     </div>
     <div class="form-group row">
-        <label for="dtInicioContr" class="col-4 col-form-label">Data Inicio Contrato</label>
+        <label for="dtInicioContrato" class="col-4 col-form-label">Data Inicio Contrato</label>
         <div class="col-8">
-            <input id="dtInicioContr" name="dtInicioContr" type="text" th:field="*{dtInicioContr}"
+            <input id="dtInicioContrato" name="dtInicioContrato" type="text" th:field="*{dtInicioContrato}"
                    class="form-control">
-            <small id="dtInicioContr" class="form-text text-muted">formato "dd/mm/yyyy"</small>
+            <small id="dtInicioContrato" class="form-text text-muted">formato "dd/mm/yyyy"</small>
         </div>
     </div>
     <div class="form-group row">
-        <label for="dtFimContr" class="col-4 col-form-label">Data Fim Contrato</label>
+        <label for="dtFimContrato" class="col-4 col-form-label">Data Fim Contrato</label>
         <div class="col-8">
-            <input id="dtFimContr" name="dtFimContr" type="text" th:field="*{dtFimContr}"
+            <input id="dtFimContrato" name="dtFimContrato" type="text" th:field="*{dtFimContrato}"
                    class="form-control">
-            <small id="dtFimContr" class="form-text text-muted">formato "dd/mm/yyyy"</small>
+            <small id="dtFimContrato" class="form-text text-muted">formato "dd/mm/yyyy"</small>
         </div>
     </div>
     <div class="form-group row">
-        <label for="vl_iptu" class="col-4 col-form-label">Valor IPTU sem desconto</label>
+        <label for="vlIPTU" class="col-4 col-form-label">Valor IPTU sem desconto</label>
         <div class="col-8">
-            <input id="vl_iptu" name="vl_iptu" type="text" class="form-control" th:field="*{vl_iptu}">
-            <small id="vl_iptu" class="form-text text-muted">decimal com "."</small>
+            <input id="vlIPTU" name="vlIPTU" type="text" class="form-control" th:field="*{vlIPTU}">
+            <small id="vlIPTU" class="form-text text-muted">decimal com "."</small>
         </div>
     </div>
     <div class="form-group row">
-        <label for="vl_iptu_desc" class="col-4 col-form-label">Valor IPTU com desconto</label>
+        <label for="vlIPTUDesc" class="col-4 col-form-label">Valor IPTU com desconto</label>
         <div class="col-8">
-            <input id="vl_iptu_desc" name="vl_iptu_desc" type="text" class="form-control" th:field="*{vl_iptu_desc}">
-            <small id="vl_iptu_desc" class="form-text text-muted">decimal com "."</small>
+            <input id="vlIPTUDesc" name="vlIPTUDesc" type="text" class="form-control" th:field="*{vlIPTUDesc}">
+            <small id="vlIPTUDesc" class="form-text text-muted">decimal com "."</small>
         </div>
     </div>
     <div class="form-group row">
-        <label for="nr_inscr" class="col-4 col-form-label">Nro Inscricao Prefeitura</label>
+        <label for="nroInscrPrefeitura" class="col-4 col-form-label">Nro Inscricao Prefeitura</label>
         <div class="col-8">
-            <input id="nr_inscr" name="nr_inscr" type="text" th:field="*{nr_inscr}"
+            <input id="nroInscrPrefeitura" name="nroInscrPrefeitura" type="text" th:field="*{nroInscrPrefeitura}"
                    class="form-control">
         </div>
     </div>
@@ -136,15 +136,15 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="cd_daem" class="col-4 col-form-label">Cod DAEM</label>
+        <label for="codDAEM" class="col-4 col-form-label">Cod DAEM</label>
         <div class="col-8">
-            <input id="cd_daem" name="cd_daem" type="text" class="form-control" th:field="*{cd_daem}">
+            <input id="codDAEM" name="codDAEM" type="text" class="form-control" th:field="*{codDAEM}">
         </div>
     </div>
     <div class="form-group row">
-        <label for="cd_luz" class="col-4 col-form-label">Codigo Conta Luz</label>
+        <label for="codLUZ" class="col-4 col-form-label">Codigo Conta Luz</label>
         <div class="col-8">
-            <input id="cd_luz" name="cd_luz" type="text" class="form-control" th:field="*{cd_luz}">
+            <input id="codLUZ" name="codLUZ" type="text" class="form-control" th:field="*{codLUZ}">
         </div>
     </div>
     <div class="form-group row">

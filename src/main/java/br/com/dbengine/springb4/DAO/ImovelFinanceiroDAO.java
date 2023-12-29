@@ -1,29 +1,58 @@
 package br.com.dbengine.springb4.DAO;
 
-import br.com.dbengine.springb4.dbUtil.HarperDBClient;
-import br.com.dbengine.springb4.dbUtil.JSONValidations;
-import br.com.dbengine.springb4.dbUtil.Sysout;
-import br.com.dbengine.springb4.entity.ImovelFinanceiro;
+import br.com.dbengine.springb4.dbUtil.*;
+import br.com.dbengine.springb4.entity.*;
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
+
 @Component
 public class ImovelFinanceiroDAO {
     //@Autowired
     private HarperDBClient harperDb = new HarperDBClient();
+    private static CanonicClient canDb = new CanonicClient();
 
     public ImovelFinanceiro getItem(Integer id) {
-        String strQuery = "select * FROM rep1.imovelFinanc where imovel_id = '" + id + "'";
-        JSONObject iocc = harperDb.getJSONItem(strQuery);
+        //String strQuery = "select * FROM rep1.imovelFinanc where imovel_id = '" + id + "'";
 
-        ImovelFinanceiro ioccFom = getImovelFinanc(iocc);
+        String resultGetAll = canDb.getList("getImovelFinancByImovelId",id);
+        //Sysout.s(resultGetAll);
+        //obj = parser.parse(resultGetAll);
+        //29.12
+        JSONArray results = canDb.CanonicJSONList(resultGetAll);
+        //29.12 - FIM
+
+        ObjectMapper objectMapper=new ObjectMapper();
+        JSONObject obj = (JSONObject) results.get(0);
+        ImovelFinanceiro ioccFom = null;
+        try {
+            ioccFom = objectMapper.readValue(obj.toString(), ImovelFinanceiro.class);
+        } catch (JsonProcessingException e) {
+            //throw new RuntimeException(e);
+            e.getMessage();
+        }
+        //Sysout.s("[[29.12]] " + results.get(0).toString());
+        //ImovelFinanceiro ioccFom = (ImovelFinanceiro) results.get(0);
+        //ImovelFinanceiro ioccFom = getImovelFinanc(iocc);
         return ioccFom;
 
     }
 
-    public void update(ImovelFinanceiro imovelFin) {
+    public _ImovelFinanceiro _getItem(Integer id) {
+        String strQuery = "select * FROM rep1.imovelFinanc where imovel_id = '" + id + "'";
+        JSONObject iocc = harperDb.getJSONItem(strQuery);
+
+        _ImovelFinanceiro ioccFom = getImovelFinanc(iocc);
+        return ioccFom;
+
+    }
+
+    public void update(_ImovelFinanceiro imovelFin) {
         System.out.println("ImovelFinanceiroDAO.update...");
         JSONObject objJS = new JSONObject();
 //        try {
@@ -48,12 +77,12 @@ public class ImovelFinanceiroDAO {
 
     }
 
-    private static ImovelFinanceiro getImovelFinanc(JSONObject jfin) {
+    private static _ImovelFinanceiro getImovelFinanc(JSONObject jfin) {
         String formattedDate = JSONValidations.parseAttrToDateTimeBR(jfin.get("__createdtime__"));
         String dataUpdate = JSONValidations.parseAttrToDateTimeBR(jfin.get("__updatedtime__"));
         //System.out.println("COM FORMAT: " + formattedDate);
 
-        ImovelFinanceiro ifim = new ImovelFinanceiro();
+        _ImovelFinanceiro ifim = new _ImovelFinanceiro();
         ifim.setImovel_id(JSONValidations.parseAttrToInteger(jfin.get("imovel_id")));
         ifim.setVlAluguel(Sysout.getaDouble(
                 JSONValidations.validaAtributo(jfin.get("vlAluguel"))
@@ -92,7 +121,7 @@ public class ImovelFinanceiroDAO {
         return ifim;
     }
 
-    private JSONObject convertIFtoJSON(ImovelFinanceiro imovelFinanceiro) {
+    private JSONObject convertIFtoJSON(_ImovelFinanceiro imovelFinanceiro) {
         JSONObject jo = new JSONObject();
         //jo.put("id", imovelFinanceiro.getImovel_id();
         jo.put("imovel_id", imovelFinanceiro.getImovel_id());

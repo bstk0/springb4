@@ -99,6 +99,7 @@ public class ImovelController {
     public String imovelList(Model model) {
         List<Imovel> imovelList = new ArrayList<Imovel>();
         imovelList = dao.getList();
+        Sysout.s(">> " + imovelList.size());
         model.addAttribute("imovelList",imovelList);
         return "imovel/list";
     }

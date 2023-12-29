@@ -2,58 +2,55 @@ package br.com.dbengine.springb4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties (ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Imovel {
     // id	inscricao	 apelido	tipo	imovel	imobiliaria	bairro observacoes
     private String id;
+
+    public int getImovelId() {
+        return imovelId;
+    }
+
+    public void setImovelId(int imovelId) {
+        this.imovelId = imovelId;
+    }
+
+    private int imovelId;
     private String inscricao;
     private String apelido;
     private String tipo;
-    private String imovel;
+    private String descricao;
     private String imobiliaria;
     private String bairro;
     private String observacoes;
-
     private String status;
+    private String createdAt;
 
-    private long __createdtime__;
+    //private long __createdtime__;
 
-    private long __updatedtime__;
+    //private long __updatedtime__;
 
     // constructor
 
 
-    public Imovel(String id, String inscricao, String apelido, String tipo, String imovel, String imobiliaria, String bairro, String observacoes, long __createdtime__, long __updatedtime__) {
+    public Imovel(String id, String inscricao, String apelido, String tipo, String descricao,
+                  String imobiliaria, String bairro, String observacoes, int imovelId) {
+                  //long __createdtime__, long __updatedtime__) {
         this.id = id;
+        this.imovelId = imovelId;
         this.inscricao = inscricao;
         this.apelido = apelido;
         this.tipo = tipo;
-        this.imovel = imovel;
+        this.descricao = descricao;
         this.imobiliaria = imobiliaria;
         this.bairro = bairro;
         this.observacoes = observacoes;
-        this.__createdtime__ = __createdtime__;
-        this.__updatedtime__ = __updatedtime__;
+        //this.__createdtime__ = __createdtime__;
+        //this.__updatedtime__ = __updatedtime__;
     }
 
     public Imovel() {
 
-    }
-
-    public long get__createdtime__() {
-        return __createdtime__;
-    }
-
-    public void set__createdtime__(long __createdtime__) {
-        this.__createdtime__ = __createdtime__;
-    }
-
-    public long get__updatedtime__() {
-        return __updatedtime__;
-    }
-
-    public void set__updatedtime__(long __updatedtime__) {
-        this.__updatedtime__ = __updatedtime__;
     }
 
     public String getId() {
@@ -88,12 +85,12 @@ public class Imovel {
         this.tipo = tipo;
     }
 
-    public String getImovel() {
-        return imovel;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setImovel(String imovel) {
-        this.imovel = imovel;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getImobiliaria() {
