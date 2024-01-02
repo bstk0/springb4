@@ -118,4 +118,6 @@ public class ImovelController {
         dao.update(imovel);
         return "redirect:/imovelList";
     }
+
+
 }

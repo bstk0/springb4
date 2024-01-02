@@ -1,10 +1,11 @@
 package br.com.dbengine.springb4.controller;
 
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import br.com.dbengine.springb4.dbUtil.Sysout;
+import br.com.dbengine.springb4.dbUtil.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -137,6 +138,18 @@ public class WebApp {
         return "datastax";
     }
 
-
+    //@RequestMapping("/canonic1")
+    @GetMapping("/canonic1")
+    public String canonic1(Model m) {
+        String canonicPeopleList = "";
+        try {
+            canonicPeopleList = new CanonicClient().getPeopleList();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //Sysout.s(canonicPeopleList);
+        m.addAttribute("canonicPeopleList", canonicPeopleList);
+        return "canonic1";
+    }
 
 }

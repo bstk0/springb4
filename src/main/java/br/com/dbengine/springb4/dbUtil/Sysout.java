@@ -1,7 +1,14 @@
 package br.com.dbengine.springb4.dbUtil;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.simple.JSONObject;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Sysout {
@@ -34,5 +41,27 @@ public class Sysout {
         if (UBUNTU.equals(localHostName)) {
             System.out.println(texto);
         }
+    }
+
+    @NotNull
+    public static Double getaDouble(String strVl) {
+        Double dbVl = (double) 0;
+        if (! "".equals(strVl) && strVl != null) {
+            dbVl = Double.valueOf(strVl);
+        }
+        return dbVl;
+    }
+
+    public static long dateStringtoUnix(String strDate) {
+        DateTimeFormatter formatter
+                = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        LocalDate date = LocalDate.parse(strDate, formatter);
+
+        ZonedDateTime dateTime = date.atStartOfDay(ZoneId.systemDefault());
+
+        long unixTimestamp = dateTime.toEpochSecond();
+        s(" >> Parsed date-time " + dateTime + " Unix timestamp " + unixTimestamp);
+        return unixTimestamp;
     }
 }

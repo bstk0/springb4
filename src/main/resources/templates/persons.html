@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title> Person Management System </title>
+</head>
+<a href="/">Voltar Inicio</a>
+<body>
+<h2> Person Information </h2>
+<form action="#" th:action="@{/person}" th:object="${person}"  method="post">
+    <label for="name">Name: </label>
+    <input type="text" id="name" required="required" th:field="*{name}" />
+    <br />
+    <label for="age">Age: </label>
+    <input type="number" id="age" required="required" th:field="*{age}"/>
+    <br />
+    <input type="submit" value="Add person" />
+</form>
+<br />
+<h2> Current persons </h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Age</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="person : ${persons}">
+        <td th:text="${person.id}"></td>
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.age}"></td>
+        <td>
+            <a th:href="@{/person/{id}/edit(id=${person.id})}">Edit</a>
+        </td>
+        <td>
+            <form action="#" th:action="@{/person/{id}(id=${person.id})}" th:method="delete">
+<!--                <input type="hidden" name="_method" value="delete" />-->
+                <input type="submit" value="Delete" />
+            </form>
+        </td>
+    </tr>
+</table>
+<br />
+<h2> Update person </h2>
+<form action="#" th:action="@{/person/{id}(id=${updatedPerson.id})}" th:object="${updatedPerson}" th:method="put">
+    <input type="hidden" id="id" th:value="*{id}" />
+    <label for="name">Name: </label>
+    <input type="text" id="name" name="name" th:value="*{name}" required="required" />
+    <br />
+    <label for="age">Age: </label>
+    <input type="number" id="age" name="age" th:value="*{age}" required="required" />
+    <br />
+<!--    <input type="hidden" name="_method" value="PUT" /> -->
+    <input type="submit" value="Update person" />
+</form>
+</body>
+<br />
+<a href="/">Voltar Inicio</a>
+</html>

@@ -40,9 +40,10 @@
         <th>Bairro</th>
         <th>Tipo</th>
         <th>STATUS</th>
+        <th> $$ </th>
         <th>OCOR</th>
         <th>UPD</th>
-        <th>DEL</th>
+<!--        <th>DEL</th>-->
       </tr>
     </thead>
     <tbody>
@@ -54,11 +55,15 @@
         <td th:text="${data.tipo}"></td>
         <td th:style="${data.status == 'VAGO' ? 'color: red;' : 'color: black;'}" th:text="${data.status}"></td>
         <td>
+          <a th:href="@{/imovelFinanceiroDetail(imovelId=${data.id})}" class="btn btn-secondary"> + </a>
+        </td>
+        <td>
           <a th:href="@{/imovelOcorrenciaList(imovelId=${data.id})}" class="btn btn-success">Ocorr.</a>
         </td>
         <td>
           <a th:href="@{/imovelUpdForm(imovelId=${data.id})}" class="btn btn-info">Update</a>
         </td>
+        <!--
         <td><a href="#"   th:attr="data-id=${data.id}"
                     th:data-descr="${data.imovel}"
                     data-toggle="modal"
@@ -66,6 +71,7 @@
               <span class="fas fa-trash"></span>
             </a>
         </td>
+        -->
       </tr>
     </tbody>
   </table>
@@ -109,7 +115,6 @@
 
 			$('.confirm-delete').on('click', function(e) {
 				e.preventDefault();
-
                 // teste - nao deu certo
                 // document.getElementsByClassName("modal-body").innerHTML += 'Testing here';
                 var descrHtml = '<p>You are about to delete.</p>';
@@ -125,12 +130,8 @@
 			$('#btnConfirmDelete').click(function() {
 				// handle deletion here
 				var delId = $('#confirm-delete').data('id');
-				//var urlAction = "${linkTo[CulturaController].delete}";
-				//th:href="@{/culturaDelete(culturaId=${data._id})}"
-				var urlAction = "/culturaDelete";
-				urlAction += "?culturaId="+delId
-				//alert("confirm:" + id);
-				//$('[data-id='+id+']').remove();
+				var urlAction = "/xxximovelDelete";
+				urlAction += "?imovelId="+delId
 				window.location.href = urlAction;
 				$('#confirm-delete').modal('hide');
 			});

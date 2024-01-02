@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style type="text/css">
+        .bs-example {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="margin-top: 30px;">
+<h1>Imovel Financeiro - from HarperDB</h1>
+<a href="/">Voltar Inicio</a>&nbsp;||&nbsp;<a th:href="@{/imovelList}">Voltar Lista</a>
+<!--    ||&nbsp;<a th:href="@{/imovelOcorrenciaAdd(imovelId=${imovelIdAttr})}">ADD</a>-->
+<br><br>
+<b><p th:text=${imovelIdDescr}></p></b>
+<form action="#" th:action="@{/imovelFinancUpdate}" th:object="${imovelFinanceiro}" method="post">
+
+    <input type="hidden" class="form-control" id="imovel_id"
+           name="imovel_id" th:field="*{imovel_id}">
+
+    <div class="form-group row">
+        <label for="vlAluguel" class="col-4 col-form-label">Valor Aluguel</label>
+        <div class="col-8">
+            <input id="vlAluguel" name="vlAluguel" type="text" class="form-control" th:field="*{vlAluguel}">
+<!--            readonly="readonly">-->
+            <small id="vlCondominioHelp" class="form-text text-muted">decimal com "."</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="vlCondominio" class="col-4 col-form-label">Valor Condominio</label>
+        <div class="col-8">
+            <input id="vlCondominio" name="vlCondominio" type="text" th:field="*{vlCondominio}"
+                   class="form-control">
+            <small id="vlCondominioHelp" class="form-text text-muted">decimal com "."</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="diaPagtoAluguel" class="col-4 col-form-label">Dia Pagto Aluguel</label>
+        <div class="col-8">
+            <input id="diaPagtoAluguel" name="diaPagtoAluguel" type="text" th:field="*{diaPagtoAluguel}"
+                   class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="diaPagtoCondominio" class="col-4 col-form-label">Dia Pagto Condominio</label>
+        <div class="col-8">
+            <input id="diaPagtoCondominio" name="diaPagtoCondominio" type="text" th:field="*{diaPagtoCondominio}"
+                   class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="imobiliaria_id" class="col-4 col-form-label">Imobiliaria</label>
+        <div class="col-8">
+            <select th:field="*{imobiliaria_id}" class="custom-select">
+                <option value="0" selected="selected"></option>
+                <option value="100">DIRETO</option>
+                <option value="1">TOCA</option>
+                <option value="2">LUGAR</option>
+                <option value="3">MORADA</option>
+                <option value="4">UNISOL</option>
+                <option value="5">MARTA - SP</option>
+                <option value="6">MARIA ISABEL - AMAZONAS</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="sindico" class="col-4 col-form-label">Contato Síndico</label>
+        <div class="col-8">
+            <input id="sindico" name="sindico" type="text" th:field="*{sindico}"
+                   class="form-control">
+            <small id="sindicoHelp" class="form-text text-muted">preferência nome e telefone</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="administradora" class="col-4 col-form-label">Contato Administradora</label>
+        <div class="col-8">
+            <input id="administradora" name="administradora" type="text" th:field="*{administradora}"
+                   class="form-control">
+            <small id="administradoraHelp" class="form-text text-muted">preferência nome e telefone</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="nroContrato" class="col-4 col-form-label">Nro Contrato</label>
+        <div class="col-8">
+            <input id="nroContrato" name="nroContrato" type="text" th:field="*{nroContrato}"
+                   class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="dtInicioContrato" class="col-4 col-form-label">Data Inicio Contrato</label>
+        <div class="col-8">
+            <input id="dtInicioContrato" name="dtInicioContrato" type="text" th:field="*{dtInicioContrato}"
+                   class="form-control">
+            <small id="dtInicioContrato" class="form-text text-muted">formato "dd/mm/yyyy"</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="dtFimContrato" class="col-4 col-form-label">Data Fim Contrato</label>
+        <div class="col-8">
+            <input id="dtFimContrato" name="dtFimContrato" type="text" th:field="*{dtFimContrato}"
+                   class="form-control">
+            <small id="dtFimContrato" class="form-text text-muted">formato "dd/mm/yyyy"</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="vlIPTU" class="col-4 col-form-label">Valor IPTU sem desconto</label>
+        <div class="col-8">
+            <input id="vlIPTU" name="vlIPTU" type="text" class="form-control" th:field="*{vlIPTU}">
+            <small id="vlIPTU" class="form-text text-muted">decimal com "."</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="vlIPTUDesc" class="col-4 col-form-label">Valor IPTU com desconto</label>
+        <div class="col-8">
+            <input id="vlIPTUDesc" name="vlIPTUDesc" type="text" class="form-control" th:field="*{vlIPTUDesc}">
+            <small id="vlIPTUDesc" class="form-text text-muted">decimal com "."</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="nroInscrPrefeitura" class="col-4 col-form-label">Nro Inscricao Prefeitura</label>
+        <div class="col-8">
+            <input id="nroInscrPrefeitura" name="nroInscrPrefeitura" type="text" th:field="*{nroInscrPrefeitura}"
+                   class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="cpfCadastrado" class="col-4 col-form-label">CPF Cadastrado Prefeitura</label>
+        <div class="col-8">
+            <input id="cpfCadastrado" name="cpfCadastrado" type="text" th:field="*{cpfCadastrado}"
+                   class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="codDAEM" class="col-4 col-form-label">Cod DAEM</label>
+        <div class="col-8">
+            <input id="codDAEM" name="codDAEM" type="text" class="form-control" th:field="*{codDAEM}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="codLUZ" class="col-4 col-form-label">Codigo Conta Luz</label>
+        <div class="col-8">
+            <input id="codLUZ" name="codLUZ" type="text" class="form-control" th:field="*{codLUZ}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="dados-gerais" class="col-4 col-form-label">Dados Gerais</label>
+        <div class="col-8">
+            <textarea id="dados-gerais" name="dados-gerais" cols="40" rows="5"
+                      th:field="*{dadosGerais}"
+                      class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="offset-4 col-8">
+            <button name="submit" type="submit" class="btn btn-primary">Update</button>
+            <!--
+            <button id="Edit" type="button" >EDIT</button>
+            <button id="Cancel" type="button">CANCEL EDIT</button>
+            -->
+        </div>
+    </div>
+</form>
+    <a href="/">Voltar Inicio</a>&nbsp;||&nbsp;<a th:href="@{/imovelList}">Voltar Lista</a>
+</div>
+<script>
+    // habilita edição
+    document.getElementById('Edit').onclick = function() {
+        //$(':input').attr('readonly','false');
+        //document.getElementById('vlAluguel').readOnly = false;
+        var f = document.forms[0];
+        for(var i=0,fLen=f.length;i<fLen;i++){
+          f.elements[i].readOnly = false;
+        }
+    };
+    // desabilita edição
+    document.getElementById('Cancel').onclick = function() {
+        //$(':input').attr('readonly','true');
+        //document.getElementById('vlAluguel').readOnly = true;
+        var f = document.forms[0];
+        for(var i=0,fLen=f.length;i<fLen;i++){
+          f.elements[i].readOnly = true;
+        }
+    };
+</script>
+</body>
+</html>

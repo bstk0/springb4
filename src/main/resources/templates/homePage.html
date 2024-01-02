@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +19,15 @@
       <ul>
         <li><a th:href="@{/imovelList}">LIST</a></li>
         <li><a th:href="@{/imobiliariaList}">Imobiliaria</a></li>
+        <li><a th:href="@{/imovelPagtoList}">Imovel Pagtos</a></li>
       </ul>
     </li>
     <li><a href="#">TESTES APIs</a>
       <ul>
         <li><a th:href="@{/v1/countries}">Countries</a></li>
         <li><a th:href="@{/v1/periodos}">Periodos</a></li>
+        <li><a th:href="@{/canonic1}">CANONIC 1</a></li>
+        <li><a th:href="@{/canonic1Add}">CANONIC ADD PEOPLE</a></li>
       </ul>
     </li>
     <li><a href="#">Web MVC</a>
@@ -33,6 +37,7 @@
         <li><a th:href="@{/imovel}">Imovel</a></li>
         <li><a th:href="@{/imovelhistorico}">Imovel Historico</a></li>
         <li><a th:href="@{/periodos}">Periodos - Paraio</a></li>
+        <li><a th:href="@{/personList}">Person Management System</a></li>
         <li><a href="#">XML</a></li>
       </ul>
     </li>

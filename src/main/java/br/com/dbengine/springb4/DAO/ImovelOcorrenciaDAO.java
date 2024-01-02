@@ -39,7 +39,10 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
     }
 
     public List<ImovelOcorrForm> getListForm(String imovelId) {
-        JSONArray imovelOccList=  getJSONList(imovelId);
+        String strQuery = "select * FROM rep1.imovelOcorrencia where imovel_id = " + imovelId;
+        strQuery += " order by __createdtime__ desc";
+
+        JSONArray imovelOccList=  harperDb.getJSONList(strQuery);
         //System.out.println("imovelOccList size: " + imovelOccList.size());
         List<ImovelOcorrForm> iOccListForm = new ArrayList<ImovelOcorrForm>();
         for (int i = 0; i < imovelOccList.size() ; i++) {
@@ -120,7 +123,10 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
         //return DAOInterface.super.getItem(id);
         //TODO: Vai ter que fazer algo igual ao getJSONList ...
 
-        JSONObject iocc = getJSONItem(id);
+        //JSONObject iocc = getJSONItem(id);
+        String strQuery = "select * FROM rep1.imovelOcorrencia where id = '" + id + "'";
+        JSONObject iocc = harperDb.getJSONItem(strQuery);
+
         ImovelOcorrForm ioccFom = getImovelOcorrForm(iocc);
 //
 //        String formattedDate = JSONValidations.parseAttrToDateBR(iocc.get("__createdtime__"));
@@ -152,11 +158,7 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
 
         JSONArray list = new JSONArray();
         JSONParser parser = new JSONParser();
-        //JSONObject innerObj = new JSONObject();
-        //String newId = "'" + id +  "'";
-        //innerObj.put("id",id);
-        //innerObj.
-        //list.add(innerObj);
+
         List<String> listString = new ArrayList<String>();
         listString.add(id);
 
@@ -181,48 +183,10 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
         return jo;
     }
 
-    public JSONArray getJSONList(String imovelId) {
-        String strQuery = "select * FROM rep1.imovelOcorrencia where imovel_id = " + imovelId;
-        strQuery += " order by __createdtime__ desc";
-        JSONParser parser = new JSONParser();
-        JSONArray results = null;
-        Object obj = null;
-        String resultGetAll;
-        try {
-            resultGetAll = harperDb.getList(strQuery);
-            obj = parser.parse(resultGetAll);
-            results = (JSONArray) (obj);
-            return results;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new JSONArray();
-    }
-
-    public JSONObject getJSONItem(String imovelOccId) {
-        String strQuery = "select * FROM rep1.imovelOcorrencia where id = '" + imovelOccId + "'";
-        //strQuery += " order by __createdtime__ desc";
-        Sysout.s("SQL: " + strQuery);
-        JSONParser parser = new JSONParser();
-        JSONArray results = null;
-        Object obj = null;
-        String resultGetAll;
-        try {
-            resultGetAll = harperDb.getList(strQuery);
-            obj = parser.parse(resultGetAll);
-            results = (JSONArray) (obj);
-            Sysout.s("DAO-175: " + results.size());
-            return ((JSONObject) results.get(0));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new JSONObject();
-    }
-
     @NotNull
     private static ImovelOcorrForm getImovelOcorrForm(JSONObject iocc) {
-        String formattedDate = JSONValidations.parseAttrToDateBR(iocc.get("__createdtime__"));
-        String dataUpdate = JSONValidations.parseAttrToDateBR(iocc.get("__updatedtime__"));
+        String formattedDate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__createdtime__"));
+        String dataUpdate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__updatedtime__"));
         //System.out.println("COM FORMAT: " + formattedDate);
 
         ImovelOcorrForm ioccFom = new ImovelOcorrForm(
