@@ -40,7 +40,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
             //29.12 - FIM
             //JSONArray results = (JSONArray) (obj);
             //List<Imovel> imovelList = (ArrayList<Imovel>) results;
-            List<Imovel> imovelList = this.getImovelList(resultGetAll);
+            List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
             //singleton
             //ImovelListSingleton.setInstance(imovelList);
             ImovelListSingleton.setInstaceJSON((JSONArray) results);
@@ -85,11 +85,11 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     }
 
-    @Override
-    public Imovel getItem(String id) {
+    //@Override
+    public Imovel getItem(int id) {
         List<Imovel> imovelList = ImovelListSingleton.getInstance();
         for(Imovel imovel : imovelList) {
-            if(imovel.getId().equals(id)) {
+            if(imovel.getImovelId() == id) {
                 return imovel;
             }
         }
@@ -117,8 +117,9 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         return jo;
     }
 
-    private List<Imovel> getImovelList(String sjon) {
-        JSONArray results = canDb.CanonicJSONList(sjon);
+    private List<Imovel> getImovelList(JSONArray results) {
+  //private List<Imovel> getImovelList(String sjon) {
+        //JSONArray results = canDb.CanonicJSONList(sjon);
         //Iterator<String> iterator = results.iterator();
         List<Imovel> retorno = new ArrayList<Imovel>();
         //Imovel imov = new Imovel();

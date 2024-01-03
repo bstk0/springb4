@@ -45,15 +45,6 @@ public class ImovelFinanceiroDAO {
 
     }
 
-    public _ImovelFinanceiro _getItem(Integer id) {
-        String strQuery = "select * FROM rep1.imovelFinanc where imovel_id = '" + id + "'";
-        JSONObject iocc = harperDb.getJSONItem(strQuery);
-
-        _ImovelFinanceiro ioccFom = getImovelFinanc(iocc);
-        return ioccFom;
-
-    }
-
     public void _update(ImovelFinanceiro imovelFin) {
         System.out.println("ImovelFinanceiroDAO.update...");
         JSONObject objJS = new JSONObject();
@@ -120,7 +111,7 @@ public class ImovelFinanceiroDAO {
 
     }
 
-    private static _ImovelFinanceiro getImovelFinanc(JSONObject jfin) {
+    /*private static _ImovelFinanceiro getImovelFinanc(JSONObject jfin) {
         String formattedDate = JSONValidations.parseAttrToDateTimeBR(jfin.get("__createdtime__"));
         String dataUpdate = JSONValidations.parseAttrToDateTimeBR(jfin.get("__updatedtime__"));
         //System.out.println("COM FORMAT: " + formattedDate);
@@ -163,8 +154,8 @@ public class ImovelFinanceiroDAO {
         ifim.setAdministradora(JSONValidations.validaAtributo(jfin.get("administradora")));
         return ifim;
     }
-
-    private JSONObject _convertIFtoJSON(_ImovelFinanceiro imovelFinanceiro) {
+*/
+    /*private JSONObject _convertIFtoJSON(_ImovelFinanceiro imovelFinanceiro) {
         JSONObject jo = new JSONObject();
         //jo.put("id", imovelFinanceiro.getImovel_id();
         jo.put("imovel_id", imovelFinanceiro.getImovel_id());
@@ -201,7 +192,7 @@ public class ImovelFinanceiroDAO {
         jo.put("createdBy" , imovelFinanceiro.getCreatedBy());
         jo.put("updatedBy" , imovelFinanceiro.getUpdatedBy());
         return jo;
-    }
+    }*/
 
     private JSONObject convertIFtoJSON(ImovelFinanceiro imovelFinanceiro) {
         JSONObject jo = new JSONObject();

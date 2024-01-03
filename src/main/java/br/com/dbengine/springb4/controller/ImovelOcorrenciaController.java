@@ -21,7 +21,7 @@ public class ImovelOcorrenciaController {
     private final ImovelOcorrenciaDAO dao = new ImovelOcorrenciaDAO();
 
     @GetMapping("/imovelOcorrenciaList")
-    public String imovelOcorrenciaList(Model model, @RequestParam String imovelId) {
+    public String imovelOcorrenciaList(Model model, @RequestParam int imovelId) {
         List<ImovelOcorrForm> iOccListForm = dao.getListForm(imovelId);
         // Descriçáo do Imovel
         String imovelDescr = new ImovelDAO().getItem(imovelId).getDescricao();
@@ -35,7 +35,7 @@ public class ImovelOcorrenciaController {
     @GetMapping("/imovelOcorrenciaAdd")
     public String imovelOcorrenciaAdd(Model model, @RequestParam Integer imovelId) {
         ImovelOcorrencia imovOccAdd = new ImovelOcorrencia();
-        imovOccAdd.setImovel_id(imovelId);
+        imovOccAdd.setImovelId(imovelId);
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelOcorrencia",imovOccAdd);
         return "imovelOcorrencia/add";
@@ -46,9 +46,9 @@ public class ImovelOcorrenciaController {
     public String imovelOcorrenciaSave(@ModelAttribute ImovelOcorrencia imovelOcorrencia,
                                        Authentication authentication
                                        )  {
-        imovelOcorrencia.setCreatedBy(authentication.getName());
+        //imovelOcorrencia.setCreatedBy(authentication.getName());
         dao.add(imovelOcorrencia);
-        String s = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovel_id();
+        String s = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovelId();
         return s;
     }
 
@@ -66,9 +66,9 @@ public class ImovelOcorrenciaController {
     public String imovelOccUpdate(@ModelAttribute ImovelOcorrencia imovelOcorrencia,
                                   Authentication authentication) {
         Sysout.s("UPDATE imovelOcorrencia..." + imovelOcorrencia.getId());
-        imovelOcorrencia.setUpdatedBy(authentication.getName());
+        //imovelOcorrencia.setUpdatedBy(authentication.getName());
         dao.update(imovelOcorrencia);
-        String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovel_id();
+        String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovelId();
         return redirect;
     }
 
