@@ -1,6 +1,7 @@
 package br.com.dbengine.springb4.dbUtil;
 
 import okhttp3.*;
+import org.jetbrains.annotations.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
@@ -67,14 +68,25 @@ public String getPeopleList() throws IOException {
         String resp = this.getPeopleList();
 
     }*/
-    public String add(String sobj) {
+    public String add(String URL, String sobj) {
+        Response response = execute("POST", URL, sobj);
+        return response.toString();
+    }
+
+    public String update(String URL, String sobj) {
+        Response response = execute("PATCH", URL, sobj);
+        return response.toString();
+    }
+
+    @NotNull
+    private static Response execute(String METHOD, String URL, String sobj) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(mediaType, sobj);
         Request request = new Request.Builder()
-                .url("https://can.canonic.dev/rep1-180hdf/api/people")
-                .method("POST", body)
+                .url(URL)
+                .method(METHOD, body)
                 .addHeader("Authorization", "658c9538c6feb36c0d677bb4-1334c248-62e9-4c23-a0a6-93af5972ad7d")
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -84,7 +96,7 @@ public String getPeopleList() throws IOException {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return response.toString();
+        return response;
     }
 
     public JSONArray CanonicJSONList(String sjson) {

@@ -14,6 +14,8 @@ public class CPeopleDAO {
 
     private static CanonicClient cndb = new CanonicClient();
 
+    private final String URL_ADD = "https://can.canonic.dev/rep1-180hdf/api/people";
+
     public void add(CPeople cpeople) {
 
         JSONObject obj = new JSONObject();
@@ -24,7 +26,7 @@ public class CPeopleDAO {
         obj.put("input", innerObj);
 
         //Sysout.s(">> " + obj.toJSONString());
-        String opResult = cndb.add(obj.toJSONString());
+        String opResult = cndb.add(URL_ADD, obj.toJSONString());
         //Sysout.s(" RESULT >> " + opResult);
     }
 

@@ -19,8 +19,14 @@ public class JSONValidations {
 
     public static Integer parseAttrToInteger(Object o) {
         if (o == null) { return 0; }
+
+        Sysout.s(">>> parseAttrToInteger : " + o.getClass().getSimpleName());
+
         if (o.getClass().getSimpleName().equals("Long")) {
             return Math.toIntExact((long) o);
+        }
+        if (o.getClass().getSimpleName().equals("int")) {
+            return (Integer) o;
         } else {
             return 0;
         }

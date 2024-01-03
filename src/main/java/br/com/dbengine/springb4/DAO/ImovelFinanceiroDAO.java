@@ -17,6 +17,8 @@ public class ImovelFinanceiroDAO {
     private HarperDBClient harperDb = new HarperDBClient();
     private static CanonicClient canDb = new CanonicClient();
 
+    private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovelFinanc/:_id";
+
     public ImovelFinanceiro getItem(Integer id) {
         //String strQuery = "select * FROM rep1.imovelFinanc where imovel_id = '" + id + "'";
 
@@ -52,7 +54,7 @@ public class ImovelFinanceiroDAO {
 
     }
 
-    public void update(_ImovelFinanceiro imovelFin) {
+    public void _update(ImovelFinanceiro imovelFin) {
         System.out.println("ImovelFinanceiroDAO.update...");
         JSONObject objJS = new JSONObject();
 //        try {
@@ -74,6 +76,47 @@ public class ImovelFinanceiroDAO {
         String opResult = harperDb.execOperation(objJS.toJSONString());
 
         Sysout.s("UPDATE: " + opResult);
+
+    }
+
+    public void update(ImovelFinanceiro imovelFin) {
+        System.out.println("C - ImovelFinanceiroDAO.update...");
+
+        JSONObject obj = new JSONObject();
+        JSONParser parser = new JSONParser();
+        JSONObject innerObj = null;
+
+        innerObj = convertIFtoJSON(imovelFin);
+        obj.put("_id", imovelFin.getId());
+        obj.put("input", innerObj);
+
+        Sysout.s(">> " + obj.toJSONString());
+        String opResult = canDb.update(URL_UPD, obj.toJSONString());
+        Sysout.s(" RESULT >> " + opResult);
+
+
+/*
+        JSONObject objJS = new JSONObject();
+//        try {
+        objJS.put("operation", "update");
+        objJS.put("schema", "rep1");
+        objJS.put("table", "imovelFinanc");
+
+        JSONArray list = new JSONArray();
+
+        JSONParser parser = new JSONParser();
+        JSONObject innerObj = null;
+
+        innerObj = convertIFtoJSON(imovelFin);
+        list.add(innerObj);
+        objJS.put("records", list);
+
+        Sysout.s("DAO-46: " + objJS.toJSONString());
+
+        String opResult = harperDb.execOperation(objJS.toJSONString());
+
+        Sysout.s("UPDATE: " + opResult);
+*/
 
     }
 
@@ -121,7 +164,7 @@ public class ImovelFinanceiroDAO {
         return ifim;
     }
 
-    private JSONObject convertIFtoJSON(_ImovelFinanceiro imovelFinanceiro) {
+    private JSONObject _convertIFtoJSON(_ImovelFinanceiro imovelFinanceiro) {
         JSONObject jo = new JSONObject();
         //jo.put("id", imovelFinanceiro.getImovel_id();
         jo.put("imovel_id", imovelFinanceiro.getImovel_id());
@@ -160,6 +203,46 @@ public class ImovelFinanceiroDAO {
         return jo;
     }
 
+    private JSONObject convertIFtoJSON(ImovelFinanceiro imovelFinanceiro) {
+        JSONObject jo = new JSONObject();
+        jo.put("id", imovelFinanceiro.getId());
+        jo.put("imovel_id", imovelFinanceiro.getImovelId());
+        jo.put("dadosGerais", imovelFinanceiro.getDadosGerais() );
+        jo.put("vl_aluguel", imovelFinanceiro.getVl_aluguel() );
+        jo.put("vl_condom", imovelFinanceiro.getVl_condom() );
+        jo.put("vl_iptu", imovelFinanceiro.getVl_iptu() );
+        jo.put("vl_iptu_desc", imovelFinanceiro.getVl_iptu_desc() );
+        //jo.put("imobiliaria_id", imovelFinanceiro.getImobiliaria_id());
+        jo.put("cd_luz", imovelFinanceiro.getCd_luz());
+        jo.put("cd_daem", imovelFinanceiro.getCd_daem());
+        jo.put("diaPagtoAluguel", imovelFinanceiro.getDiaPagtoAluguel());
+        jo.put("diaPagtoCond", imovelFinanceiro.getDiaPagtoCond());
+        jo.put("cpfCadastrado", imovelFinanceiro.getCpfCadastrado());
+        jo.put("nr_contrato", imovelFinanceiro.getNr_contrato());
+        jo.put("nr_inscr", imovelFinanceiro.getNr_inscr());
+
+//        if(imovelFinanceiro.getDtInicioContrato() != null && !("".equals(imovelFinanceiro.getDtFimContrato()))) {
+//            jo.put("dtInicioContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtInicioContrato()));
+//        }
+//
+//        Sysout.s(" >> dtFimContrato antes : " + imovelFinanceiro.getDtFimContrato());
+//
+//        if(imovelFinanceiro.getDtFimContrato() != null && !("".equals(imovelFinanceiro.getDtFimContrato()))) {
+//            jo.put("dtFimContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtFimContrato()));
+//        }
+
+        jo.put("dtInicioContr", imovelFinanceiro.getDtInicioContr());
+        jo.put("dtFimContr", imovelFinanceiro.getDtFimContr());
+
+        jo.put("sindico", imovelFinanceiro.getSindico());
+        jo.put("administradora", imovelFinanceiro.getAdministradora());
+
+        //jo.put("numero_ref", imovelOcorrencia.getNumero_ref());
+        //jo.put("status_final", imovelOcorrencia.getStatus_final());
+        //jo.put("createdBy" , imovelFinanceiro.getCreatedBy());
+        //jo.put("updatedBy" , imovelFinanceiro.getUpdatedBy());
+        return jo;
+    }
 
 
 }

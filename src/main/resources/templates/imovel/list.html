@@ -39,6 +39,7 @@
         <th>Imovel</th>
         <th>Bairro</th>
         <th>Tipo</th>
+        <th>Imobiliaria</th>
         <th>STATUS</th>
         <th> $$ </th>
         <th>OCOR</th>
@@ -48,11 +49,12 @@
     </thead>
     <tbody>
       <tr th:each="data : ${imovelList}">
-        <td th:text="${data.id}"></td>
+        <td th:text="${data.imovelId}"></td>
         <td th:text="${data.apelido}"></td>
         <td th:text="${data.descricao}"></td>
         <td th:text="${data.bairro}"></td>
         <td th:text="${data.tipo}"></td>
+        <td th:text="${data.imobiliaria}"></td>
         <td th:style="${data.status == 'VAGO' ? 'color: red;' : 'color: black;'}" th:text="${data.status}"></td>
         <td>
           <a th:href="@{/imovelFinanceiroDetail(imovelId=${data.imovelId})}" class="btn btn-secondary"> + </a>

@@ -33,7 +33,8 @@ public class ImovelListSingleton {
             iocc = (JSONObject) array.get(i);
             imovel = new Imovel();
             imovel.setId(JSONValidations.validaAtributo(iocc.get("id")));
-            imovel.setDescricao(JSONValidations.validaAtributo(iocc.get("imovel")));
+            imovel.setImovelId( JSONValidations.parseAttrToInteger(iocc.get("imovelId")));
+            imovel.setDescricao(JSONValidations.validaAtributo(iocc.get("descricao")));
             imovel.setApelido(JSONValidations.validaAtributo(iocc.get("apelido")));
             imovel.setBairro(JSONValidations.validaAtributo(iocc.get("bairro")));
             imovel.setTipo(JSONValidations.validaAtributo(iocc.get("tipo")));
