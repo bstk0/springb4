@@ -1,22 +1,31 @@
 package br.com.dbengine.springb4.dbUtil;
 
+import br.com.dbengine.springb4.security.*;
 import okhttp3.*;
 import org.jetbrains.annotations.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.core.env.*;
+import org.springframework.stereotype.*;
 
+import javax.annotation.*;
 import java.io.*;
 import java.util.*;
 
+@Service
 public final class CanonicClient {
 
-
+    //private String CANONIC_KEY = Sysout.CANONIC_KEY;
     public String getList(String cObj) { //throws IOException {
         return this.getList(cObj,0);
     }
     public String getList(String cObj, int imovelId) { //throws IOException {
         String query = null;
         String METHOD = "GET";
+        //Sysout.s( ">> EMAIL :" +  sec.getEmailKey() ); //env.getProperty("email"));
+        //Sysout.s(">> Thread : " + sec.getThreadPoolKey());
+        Sysout.s(">> KEY:" + Sysout.CANONIC_KEY);
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/json");
@@ -35,7 +44,7 @@ public final class CanonicClient {
         Request request = new Request.Builder()
                 .url("https://can.canonic.dev/rep1-180hdf/api/" + cObj)
                 .method(METHOD, body)   //null
-                .addHeader("Authorization", "658c9538c6feb36c0d677bb4-1334c248-62e9-4c23-a0a6-93af5972ad7d")
+                .addHeader("Authorization", Sysout.CANONIC_KEY)
                 .build();
         Response response = client.newCall(request).execute();
 
@@ -54,7 +63,7 @@ public String getPeopleList() throws IOException {
     Request request = new Request.Builder()
             .url("https://can.canonic.dev/rep1-180hdf/api/people")
             .method("GET", null)
-            .addHeader("Authorization", "658c9538c6feb36c0d677bb4-1334c248-62e9-4c23-a0a6-93af5972ad7d")
+            .addHeader("Authorization", Sysout.CANONIC_KEY)
             .build();
     Response response = client.newCall(request).execute();
     try {
@@ -69,17 +78,17 @@ public String getPeopleList() throws IOException {
 
     }*/
     public String add(String URL, String sobj) {
-        Response response = execute("POST", URL, sobj);
+        Response response = execute(Sysout.CANONIC_KEY, "POST", URL, sobj);
         return response.toString();
     }
 
     public String update(String URL, String sobj) {
-        Response response = execute("PATCH", URL, sobj);
+        Response response = execute(Sysout.CANONIC_KEY,"PATCH", URL, sobj);
         return response.toString();
     }
 
     @NotNull
-    private static Response execute(String METHOD, String URL, String sobj) {
+    private static Response execute(String TOKEN, String METHOD, String URL, String sobj) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/json");
@@ -87,7 +96,7 @@ public String getPeopleList() throws IOException {
         Request request = new Request.Builder()
                 .url(URL)
                 .method(METHOD, body)
-                .addHeader("Authorization", "658c9538c6feb36c0d677bb4-1334c248-62e9-4c23-a0a6-93af5972ad7d")
+                .addHeader("Authorization", TOKEN)
                 .addHeader("Content-Type", "application/json")
                 .build();
         Response response = null;

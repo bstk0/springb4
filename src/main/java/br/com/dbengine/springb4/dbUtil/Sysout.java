@@ -14,6 +14,8 @@ import java.util.Objects;
 public class Sysout {
 
     //private static final Boolean SHOW_SYSOUT = true ;
+    public static String CANONIC_KEY;
+
     private static final String UBUNTU = "rodrigo-U46E";
     public static void s(String texto) {
         //InetAddress.getByName(new URL(urlString).getHost());
@@ -64,4 +66,5 @@ public class Sysout {
         s(" >> Parsed date-time " + dateTime + " Unix timestamp " + unixTimestamp);
         return unixTimestamp;
     }
+
 }

@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /hs_err_pid32809.log
+/src/main/resources/sec/
