@@ -23,22 +23,6 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
     private static HarperDBClient harperDb = new HarperDBClient();
     private static CanonicClient canDb = new CanonicClient();
 
-    public List<ImovelOcorrencia> _getList(String imovelId) {
-        String strQuery = "select * FROM rep1.imovelOcorrencia where imovel_id = " + imovelId;
-        strQuery += " order by __createdtime__ desc";
-        JSONParser parser = new JSONParser();
-        Object obj = null;
-        String resultGetAll;
-        try {
-            resultGetAll = harperDb.getList(strQuery);
-            obj = parser.parse(resultGetAll);
-            JSONArray results = (JSONArray) (obj);
-            return (ArrayList<ImovelOcorrencia>) results;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<ImovelOcorrencia>();
-    }
 
     public List<ImovelOcorrencia> getList(int imovelId) {
         //Object obj = null;
@@ -53,22 +37,6 @@ public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
         //singleton
         //ImovelListSingleton.setInstance(imovelList);
         return imovelOcorrList;      // (ArrayList<Imovel>) results;
-
-    }
-
-    public List<ImovelOcorrForm> _getListForm(String imovelId) {
-        String strQuery = "select * FROM rep1.imovelOcorrencia where imovel_id = " + imovelId;
-        strQuery += " order by __createdtime__ desc";
-
-        JSONArray imovelOccList=  harperDb.getJSONList(strQuery);
-        //System.out.println("imovelOccList size: " + imovelOccList.size());
-        List<ImovelOcorrForm> iOccListForm = new ArrayList<ImovelOcorrForm>();
-        for (int i = 0; i < imovelOccList.size() ; i++) {
-            JSONObject iocc = (JSONObject) imovelOccList.get(i);
-            ImovelOcorrForm ioccFom = getImovelOcorrForm(iocc);
-            iOccListForm.add(ioccFom);
-        }
-        return iOccListForm;
     }
 
     public List<ImovelOcorrForm> getListForm(int imovelId) {

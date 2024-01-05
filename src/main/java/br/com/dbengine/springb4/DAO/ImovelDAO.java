@@ -18,26 +18,26 @@ import java.util.*;
 @Component
 public class ImovelDAO implements DAOInterface<Imovel> {
 
-    private static HarperDBClient harperDb = new HarperDBClient();
+    //private static HarperDBClient harperDb = new HarperDBClient();
     private static CanonicClient canDb = new CanonicClient();
+
+    private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovel/:_id";
+
 
     public List<Imovel> getList() { //throws ParseException {
 
         if ( ImovelListSingleton.getInstance() != null) {
-            Sysout.s("Usando singleton");
+            Sysout.s(" >> Usando singleton <<");
             return ImovelListSingleton.getInstance();
         }
         //JSONParser parser = new JSONParser();
         Object obj = null;
         String resultGetAll;
-        //try {
             //resultGetAll = harperDb.getList();
             resultGetAll = canDb.getList("imovel");
             //Sysout.s(resultGetAll);
             //obj = parser.parse(resultGetAll);
-            //29.12
             JSONArray results = canDb.CanonicJSONList(resultGetAll);
-            //29.12 - FIM
             //JSONArray results = (JSONArray) (obj);
             //List<Imovel> imovelList = (ArrayList<Imovel>) results;
             List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
@@ -45,12 +45,6 @@ public class ImovelDAO implements DAOInterface<Imovel> {
             //ImovelListSingleton.setInstance(imovelList);
             ImovelListSingleton.setInstaceJSON((JSONArray) results);
             return imovelList;      // (ArrayList<Imovel>) results;
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //    //throw new RuntimeException(e);
-        //}
-
-        //return new ArrayList<Imovel>();
 
     }
 
@@ -62,24 +56,18 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     @Override
     public void update(Imovel imovel) {
         System.out.println("ImovelDAO.update...");
+
         JSONObject obj = new JSONObject();
-//        try {
-        obj.put("operation", "update");
-        obj.put("schema", "rep1");
-        obj.put("table", "imovel");
-
-        JSONArray list = new JSONArray();
-
         JSONParser parser = new JSONParser();
         JSONObject innerObj = null;
 
         innerObj = convertItoJSON(imovel);
-        list.add(innerObj);
-        obj.put("records", list);
+        obj.put("_id", imovel.getId());
+        obj.put("input", innerObj);
 
-        String opResult = harperDb.execOperation(obj.toJSONString());
-
-        Sysout.s("UPDATE: " + opResult);
+        Sysout.s("UPDATE JSON >> " + obj.toJSONString());
+        String opResult = canDb.update(URL_UPD, obj.toJSONString());
+        Sysout.s(" UPDATE RESULT >> " + opResult);
 
         ImovelListSingleton.setInstance(null);
 
@@ -87,8 +75,10 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     //@Override
     public Imovel getItem(int id) {
+        Sysout.s("getItem.param " + id);
         List<Imovel> imovelList = ImovelListSingleton.getInstance();
         for(Imovel imovel : imovelList) {
+            Sysout.s("imovel.getImovelId() : " + imovel.getImovelId());
             if(imovel.getImovelId() == id) {
                 return imovel;
             }
@@ -108,11 +98,17 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     private JSONObject convertItoJSON(Imovel imovel) {
         JSONObject jo = new JSONObject();
-        jo.put("id", Integer.parseInt(imovel.getId()));
+        jo.put("id",imovel.getId());
+        //jo.put("id", Integer.parseInt(imovel.getId()));
         //jo.put("imovel_id", imovel.getImovel_id());
+        jo.put("imovelId", imovel.getImovelId());
         jo.put("apelido", imovel.getApelido());
-        jo.put("imovel", imovel.getDescricao());
+        jo.put("descricao", imovel.getDescricao());
         jo.put("status", imovel.getStatus());
+        jo.put("bairro",imovel.getBairro());
+        jo.put("imobiliaria",imovel.getImobiliaria());
+        jo.put("tipo",imovel.getTipo());
+        jo.put("observacoes",imovel.getObservacoes());
         //jo.put("status_final", imovel.getStatus_final());
         return jo;
     }

@@ -19,7 +19,7 @@ public final class HarperDBClient {
     private final String TAG = HarperDBClient.class.getSimpleName();
     // You can find your API KEYS here : https://restdb.io/docs/apikeys-and-cors
     private final String BASE_URI = "https://cloud-dbe-bisterco.harperdbcloud.com"; // change to your BASE URI
-    private final String AUTHOR = "Basic YmlzdGVyY286Q2FsbTA2MjNA";
+    private final String AUTHOR = Sysout.HARPER_KEY;
     private final String CONTENT_TYPE = "application/json";
     private final int TIMEOUT = 2000;// 2000ms = 2seconds
 
@@ -47,7 +47,7 @@ public final class HarperDBClient {
                 .url("https://cloud-dbe-bisterco.harperdbcloud.com")
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", "Basic YmlzdGVyY286Q2FsbTA2MjNA")
+                .addHeader("Authorization", Sysout.HARPER_KEY)
                 .build();
         Response response = null;
         try {
@@ -76,7 +76,7 @@ public final class HarperDBClient {
                 .url("https://cloud-dbe-bisterco.harperdbcloud.com")
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", "Basic YmlzdGVyY286Q2FsbTA2MjNA")
+                .addHeader("Authorization", Sysout.HARPER_KEY)
                 .build();
         Response response = null;
         try {
@@ -99,7 +99,7 @@ public final class HarperDBClient {
                 .url("https://cloud-dbe-bisterco.harperdbcloud.com")
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", "Basic YmlzdGVyY286Q2FsbTA2MjNA")
+                .addHeader("Authorization", Sysout.HARPER_KEY)
                 .build();
         Response response = null;
         try {

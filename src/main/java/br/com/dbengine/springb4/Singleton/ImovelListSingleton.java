@@ -40,6 +40,7 @@ public class ImovelListSingleton {
             imovel.setTipo(JSONValidations.validaAtributo(iocc.get("tipo")));
             imovel.setStatus(JSONValidations.validaAtributo(iocc.get("status")));
             imovel.setImobiliaria(JSONValidations.validaAtributo(iocc.get("imobiliaria")));
+            imovel.setObservacoes(JSONValidations.validaAtributo(iocc.get("observacoes")));
 
             imovelList.add(imovel);
         }
