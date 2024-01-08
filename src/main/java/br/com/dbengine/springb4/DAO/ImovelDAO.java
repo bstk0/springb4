@@ -75,10 +75,10 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     //@Override
     public Imovel getItem(int id) {
-        Sysout.s("getItem.param " + id);
+        //Sysout.s("getItem.param " + id);
         List<Imovel> imovelList = ImovelListSingleton.getInstance();
         for(Imovel imovel : imovelList) {
-            Sysout.s("imovel.getImovelId() : " + imovel.getImovelId());
+            //Sysout.s("imovel.getImovelId() : " + imovel.getImovelId());
             if(imovel.getImovelId() == id) {
                 return imovel;
             }
