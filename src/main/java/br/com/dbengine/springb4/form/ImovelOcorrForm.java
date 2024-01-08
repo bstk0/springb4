@@ -13,7 +13,6 @@ public class ImovelOcorrForm {
     private String nr_ref;
     private String statusFinal;
     private String dataCriacao;
-
     private String dataAtualizacao;
 
     public ImovelOcorrForm() {

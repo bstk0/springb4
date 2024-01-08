@@ -20,6 +20,7 @@ public class ImovelOcorrenciaController {
 
     private final ImovelOcorrenciaDAO dao = new ImovelOcorrenciaDAO();
 
+
     @GetMapping("/imovelOcorrenciaList")
     public String imovelOcorrenciaList(Model model, @RequestParam int imovelId) {
         List<ImovelOcorrForm> iOccListForm = dao.getListForm(imovelId);
@@ -55,7 +56,7 @@ public class ImovelOcorrenciaController {
     @GetMapping("/imovelOccUpdForm")
     public String imovelOccUpdForm(@RequestParam String imovelOccId,
                                    Model model) {
-        Sysout.s("imovelOccUpdForm...");
+        //Sysout.s("imovelOccUpdForm...");
         ImovelOcorrForm imovelOccUpd = new ImovelOcorrForm();
         imovelOccUpd = dao.getItemForm(imovelOccId);
         model.addAttribute("imovelOcorrencia", imovelOccUpd);
@@ -65,7 +66,7 @@ public class ImovelOcorrenciaController {
     @PostMapping("/imovelOcorrenciaUpdate")
     public String imovelOccUpdate(@ModelAttribute ImovelOcorrencia imovelOcorrencia,
                                   Authentication authentication) {
-        Sysout.s("UPDATE imovelOcorrencia..." + imovelOcorrencia.getId());
+        //Sysout.s("UPDATE imovelOcorrencia..." + imovelOcorrencia.getId());
         //imovelOcorrencia.setUpdatedBy(authentication.getName());
         dao.update(imovelOcorrencia);
         String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovelId();
