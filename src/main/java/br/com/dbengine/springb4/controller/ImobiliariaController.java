@@ -19,7 +19,7 @@ public class ImobiliariaController {
     public String imovelList(Model model) {
         List<Imobiliaria> imobiliarialList = new ArrayList<Imobiliaria>();
         imobiliarialList = dao.getList();
-        //System.out.println("imobiliarialList size: " + imobiliarialList.size());
+        //Sysout.s("imobiliarialList size: " + imobiliarialList.size());
         model.addAttribute("imobiliariaList",imobiliarialList);
         return "imobiliaria/list";
     }

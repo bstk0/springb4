@@ -18,7 +18,6 @@ import java.util.*;
 @Component
 public class ImovelDAO implements DAOInterface<Imovel> {
 
-    //private static HarperDBClient harperDb = new HarperDBClient();
     private static CanonicClient canDb = new CanonicClient();
 
     private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovel/:_id";
@@ -30,16 +29,15 @@ public class ImovelDAO implements DAOInterface<Imovel> {
             Sysout.s(" >> Usando singleton <<");
             return ImovelListSingleton.getInstance();
         }
-        //JSONParser parser = new JSONParser();
         Object obj = null;
         String resultGetAll;
-            resultGetAll = canDb.getList("imovel");
-            //Sysout.s(resultGetAll);
-            JSONArray results = canDb.CanonicJSONList(resultGetAll);
-            List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
-            //singleton
-            ImovelListSingleton.setInstaceJSON((JSONArray) results);
-            return imovelList;      // (ArrayList<Imovel>) results;
+        resultGetAll = canDb.getList("imovel");
+        JSONArray results = canDb.CanonicJSONList(resultGetAll);
+        List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
+        // Singleton
+        ImovelListSingleton.setInstaceJSON((JSONArray) results);
+        return imovelList;      // (ArrayList<Imovel>) results;
+
     }
 
     @Override
@@ -48,8 +46,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     @Override
     public void update(Imovel imovel) {
-        System.out.println("ImovelDAO.update...");
-
+        //Sysout.s("ImovelDAO.update...");
         JSONObject obj = new JSONObject();
         JSONParser parser = new JSONParser();
         JSONObject innerObj = null;
@@ -58,12 +55,11 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         obj.put("_id", imovel.getId());
         obj.put("input", innerObj);
 
-        Sysout.s("UPDATE JSON >> " + obj.toJSONString());
+        //Sysout.s("UPDATE JSON >> " + obj.toJSONString());
         String opResult = canDb.update(URL_UPD, obj.toJSONString());
-        Sysout.s(" UPDATE RESULT >> " + opResult);
+        //Sysout.s("UPDATE RESULT >> " + opResult);
 
         ImovelListSingleton.setInstance(null);
-
     }
 
     //@Override
@@ -92,8 +88,6 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     private JSONObject convertItoJSON(Imovel imovel) {
         JSONObject jo = new JSONObject();
         jo.put("id",imovel.getId());
-        //jo.put("id", Integer.parseInt(imovel.getId()));
-        //jo.put("imovel_id", imovel.getImovel_id());
         jo.put("imovelId", imovel.getImovelId());
         jo.put("apelido", imovel.getApelido());
         jo.put("descricao", imovel.getDescricao());
@@ -102,26 +96,22 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         jo.put("imobiliaria",imovel.getImobiliaria());
         jo.put("tipo",imovel.getTipo());
         jo.put("observacoes",imovel.getObservacoes());
-        //jo.put("status_final", imovel.getStatus_final());
         return jo;
     }
 
     private List<Imovel> getImovelList(JSONArray results) {
         List<Imovel> retorno = new ArrayList<Imovel>();
-        //Imovel imov = new Imovel();
         ObjectMapper objectMapper=new ObjectMapper();
         results.forEach(item -> {
             JSONObject obj = (JSONObject) item;
-            //parse(obj);
             Imovel imov = null;
             try {
                 imov = objectMapper.readValue(obj.toString(), Imovel.class);
-                Sysout.s(">>>" + imov.getId());
+                //Sysout.s(">>>" + imov.getId());
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                Sysout.s(e.getMessage());
                 //throw new RuntimeException(e);
             }
-            //System.out.println(iterator.next());
             retorno.add(imov);
         });
         return retorno;

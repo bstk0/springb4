@@ -20,25 +20,25 @@ public class TestJSON {
             //System.out.print(jobj.toJSONString());
             JSONObject jobj2 = (JSONObject) jobj.get("data");
             //System.out.print(jobj2.toJSONString());
-            //System.out.println(jobj2.size());
+            //Sysout.s(jobj2.size());
 
             //teste item 0
             Object key0 = "1";
             jobj = (JSONObject) jobj2.get("0"); //key0.toString());
-            System.out.println(">> " + jobj.toJSONString());
+            Sysout.s(">> " + jobj.toJSONString());
             //teste item 0
 
             Iterator<?> iterator = jobj2.keySet().iterator();
             while (iterator.hasNext()) {
                 Object key = iterator.next();
-                //System.out.println(iterator.next());
-                System.out.println(key.toString());
+                //Sysout.s(iterator.next());
+                Sysout.s(key.toString());
                 jobj = (JSONObject) jobj2.get(key.toString());
                 result.add(jobj);
             }
 
             //JSONArray sportsArray = (JSONArray) jobj.get("data");
-            System.out.println("## " + result.toJSONString());
+            Sysout.s("## " + result.toJSONString());
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

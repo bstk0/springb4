@@ -1,5 +1,7 @@
 package br.com.dbengine.springb4;
 
+import br.com.dbengine.springb4.dbUtil.*;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -18,7 +20,7 @@ public class UnixDTTest {
 // give a timezone reference for formatting (see comment at the bottom)
         sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT-4"));
         String formattedDate = sdf.format(date);
-        System.out.println(formattedDate);
+        Sysout.s(formattedDate);
         */
 
         String x = "1690920568566";

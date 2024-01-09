@@ -20,10 +20,7 @@ import java.util.List;
 public class ImovelOcorrenciaController {
 
     @Autowired
-    private ImovelOcorrenciaDAO dao;
-    //private final ImovelOcorrenciaDAO dao = new ImovelOcorrenciaDAO();
-
-
+    private ImovelOcorrenciaDAO dao; // = new ImovelOcorrenciaDAO();
 
     @GetMapping("/imovelOcorrenciaList")
     public String imovelOcorrenciaList(Model model, @RequestParam int imovelId) {
@@ -42,10 +39,12 @@ public class ImovelOcorrenciaController {
     public String imovelOcorrenciaAdd(Model model, @RequestParam Integer imovelId) {
         ImovelOcorrencia imovOccAdd = new ImovelOcorrencia();
         imovOccAdd.setImovelId(imovelId);
+        // Descriçáo do Imovel
         Imovel desc = new ImovelDAO().getItem(imovelId);
         String imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
-        model.addAttribute("imovelIdDescr",imovelDescr);
+
         model.addAttribute("imovelIdAttr",imovelId);
+        model.addAttribute("imovelIdDescr",imovelDescr);
         model.addAttribute("imovelOcorrencia",imovOccAdd);
         return "imovelOcorrencia/add";
     }
@@ -67,7 +66,17 @@ public class ImovelOcorrenciaController {
         //Sysout.s("imovelOccUpdForm...");
         ImovelOcorrForm imovelOccUpd = new ImovelOcorrForm();
         imovelOccUpd = dao.getItemForm(imovelOccId);
+
+        // Descriçáo do Imovel
+        String imovelDescr = "";
+        int imovelId = imovelOccUpd.getImovelId();
+        if (imovelId > 0) {
+            Imovel desc = new ImovelDAO().getItem(imovelId);
+            imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
+        }
+        model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelOcorrencia", imovelOccUpd);
+        model.addAttribute("imovelIdDescr",imovelDescr);
         return "imovelOcorrencia/update";
     }
 

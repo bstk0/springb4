@@ -25,7 +25,7 @@ public class ImovelListSingleton {
     (java.lang.ClassCastException)
      */
     public static void setInstaceJSON(JSONArray array) {
-        //System.out.println(">> setInstaceJSON ..." + array.size());
+        //Sysout.s(">> setInstaceJSON ..." + array.size());
         List<Imovel> imovelList = new ArrayList<Imovel>();
         JSONObject iocc = null;
         Imovel imovel = null;

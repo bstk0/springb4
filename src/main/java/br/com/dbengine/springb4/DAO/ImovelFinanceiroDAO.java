@@ -13,13 +13,13 @@ import java.util.*;
 
 @Component
 public class ImovelFinanceiroDAO {
-    //@Autowired
-    //private HarperDBClient harperDb = new HarperDBClient();
+
     private static CanonicClient canDb = new CanonicClient();
 
     private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovelFinanc/:_id";
 
     public ImovelFinanceiro getItem(Integer id) {
+
         String resultGetAll = canDb.getList("getImovelFinancByImovelId",id);
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
 
@@ -36,7 +36,7 @@ public class ImovelFinanceiroDAO {
     }
 
     public void update(ImovelFinanceiro imovelFin) {
-        System.out.println("C - ImovelFinanceiroDAO.update...");
+        //Sysout.s("C - ImovelFinanceiroDAO.update...");
 
         JSONObject obj = new JSONObject();
         JSONParser parser = new JSONParser();
@@ -46,9 +46,10 @@ public class ImovelFinanceiroDAO {
         obj.put("_id", imovelFin.getId());
         obj.put("input", innerObj);
 
-        Sysout.s(">> " + obj.toJSONString());
+        //Sysout.s("UPDATE ANTES >> " + obj.toJSONString());
         String opResult = canDb.update(URL_UPD, obj.toJSONString());
-        Sysout.s(" RESULT >> " + opResult);
+        //Sysout.s("UPDATE RESULT >> " + opResult);
+
     }
 
     private JSONObject convertIFtoJSON(ImovelFinanceiro imovelFinanceiro) {
@@ -60,7 +61,6 @@ public class ImovelFinanceiroDAO {
         jo.put("vl_condom", imovelFinanceiro.getVl_condom() );
         jo.put("vl_iptu", imovelFinanceiro.getVl_iptu() );
         jo.put("vl_iptu_desc", imovelFinanceiro.getVl_iptu_desc() );
-        //jo.put("imobiliaria_id", imovelFinanceiro.getImobiliaria_id());
         jo.put("cd_luz", imovelFinanceiro.getCd_luz());
         jo.put("cd_daem", imovelFinanceiro.getCd_daem());
         jo.put("diaPagtoAluguel", imovelFinanceiro.getDiaPagtoAluguel());

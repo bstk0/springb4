@@ -24,9 +24,9 @@ import java.util.List;
 @Controller
 public class ImovelController {
 
-    @Autowired
-    private ImovelDAO dao;
-    //private ImovelDAO dao = new ImovelDAO();
+   @Autowired
+    private ImovelDAO dao; // = new ImovelDAO();
+
 
     @GetMapping("/imovel")
     public String imovel() {
@@ -44,7 +44,7 @@ public class ImovelController {
     @GetMapping("/imovelUpdate")
     public String imovelUpdate(@RequestParam(name="imovelForm") String imovelJSON,
                                Model mav) {
-        //System.out.println("ImovelController.imovelUpdate ..." + imovelJSON);
+
         String imovel, apelido;
         ObjectMapper oMapper = new ObjectMapper();
         ImovelForm imovelForm = null;
@@ -63,11 +63,12 @@ public class ImovelController {
     @RequestMapping(value = "/imovelupdate",  consumes = "application/json")
     public String showOwner(@RequestBody ImovelForm imovelForm,
                             Model mav) {
-        System.out.println("ImovelRestController.Imovel : " + imovelForm.getImovel());
-        System.out.println("ImovelRestController.Apelido : " + imovelForm.getApelido());
+        //Sysout.s("ImovelRestController.Imovel : " + imovelForm.getImovel());
+        //Sysout.s("ImovelRestController.Apelido : " + imovelForm.getApelido());
         mav.addAttribute("imovel", imovelForm.getImovel());
         mav.addAttribute("apelido", imovelForm.getApelido());
-        //Sysout.s("Redirecting from Controller ... ");
+        Sysout.s("Redirecting from Controller ... ");
+
         return "imovelUpdate";
     }
 

@@ -44,10 +44,10 @@ public class JSONValidations {
     private static String getBRDateTime(String unixmilliseconds) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss z");
         long milliSeconds= Long.parseLong(unixmilliseconds);
-        //System.out.println(milliSeconds);
+        //Sysout.s(milliSeconds);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
-        //System.out.println(formatter.format(calendar.getTime()));
+        //Sysout.s(formatter.format(calendar.getTime()));
         return formatter.format(calendar.getTime());
     }
 

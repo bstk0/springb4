@@ -26,11 +26,11 @@ public class ImovelFinanceiroController {
 
     @GetMapping("/imovelFinanceiroDetail")
     public String imovelFinanceiroDetail(Model model, @RequestParam int imovelId) {
-        //ImovelFinanceiro iFin = dao.getItem(Integer.valueOf(imovelId));
         ImovelFinanceiro iFin = dao.getItem(imovelId);
         // Descriçáo do Imovel
         Imovel desc = new ImovelDAO().getItem(imovelId);
         String imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
+
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);
         model.addAttribute("imovelFinanceiro", iFin);

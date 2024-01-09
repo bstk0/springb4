@@ -1,7 +1,6 @@
 package br.com.dbengine.springb4.security;
 
 //import org.springframework.beans.factory.annotation.Autowired;
-import br.com.dbengine.springb4.dbUtil.Sysout;
 import br.com.dbengine.springb4.security.CustomAuthenticationProvider;
 import br.com.dbengine.springb4.security.MyAuthenticationManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 //@EnableWebSecurity
 public class SecurityWebConfig {
-
     public static final String[] ENDPOINTS_WHITELIST = {
             "/resources/**",
             "/webapp/**",
@@ -32,14 +30,12 @@ public class SecurityWebConfig {
             "/process-login",
             "/styles"
     };
-
     @Autowired
     private CustomAuthenticationProvider authProvider;
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        Sysout.s(">> Inicio filterChain ..");
+        System.out.println(">> Inicio filterChain ..");
         http.authorizeRequests()
                 //.antMatchers("/login").permitAll()
                 .antMatchers(ENDPOINTS_WHITELIST).permitAll()
@@ -69,12 +65,13 @@ public class SecurityWebConfig {
         //http.addFilter(new BasicAuthenticationFilter(authManager()));
         http.addFilter(new BasicAuthenticationFilter(new MyAuthenticationManager()));
         //http.addFilter(new CustomAuthenticationFilter(authManager.getOrBuild());
-        Sysout.s(">> FIM filterChain ..");
+        System.out.println(">> FIM filterChain ..");
         return http.build();
     }
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        Sysout.s(" >> Passou em WebSecurityCustomizer ...");
+        System.out.println(" >> Passou em WebSecurityCustomizer ...");
         return (web) -> web.ignoring().antMatchers("/webapp/**",
                 "/resources/**",
                 "/WEB-INF/**");
