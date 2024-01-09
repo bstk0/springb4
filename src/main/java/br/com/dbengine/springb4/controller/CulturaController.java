@@ -28,7 +28,7 @@ public class CulturaController {
         //return dao.getList();
         List<Cultura> culturaList = new ArrayList<>();
         culturaList = dao.getList();
-        //System.out.println("culturaList size: " + culturaList.size());
+        //Sysout.s("culturaList size: " + culturaList.size());
         model.addAttribute("culturaList",culturaList);
         return "cultura_list";
     }
@@ -50,8 +50,8 @@ public class CulturaController {
 
     @PostMapping("/culturaUpdate")
     public String culturaUpdate(@ModelAttribute Cultura cultura, @RequestParam("culturaId") String culturaId) {
-        //System.out.println("UPDATE cultura..." + cultura.get_id());
-        //System.out.println("UPDATE culturaId..." + culturaId);
+        //Sysout.s("UPDATE cultura..." + cultura.get_id());
+        //Sysout.s("UPDATE culturaId..." + culturaId);
         if (cultura.get_id() == null) { cultura.set_id(culturaId); };
         dao.update(cultura);
         return "redirect:/culturaList";

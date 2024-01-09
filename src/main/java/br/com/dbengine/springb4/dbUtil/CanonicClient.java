@@ -16,7 +16,6 @@ import java.util.*;
 @Service
 public final class CanonicClient {
 
-    //private String CANONIC_KEY = Sysout.CANONIC_KEY;
     public String getList(String cObj) { //throws IOException {
         return this.getList(cObj,0);
     }
@@ -36,10 +35,6 @@ public final class CanonicClient {
             //Sysout.s(query);
             body = RequestBody.create(mediaType,query);
         }
-
-        //MediaType mediaType = MediaType.parse("text/plain");
-        //RequestBody body = RequestBody.create(mediaType, "");
-        //RequestBody body = RequestBody.create("");
         try {
         Request request = new Request.Builder()
                 .url("https://can.canonic.dev/rep1-180hdf/api/" + cObj)
@@ -66,7 +61,7 @@ public final class CanonicClient {
     private String opItemById(String METHOD, String URL, String cObjId) { //throws IOException {
         String query = null;
         //String METHOD = "POST";
-        Sysout.s(">> KEY:" + Sysout.CANONIC_KEY);
+        //Sysout.s(">> KEY:" + Sysout.CANONIC_KEY);
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/json");
@@ -92,9 +87,6 @@ public final class CanonicClient {
     public String getPeopleList() throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
-        //MediaType mediaType = MediaType.parse("text/plain");
-        //RequestBody body = RequestBody.create(mediaType, "");
-        //RequestBody body = RequestBody.create("");
         Request request = new Request.Builder()
                 .url("https://can.canonic.dev/rep1-180hdf/api/people")
                 .method("GET", null)
@@ -165,17 +157,12 @@ public final class CanonicClient {
         try {
             jobj = (JSONObject) parser.parse(sjson);
             JSONObject jobj2 = (JSONObject) jobj.get("data");
-            //System.out.print(jobj2.toJSONString());
-            //System.out.println(jobj2.size());
-
             Iterator<?> iterator = jobj2.keySet().iterator();
             while (iterator.hasNext()) {
                 Object key = iterator.next();
                 jobj = (JSONObject) jobj2.get(key.toString());
                 result.add(jobj);
             }
-            //JSONArray sportsArray = (JSONArray) jobj.get("data");
-            //Sysout.s(result.toJSONString());
         } catch (ParseException e) {
             //return e.getMessage();
             throw new RuntimeException(e);

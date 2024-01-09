@@ -3,12 +3,12 @@ package br.com.dbengine.springb4.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.dbengine.springb4.dbUtil.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import br.com.dbengine.springb4.dbUtil.RestDBClient;
 import br.com.dbengine.springb4.entity.Cultura;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
 import org.springframework.stereotype.Component;
@@ -42,8 +42,8 @@ public class CulturaDAO implements DAOInterface<Cultura> {
     }
 
     public void add(Cultura cultura) {
-        //System.out.println("CulturaCodigo :" + cultura.getCodigo());
-        //System.out.println("CulturaDescricao :" + cultura.getDescricao() );
+        //Sysout.s("CulturaCodigo :" + cultura.getCodigo());
+        //Sysout.s("CulturaDescricao :" + cultura.getDescricao() );
         JSONObject snuttgly = culturaToJSON(cultura);
         String resultWoobly = restDb.post(COLLECTION, snuttgly.toJSONString());
 
@@ -52,11 +52,11 @@ public class CulturaDAO implements DAOInterface<Cultura> {
 
     public void update(Cultura cultura) {
         String culturaId = cultura.get_id();
-        //System.out.println("CULTURA ID:" + culturaId);
+        //Sysout.s("CULTURA ID:" + culturaId);
         JSONObject snuttgly = culturaToJSON(cultura);
-        //System.out.println("snuttgly.toJSONString():" + snuttgly.toJSONString());
+        //Sysout.s("snuttgly.toJSONString():" + snuttgly.toJSONString());
         String reString = restDb.put(COLLECTION + "/" + culturaId, snuttgly.toJSONString());
-        System.out.println(reString);
+        //Sysout.s(reString);
     }
 
 
@@ -64,7 +64,7 @@ public class CulturaDAO implements DAOInterface<Cultura> {
         JSONParser parser = new JSONParser();
         //JSONObject jsonQuery = new JSONObject();
         String culturaItem = restDb.get(COLLECTION + "/" + id);
-        //System.out.println("getItem:" + culturaItem);
+        //Sysout.s("getItem:" + culturaItem);
         JSONObject result = null;
         try {
             Object obj = parser.parse(culturaItem);
@@ -87,7 +87,7 @@ public class CulturaDAO implements DAOInterface<Cultura> {
     public String getCount() {
         JSONParser parser = new JSONParser();
         String count = restDb.getCount(COLLECTION);
-        //System.out.println("getCount:" + count);
+        //Sysout.s("getCount:" + count);
         try {
             Object obj = parser.parse(count);
             JSONObject results = (JSONObject) (obj);
@@ -136,9 +136,9 @@ public class CulturaDAO implements DAOInterface<Cultura> {
 
         String resultWoobly = client.post(COLLECTION, woobly.toJSONString());
 
-        System.out.println("result Woobly postRequest : " + resultWoobly);
+        Sysout.s("result Woobly postRequest : " + resultWoobly);
         String resultSnuttgly = client.post(COLLECTION, snuttgly.toJSONString());
-        System.out.println("result Snuttgly postRequest : " + resultSnuttgly);
+        Sysout.s("result Snuttgly postRequest : " + resultSnuttgly);
 
         // call Garbage collection
         snuttgly = null;
@@ -153,7 +153,7 @@ public class CulturaDAO implements DAOInterface<Cultura> {
      */
     private static String getRequest(final RestDBClient client) {
         String result = client.get(COLLECTION);
-        //System.out.println("CulturaDAO - result getRequest : " + result);
+        //Sysout.s("CulturaDAO - result getRequest : " + result);
         return result;
     }
 
@@ -169,7 +169,7 @@ public class CulturaDAO implements DAOInterface<Cultura> {
         jsonQuery.put("count", 8);
         String query = "?q=" + jsonQuery.toJSONString();
         String result = client.get(COLLECTION + query);
-        System.out.println("result getRequestWithFilter : " + result);
+        Sysout.s("result getRequestWithFilter : " + result);
         return result;
     }
 
@@ -189,11 +189,11 @@ public class CulturaDAO implements DAOInterface<Cultura> {
             JSONArray results = (JSONArray) (obj);
             if (!resultGetAll.isEmpty() && results.size() > 0) {
                 JSONObject firstOne = (JSONObject) results.get(0); // take first item
-                System.out.println(firstOne.toJSONString());
+                Sysout.s(firstOne.toJSONString());
                 firstOne.put("title", "updated title");
                 id = (String) firstOne.get("_id");
                 String resultPut = client.put(COLLECTION + "/" + id, firstOne.toJSONString());
-                System.out.println(resultPut);
+                Sysout.s(resultPut);
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -209,7 +209,7 @@ public class CulturaDAO implements DAOInterface<Cultura> {
      */
     private static void deleteRequest(final RestDBClient client, final String id) {
         String resultDelete = client.delete(COLLECTION + "/" + id);
-        System.out.println(resultDelete);
+        Sysout.s(resultDelete);
     }
 
     /**

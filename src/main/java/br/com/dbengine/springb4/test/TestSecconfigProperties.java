@@ -1,5 +1,6 @@
 package br.com.dbengine.springb4.test;
 
+import br.com.dbengine.springb4.dbUtil.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.springframework.beans.factory.annotation.*;

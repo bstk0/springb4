@@ -45,11 +45,11 @@ public class PeopleController {
                                @RequestParam(name="observacao") String observacao,
                                Model model) {
         //model.addAttribute("name", name);
-        //System.out.println("id " + id );
-        //System.out.println("Nome ANTES decode: " + name );
-        //System.out.println("codigoInterno " + codigoInterno );
+        //Sysout.s("id " + id );
+        //Sysout.s("Nome ANTES decode: " + name );
+        //Sysout.s("codigoInterno " + codigoInterno );
         name = this.decode(name);
-        //System.out.println("Nome DEPOIS decode: " + name );
+        //Sysout.s("Nome DEPOIS decode: " + name );
         model.addAttribute("peopleId", id);
         model.addAttribute("name", name);
         model.addAttribute("dataNascimento", dataNascimento);

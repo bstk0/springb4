@@ -27,6 +27,7 @@
     <h5>Adicionando Imovel Ocorrencia</h5>
 
     <!-- <form action="\culturaAdd"> -->
+    <b><p th:text=${imovelIdDescr}></p></b>
     <form action="#" th:action="@{/imovelOcorrenciaUpdate}" th:object="${imovelOcorrencia}" method="post">
 
 
@@ -75,14 +76,22 @@
             </div>
         </div>
 
-        <div class="row">
+<!--        <div class="row">
             <div class="col-sm-9 offset-sm-3">
                 <button type="submit" class="btn btn-success save-btn">Save</button>
                 <a href="/" class="btn btn-light"
                    role="button">Voltar</a>
             </div>
         </div>
-
+        -->
+        <div class="row">
+            <div class="col-sm-9 offset-sm-3">
+                <button type="submit" class="btn btn-success save-btn">Save</button>
+                <a th:href="@{/imovelOcorrenciaList(imovelId=${imovelIdAttr})}" class="btn btn-light"
+                   role="button">Voltar</a>
+            </div>
+        </div>
+        <a th:href="@{/imovelOcorrenciaList(imovelId=${imovelIdAttr})}">VOLTAR</a>
     </form>
 </div>
 </body>

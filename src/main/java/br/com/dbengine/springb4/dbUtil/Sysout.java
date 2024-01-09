@@ -24,7 +24,7 @@ public class Sysout {
         String localHostName;
         try {
             localHostName = InetAddress.getLocalHost().getHostName();
-//            System.out.println("LOCAL CONFIG::" +    // Local address
+//            Sysout.s("LOCAL CONFIG::" +    // Local address
 //                    InetAddress.getLocalHost().getHostAddress() + " / " +
 //                    InetAddress.getLocalHost().getHostName());
         } catch (UnknownHostException e) {
@@ -32,7 +32,7 @@ public class Sysout {
         }
 
 //        try {
-//            System.out.println("REMOTE CONFIG::" +
+//            Sysout.s("REMOTE CONFIG::" +
 //                    InetAddress.getLoopbackAddress().getHostAddress() + " / " +
 //                    InetAddress.getLoopbackAddress().getHostName());
 //        } catch (Exception e) {
@@ -42,7 +42,7 @@ public class Sysout {
         //if (SHOW_SYSOUT) {
         //if (InetAddress.getLoopbackAddress().getHostName() == "localhost") {
         if (UBUNTU.equals(localHostName)) {
-            System.out.println(texto);
+            Sysout.s(texto);
         }
     }
 

@@ -23,7 +23,6 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
     private final String URL_GET = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
     private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
     private final String URL_DEL = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
-    private static HarperDBClient harperDb = new HarperDBClient();
     private static CanonicClient canDb = new CanonicClient();
 
 
@@ -48,12 +47,6 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         return iOccListForm;
     }
 
-/*    @Override
-    public List<ImovelOcorrencia> getList() {
-        return null;
-    }*/
-
-    //@Override
     public void add(ImovelOcorrencia imovelOcorrencia) {
 
         JSONObject obj = new JSONObject();
@@ -63,15 +56,14 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         innerObj = this.convertIOtoJSON(imovelOcorrencia);
         obj.put("input", innerObj);
 
-        Sysout.s(" ADD ANTES >> " + obj.toJSONString());
+        //Sysout.s(" ADD ANTES >> " + obj.toJSONString());
         String opResult = canDb.add(URL_ADD, obj.toJSONString());
-        Sysout.s(" ADD RESULT >> " + opResult);
-
+        //Sysout.s(" ADD RESULT >> " + opResult);
     }
 
     //@Override
     public void update(ImovelOcorrencia imovelOcc) {
-        //System.out.println("DAO - ImovelOcorrenciaDAO.update...");
+        //Sysout.s("DAO - ImovelOcorrenciaDAO.update...");
         JSONObject obj = new JSONObject();
         JSONParser parser = new JSONParser();
         JSONObject innerObj = null;
@@ -80,30 +72,19 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         obj.put("_id", imovelOcc.getId());
         obj.put("input", innerObj);
 
-        Sysout.s("UPDATE ANTES >> " + obj.toJSONString());
+        //Sysout.s("UPDATE ANTES >> " + obj.toJSONString());
         String opResult = canDb.update(URL_UPD, obj.toJSONString());
-        Sysout.s(" UPDATE RESULT >> " + opResult);
+        //Sysout.s(" UPDATE RESULT >> " + opResult);
     }
-
-/*    @Override
-    public ImovelOcorrencia getItem(String id) {
-        return DAOInterface.super.getItem(id);
-    }*/
 
     public ImovelOcorrForm getItemForm(String id) {
         String resultGetAll = canDb.getItemById(URL_GET,id);
-        Sysout.s(resultGetAll);
+        //Sysout.s(resultGetAll);
         JSONObject iocc = canDb.CanonicJSONItem(resultGetAll);
         ImovelOcorrForm ioccFom = getImovelOcorrForm(iocc);
         return ioccFom;
     }
 
-/*    @Override
-    public String getCount() {
-        return null;
-    }*/
-
-    //@Override
     public void delete(String id) {
         canDb.deleteItemById(URL_DEL,id);
     }
@@ -126,7 +107,7 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         //String formattedDate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__createdtime__"));
         //String dataUpdate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__updatedtime__"));
 
-        Sysout.s(" DAO - getImovelOcorrForm : " + iocc.toJSONString());
+        //Sysout.s(" DAO - getImovelOcorrForm : " + iocc.toJSONString());
 
         String ioId = JSONValidations.validaAtributo(iocc.get("id"));
         if (ioId.equals("")) {
@@ -145,15 +126,10 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
     }
 
     private List<ImovelOcorrencia> getImovelOcorrList(JSONArray results) {
-        //private List<Imovel> getImovelList(String sjon) {
-        //JSONArray results = canDb.CanonicJSONList(sjon);
-        //Iterator<String> iterator = results.iterator();
         List<ImovelOcorrencia> retorno = new ArrayList<ImovelOcorrencia>();
-        //Imovel imov = new Imovel();
         ObjectMapper objectMapper=new ObjectMapper();
         results.forEach(item -> {
             JSONObject obj = (JSONObject) item;
-            //parse(obj);
             ImovelOcorrencia imov = null;
             try {
                 imov = objectMapper.readValue(obj.toString(), ImovelOcorrencia.class);
@@ -162,10 +138,8 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
                 e.printStackTrace();
                 //throw new RuntimeException(e);
             }
-            //System.out.println(iterator.next());
             retorno.add(imov);
         });
-
         return retorno;
     }
 }

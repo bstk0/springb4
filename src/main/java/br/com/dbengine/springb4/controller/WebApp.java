@@ -47,7 +47,7 @@ public class WebApp {
         String erro2 = null;
 
         try {
-            //System.out.println("LOCAL CONFIG::" +    // Local address
+            //Sysout.s("LOCAL CONFIG::" +    // Local address
             localHostAddress = InetAddress.getLocalHost().getHostAddress() ;
             localHostName = InetAddress.getLocalHost().getHostName();
         } catch (Exception e) {
@@ -56,7 +56,7 @@ public class WebApp {
         }
 
         try {
-            //System.out.println("REMOTE CONFIG::" +
+            //Sysout.s("REMOTE CONFIG::" +
             remoteHostAddress = InetAddress.getLoopbackAddress().getHostAddress();
             remoteHostName = InetAddress.getLoopbackAddress().getHostName();
         } catch (Exception e) {

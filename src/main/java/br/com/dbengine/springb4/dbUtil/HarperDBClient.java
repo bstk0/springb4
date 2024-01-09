@@ -36,7 +36,7 @@ public final class HarperDBClient {
         //JSONObject snuttgly = new JSONObject();
         //snuttgly.put("operation","sql");
         //snuttgly.put("sql","select * FROM rep1.imovel");
-        //System.out.println(">> " + snuttgly.toJSONString());
+        //Sysout.s(">> " + snuttgly.toJSONString());
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -54,7 +54,7 @@ public final class HarperDBClient {
             response = client.newCall(request).execute();
             return response.body().string();
         } catch (IOException e) {
-            System.out.println("Exception ...");
+            Sysout.s("Exception ...");
             throw new RuntimeException(e);
         }
     }
@@ -64,7 +64,7 @@ public final class HarperDBClient {
         //JSONObject snuttgly = new JSONObject();
         //snuttgly.put("operation","sql");
         //snuttgly.put("sql","select * FROM rep1.imovel");
-        //System.out.println(">> " + snuttgly.toJSONString());
+        //Sysout.s(">> " + snuttgly.toJSONString());
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -83,7 +83,7 @@ public final class HarperDBClient {
             response = client.newCall(request).execute();
             return response.body().string();
         } catch (IOException e) {
-            System.out.println("Exception ...");
+            Sysout.s("Exception ...");
             throw new RuntimeException(e);
         }
     }
@@ -106,7 +106,7 @@ public final class HarperDBClient {
             response = client.newCall(request).execute();
             return response.body().string();
         } catch (IOException e) {
-            System.out.println("Exception ...");
+            Sysout.s("Exception ...");
             throw new RuntimeException(e);
         }
     }

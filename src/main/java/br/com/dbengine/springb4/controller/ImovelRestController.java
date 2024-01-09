@@ -15,8 +15,8 @@ public class ImovelRestController {
                                HttpServletResponse response,
                                Model model) throws IOException {
         // funcionou ok para testes locais
-        System.out.println("ImovelRestController.Imovel : " + imovelForm.getImovel());
-        System.out.println("ImovelRestController.Apelido : " + imovelForm.getApelido());
+        //Sysout.s("ImovelRestController.Imovel : " + imovelForm.getImovel());
+        //Sysout.s("ImovelRestController.Apelido : " + imovelForm.getApelido());
         model.addAttribute("imovel", imovelForm.getImovel());
         model.addAttribute("apelido", imovelForm.getApelido());
         //response.sendRedirect("/imovel/update");
@@ -29,8 +29,8 @@ public class ImovelRestController {
     public String showOwner(@RequestBody ImovelForm imovelForm) {
         ModelAndView mav = new ModelAndView("/imovel/update");
         //mav.addObject(this.clinicService.findOwnerById(ownerId));
-        System.out.println("ImovelRestController.Imovel : " + imovelForm.getImovel());
-        System.out.println("ImovelRestController.Apelido : " + imovelForm.getApelido());
+        //Sysout.s("ImovelRestController.Imovel : " + imovelForm.getImovel());
+        //Sysout.s("ImovelRestController.Apelido : " + imovelForm.getApelido());
         //mav.addAttribute("imovel", imovelForm.getImovel());
         //mav.addAttribute("apelido", imovelForm.getApelido());
         mav.addObject(imovelForm);

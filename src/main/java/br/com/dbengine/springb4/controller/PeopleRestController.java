@@ -10,8 +10,8 @@ public class PeopleRestController {
     @RequestMapping(value = "/people/save", method = RequestMethod.POST, consumes = "application/json")
     public String upsertPeople(@RequestBody PeopleForm peopleForm) {
         // funcionou ok para testes locais
-        // System.out.println("PeopleRestController.Nome : " + peopleForm.getNome());
-        // System.out.println("PeopleRestController.Observacao : " + peopleForm.getObservacao());
+        // Sysout.s("PeopleRestController.Nome : " + peopleForm.getNome());
+        // Sysout.s("PeopleRestController.Observacao : " + peopleForm.getObservacao());
         return "OK";
     }
 }
