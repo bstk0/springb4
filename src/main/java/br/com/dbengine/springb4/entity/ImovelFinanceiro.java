@@ -1,69 +1,62 @@
 package br.com.dbengine.springb4.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ImovelFinanceiro {
-    private String __createdtime__;
-    private String __updatedtime__;
-    private Integer imovel_id;
-    private String codLUZ;
-    private Double vlAluguel;
-    private Double vlCondominio;
-    private Double vlIPTU;
-    private Double vlIPTUDesc;
-    private Integer diaPagtoAluguel;
-    private String cpfCadastrado;
-    private Integer diaPagtoCondominio;
-    private String nroContrato;
+    private String id;                  //ok
+    private int imovelId;               //ok
+    private String cd_luz;              //ok
+    private Double vl_aluguel;          //ok
+    private Double vl_condom;           //ok
+    private Double vl_iptu;             //ok
+    private Double vl_iptu_desc;        //ok
+    private Integer diaPagtoAluguel;    //ok
+    private String cpfCadastrado;       //ok
+    private Integer diaPagtoCond;       //ok
+    private String nr_contrato;         //ok
     //private Date dtInicioContrato;
-    private String dtInicioContrato;
+    private String dtInicioContr;       //ok
     //private Date dtFimContrato;
-    private String dtFimContrato;
-    private String dadosGerais;
-    private String codDAEM;
-    private String nroInscrPrefeitura;
+    private String dtFimContr;          //ok
+    private String dadosGerais;         //ok
+    private String cd_daem;             //ok
+    private String nr_inscr;            //ok
     private Integer imobiliaria_id;
-    private String sindico;
-    private String administradora;
-    private String createdBy;
-    private String updatedBy;
+    private String sindico;             //ok
+    private String administradora;      //ok
 
     public ImovelFinanceiro() {
     }
 
-    public ImovelFinanceiro(String __createdtime__, String __updatedtime__,
-                            Integer imovel_id, String codLUZ, Double vlAluguel, Double vlCondominio,
-                            Double vlIPTU, Double vlIPTUDesc, Integer diaPagtoAluguel,
-                            String cpfCadastrado, Integer diaPagtoCondominio,
-                            String nroContrato, String dtInicioContrato, String dtFimContrato,
-                            String dadosGerais, String codDAEM, String nroInscrPrefeitura,
-                            Integer imobiliaria_id,
-                            String sindico, String administradora,
-                            String createdBy, String updatedBy) {
-        this.__createdtime__ = __createdtime__;
-        this.__updatedtime__ = __updatedtime__;
-        this.imovel_id = imovel_id;
-        this.codLUZ = codLUZ;
-        this.vlAluguel = vlAluguel;
-        this.vlCondominio = vlCondominio;
-        this.vlIPTU = vlIPTU;
-        this.vlIPTUDesc = vlIPTUDesc;
+    public ImovelFinanceiro(String id, int imovelId, String cd_luz, Double vl_aluguel,
+                            Double vl_condom, Double vl_iptu, Double vl_iptu_desc,
+                            Integer diaPagtoAluguel, String cpfCadastrado, Integer diaPagtoCond,
+                            String nr_contrato, String dtInicioContr, String dtFimContr,
+                            String dadosGerais, String cd_daem, String nr_inscr,
+                            Integer imobiliaria_id, String sindico, String administradora) {
+        this.id = id;
+        this.imovelId = imovelId;
+        this.cd_luz = cd_luz;
+        this.vl_aluguel = vl_aluguel;
+        this.vl_condom = vl_condom;
+        this.vl_iptu = vl_iptu;
+        this.vl_iptu_desc = vl_iptu_desc;
         this.diaPagtoAluguel = diaPagtoAluguel;
         this.cpfCadastrado = cpfCadastrado;
-        this.diaPagtoCondominio = diaPagtoCondominio;
-        this.nroContrato = nroContrato;
-        this.dtInicioContrato = dtInicioContrato;
-        this.dtFimContrato = dtFimContrato;
+        this.diaPagtoCond = diaPagtoCond;
+        this.nr_contrato = nr_contrato;
+        this.dtInicioContr = dtInicioContr;
+        this.dtFimContr = dtFimContr;
         this.dadosGerais = dadosGerais;
-        this.codDAEM = codDAEM;
-        this.nroInscrPrefeitura = nroInscrPrefeitura;
+        this.cd_daem = cd_daem;
+        this.nr_inscr = nr_inscr;
         this.imobiliaria_id = imobiliaria_id;
         this.sindico = sindico;
         this.administradora = administradora;
-        this.createdBy = createdBy;
-        this.updatedBy = updatedBy;
     }
 }

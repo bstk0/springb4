@@ -3,8 +3,9 @@ package br.com.dbengine.springb4.controller;
 import br.com.dbengine.springb4.DAO.ImovelDAO;
 import br.com.dbengine.springb4.DAO.ImovelOcorrenciaDAO;
 import br.com.dbengine.springb4.dbUtil.Sysout;
-import br.com.dbengine.springb4.entity.ImovelOcorrencia;
+import br.com.dbengine.springb4.entity.*;
 import br.com.dbengine.springb4.form.ImovelOcorrForm;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +19,18 @@ import java.util.List;
 @Controller
 public class ImovelOcorrenciaController {
 
-    private final ImovelOcorrenciaDAO dao = new ImovelOcorrenciaDAO();
+    @Autowired
+    private ImovelOcorrenciaDAO dao;
+    //private final ImovelOcorrenciaDAO dao = new ImovelOcorrenciaDAO();
+
+
 
     @GetMapping("/imovelOcorrenciaList")
-    public String imovelOcorrenciaList(Model model, @RequestParam String imovelId) {
+    public String imovelOcorrenciaList(Model model, @RequestParam int imovelId) {
         List<ImovelOcorrForm> iOccListForm = dao.getListForm(imovelId);
         // Descriçáo do Imovel
-        String imovelDescr = new ImovelDAO().getItem(imovelId).getImovel();
+        Imovel desc = new ImovelDAO().getItem(imovelId);
+        String imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
 
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);
@@ -35,7 +41,10 @@ public class ImovelOcorrenciaController {
     @GetMapping("/imovelOcorrenciaAdd")
     public String imovelOcorrenciaAdd(Model model, @RequestParam Integer imovelId) {
         ImovelOcorrencia imovOccAdd = new ImovelOcorrencia();
-        imovOccAdd.setImovel_id(imovelId);
+        imovOccAdd.setImovelId(imovelId);
+        Imovel desc = new ImovelDAO().getItem(imovelId);
+        String imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
+        model.addAttribute("imovelIdDescr",imovelDescr);
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelOcorrencia",imovOccAdd);
         return "imovelOcorrencia/add";
@@ -46,16 +55,16 @@ public class ImovelOcorrenciaController {
     public String imovelOcorrenciaSave(@ModelAttribute ImovelOcorrencia imovelOcorrencia,
                                        Authentication authentication
                                        )  {
-        imovelOcorrencia.setCreatedBy(authentication.getName());
+        //imovelOcorrencia.setCreatedBy(authentication.getName());
         dao.add(imovelOcorrencia);
-        String s = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovel_id();
+        String s = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovelId();
         return s;
     }
 
     @GetMapping("/imovelOccUpdForm")
     public String imovelOccUpdForm(@RequestParam String imovelOccId,
                                    Model model) {
-        Sysout.s("imovelOccUpdForm...");
+        //Sysout.s("imovelOccUpdForm...");
         ImovelOcorrForm imovelOccUpd = new ImovelOcorrForm();
         imovelOccUpd = dao.getItemForm(imovelOccId);
         model.addAttribute("imovelOcorrencia", imovelOccUpd);
@@ -65,10 +74,10 @@ public class ImovelOcorrenciaController {
     @PostMapping("/imovelOcorrenciaUpdate")
     public String imovelOccUpdate(@ModelAttribute ImovelOcorrencia imovelOcorrencia,
                                   Authentication authentication) {
-        Sysout.s("UPDATE imovelOcorrencia..." + imovelOcorrencia.getId());
-        imovelOcorrencia.setUpdatedBy(authentication.getName());
+        //Sysout.s("UPDATE imovelOcorrencia..." + imovelOcorrencia.getId());
+        //imovelOcorrencia.setUpdatedBy(authentication.getName());
         dao.update(imovelOcorrencia);
-        String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovel_id();
+        String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovelId();
         return redirect;
     }
 

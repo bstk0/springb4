@@ -2,12 +2,8 @@ package br.com.dbengine.springb4.Singleton;
 
 import br.com.dbengine.springb4.dbUtil.JSONValidations;
 import br.com.dbengine.springb4.entity.Imovel;
-import br.com.dbengine.springb4.form.ImovelForm;
-import br.com.dbengine.springb4.form.ImovelOcorrForm;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +33,14 @@ public class ImovelListSingleton {
             iocc = (JSONObject) array.get(i);
             imovel = new Imovel();
             imovel.setId(JSONValidations.validaAtributo(iocc.get("id")));
-            imovel.setImovel(JSONValidations.validaAtributo(iocc.get("imovel")));
+            imovel.setImovelId( JSONValidations.parseAttrToInteger(iocc.get("imovelId")));
+            imovel.setDescricao(JSONValidations.validaAtributo(iocc.get("descricao")));
             imovel.setApelido(JSONValidations.validaAtributo(iocc.get("apelido")));
             imovel.setBairro(JSONValidations.validaAtributo(iocc.get("bairro")));
             imovel.setTipo(JSONValidations.validaAtributo(iocc.get("tipo")));
             imovel.setStatus(JSONValidations.validaAtributo(iocc.get("status")));
+            imovel.setImobiliaria(JSONValidations.validaAtributo(iocc.get("imobiliaria")));
+            imovel.setObservacoes(JSONValidations.validaAtributo(iocc.get("observacoes")));
 
             imovelList.add(imovel);
         }

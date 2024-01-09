@@ -27,23 +27,17 @@
     <h5>Adicionando Imovel Ocorrencia</h5>
 
     <!-- <form action="\culturaAdd"> -->
+    <b><p th:text=${imovelIdDescr}></p></b>
     <form action="#" th:action="@{/imovelOcorrenciaSave}" th:object="${imovelOcorrencia}" method="post">
 
 
-        <input type="hidden" class="form-control" id="imovel_id"
-               name="imovel_id" th:field="*{imovel_id}">
+        <input type="hidden" class="form-control" id="imovelId"
+               name="imovelId" th:field="*{imovelId}">
 
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="codigo">Código (opcional)</label>
+            <label class="col-sm-3 col-form-label" for="nr_ref">Nro Ref. (opcional)</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="id" th:field="*{id}">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="numero_ref">Nro Ref. (opcional)</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="numero_ref" th:field="*{numero_ref}">
+                <input type="text" class="form-control" id="nr_ref" th:field="*{nr_ref}">
             </div>
         </div>
 
@@ -61,9 +55,9 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="status_final">STATUS</label>
+            <label class="col-sm-3 col-form-label" for="statusFinal">STATUS</label>
             <div class="col-sm-9">
-                <select th:field="*{status_final}">
+                <select th:field="*{statusFinal}">
                     <option value="EM ANDAMENTO">EM ANDAMENTO</option>
                     <option value="FINALIZADO">FINALIZADO</option>
                 </select>
@@ -73,11 +67,11 @@
         <div class="row">
             <div class="col-sm-9 offset-sm-3">
                 <button type="submit" class="btn btn-success save-btn">Save</button>
-                <a href="/" class="btn btn-light"
+                <a th:href="@{/imovelOcorrenciaList(imovelId=${imovelIdAttr})}" class="btn btn-light"
                    role="button">Voltar</a>
             </div>
         </div>
-
+        <a th:href="@{/imovelOcorrenciaList(imovelId=${imovelIdAttr})}">VOLTAR</a>
     </form>
 </div>
 </body>

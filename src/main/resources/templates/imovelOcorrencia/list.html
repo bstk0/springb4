@@ -28,7 +28,7 @@
 </style>
 </head>
 <body>
-<h1>ImovelOcorrencia - from HarperDB</h1>
+<h1>ImovelOcorrencia - from CANONIC</h1>
 <a href="/">Voltar Inicio</a>&nbsp;||&nbsp;<a th:href="@{/imovelList}">Voltar Lista</a> ||&nbsp;<a th:href="@{/imovelOcorrenciaAdd(imovelId=${imovelIdAttr})}">ADD</a>
 <br><br>
 <p th:text=${imovelIdDescr}></p>
@@ -50,17 +50,17 @@
     <tbody>
       <tr th:each="data : ${imovelOccList}">
         <!-- <td th:text="${data.id}"></td> -->
-        <td th:text="${data.imovel_id}"></td>
-        <td th:text="${data.numero_ref}"></td>
+        <td th:text="${data.imovelId}"></td>
+        <td th:text="${data.nr_ref}"></td>
         <td style="white-space: pre;" th:text="${data.descricao}"></td>
-        <td th:text="${data.status_final}"></td>
+        <td th:text="${data.statusFinal}"></td>
         <td th:text="${data.dataCriacao}"></td>
         <td th:text="${data.dataAtualizacao}"></td>
         <td>
           <a th:href="@{/imovelOccUpdForm(imovelOccId=${data.id})}" class="btn btn-info">Update</a>
         </td>
         <td><a href="#"   th:attr="data-id=${data.id}"
-                    th:data-imovelid="${data.imovel_id}"
+                    th:data-imovelid="${data.imovelId}"
                     th:data-descr="${data.descricao}"
                     data-toggle="modal"
                     data-target="#confirm-delete" class="confirm-delete">

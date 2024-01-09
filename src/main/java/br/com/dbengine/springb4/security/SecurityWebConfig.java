@@ -36,75 +36,6 @@ public class SecurityWebConfig {
     @Autowired
     private CustomAuthenticationProvider authProvider;
 
-    //@Autowired
-    //private UserDetailsService userDetailsService;
-
-    //@Autowired
-    //private MyAuthenticationManager authManager;
-//    private MyAuthenticationManager authManager;
-//
-//    public SecurityWebConfig() {
-//        authManager = new MyAuthenticationManager();
-//    }
-
-//    @Bean
-//    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-//        AuthenticationManagerBuilder authenticationManagerBuilder =
-//                http.getSharedObject(AuthenticationManagerBuilder.class);
-//        authenticationManagerBuilder.authenticationProvider(authProvider);
-//        return authenticationManagerBuilder.build();
-//    }
-
-//    private AuthenticationManager authManager() throws Exception {
-//        //AuthenticationManager authManager = new ProviderManager(new MyFirstCustomAuthenticationProvider());
-//        Sysout.s(">> AuthenticationManager authManager() ");
-//        AuthenticationManager aManager = new ProviderManager(authProvider);
-//        return aManager;
-//    }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user = User.builder()
-//                .username("rodrigo")
-//                .password(passwordEncoder().encode("12345"))
-//                .roles("USER")
-//                .build();
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder().encode("12345"))
-//                .roles("USER", "ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
-//    public void configure(AuthenticationManagerBuilder builder) throws Exception {
-//        builder
-//                .inMemoryAuthentication()
-//                .withUser("bisterco").password("1234")
-//                .roles("USER")
-//                .and()
-//                .withUser("zico").password("1234")
-//                .roles("USER");
-//    }
-    //@Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                    //.antMatchers("/resources/**").permitAll()
-//                    .antMatchers("/login").permitAll()
-//                    .antMatchers("/**").hasAnyRole("USER","ADMIN")
-//                    .anyRequest().authenticated()
-//                    .and()
-//                .formLogin()
-//                    .loginPage("/loginPage")
-//                    .loginProcessingUrl("/process-login")
-//                    .defaultSuccessUrl("/")
-//                    .usernameParameter("username").passwordParameter("password")
-//                    .failureUrl("/login?error=true")
-//                    //.permitAll()
-//                    .and()
-//                .logout()
-//                    .permitAll();
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -141,16 +72,6 @@ public class SecurityWebConfig {
         Sysout.s(">> FIM filterChain ..");
         return http.build();
     }
-//    public static void main(String[] args) {
-//        System.out.println(new BCryptPasswordEncoder().encode("123"));
-//    }
-
-    //@Override
-//    public void configure(WebSecurity web) {
-//        web.ignoring()
-//                .antMatchers("/resources/**", "/static/**");
-//    }
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         Sysout.s(" >> Passou em WebSecurityCustomizer ...");
@@ -160,18 +81,6 @@ public class SecurityWebConfig {
         // "/static/**");
         //return (web) -> web.ignoring().antMatchers(ENDPOINTS_WHITELIST);
     }
-
-//    @Bean
-//    public BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
-//    @Bean
-//    public AuthenticationManager
-//        authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws
-//            Exception {
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {

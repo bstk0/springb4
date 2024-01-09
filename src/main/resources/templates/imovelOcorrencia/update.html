@@ -30,8 +30,8 @@
     <form action="#" th:action="@{/imovelOcorrenciaUpdate}" th:object="${imovelOcorrencia}" method="post">
 
 
-        <input type="hidden" class="form-control" id="imovel_id"
-               name="imovel_id" th:field="*{imovel_id}">
+        <input type="hidden" class="form-control" id="imovelId"
+               name="imovelId" th:field="*{imovelId}">
 
         <input type="hidden" class="form-control" id="id"
                name="id" th:field="*{id}">
@@ -46,9 +46,9 @@
         -->
 
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="numero_ref">Nro Ref. (opcional)</label>
+            <label class="col-sm-3 col-form-label" for="nr_ref">Nro Ref. (opcional)</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="numero_ref" th:field="*{numero_ref}">
+                <input type="text" class="form-control" id="nr_ref" th:field="*{nr_ref}">
             </div>
         </div>
 
@@ -66,9 +66,9 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="status_final">STATUS</label>
+            <label class="col-sm-3 col-form-label" for="statusFinal">STATUS</label>
             <div class="col-sm-9">
-                <select th:field="*{status_final}">
+                <select th:field="*{statusFinal}">
                     <option value="EM ANDAMENTO">EM ANDAMENTO</option>
                     <option value="FINALIZADO">FINALIZADO</option>
                 </select>
