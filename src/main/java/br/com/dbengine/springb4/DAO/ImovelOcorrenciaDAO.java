@@ -23,7 +23,7 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
     private final String URL_GET = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
     private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
     private final String URL_DEL = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
-    private static HarperDBClient harperDb = new HarperDBClient();
+    //private static HarperDBClient harperDb = new HarperDBClient();
     private static CanonicClient canDb = new CanonicClient();
 
 
@@ -48,12 +48,7 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         return iOccListForm;
     }
 
-/*    @Override
-    public List<ImovelOcorrencia> getList() {
-        return null;
-    }*/
 
-    //@Override
     public void add(ImovelOcorrencia imovelOcorrencia) {
 
         JSONObject obj = new JSONObject();
@@ -69,7 +64,6 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
 
     }
 
-    //@Override
     public void update(ImovelOcorrencia imovelOcc) {
         //System.out.println("DAO - ImovelOcorrenciaDAO.update...");
         JSONObject obj = new JSONObject();
@@ -85,11 +79,6 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         Sysout.s(" UPDATE RESULT >> " + opResult);
     }
 
-/*    @Override
-    public ImovelOcorrencia getItem(String id) {
-        return DAOInterface.super.getItem(id);
-    }*/
-
     public ImovelOcorrForm getItemForm(String id) {
         String resultGetAll = canDb.getItemById(URL_GET,id);
         Sysout.s(resultGetAll);
@@ -97,11 +86,6 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         ImovelOcorrForm ioccFom = getImovelOcorrForm(iocc);
         return ioccFom;
     }
-
-/*    @Override
-    public String getCount() {
-        return null;
-    }*/
 
     //@Override
     public void delete(String id) {
@@ -145,9 +129,6 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
     }
 
     private List<ImovelOcorrencia> getImovelOcorrList(JSONArray results) {
-        //private List<Imovel> getImovelList(String sjon) {
-        //JSONArray results = canDb.CanonicJSONList(sjon);
-        //Iterator<String> iterator = results.iterator();
         List<ImovelOcorrencia> retorno = new ArrayList<ImovelOcorrencia>();
         //Imovel imov = new Imovel();
         ObjectMapper objectMapper=new ObjectMapper();
@@ -157,7 +138,7 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
             ImovelOcorrencia imov = null;
             try {
                 imov = objectMapper.readValue(obj.toString(), ImovelOcorrencia.class);
-                Sysout.s(">>>" + imov.getId());
+                //Sysout.s(">>>" + imov.getId());
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 //throw new RuntimeException(e);

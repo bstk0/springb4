@@ -20,14 +20,8 @@ public class ImovelFinanceiroDAO {
     private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovelFinanc/:_id";
 
     public ImovelFinanceiro getItem(Integer id) {
-        //String strQuery = "select * FROM rep1.imovelFinanc where imovel_id = '" + id + "'";
-
         String resultGetAll = canDb.getList("getImovelFinancByImovelId",id);
-        //Sysout.s(resultGetAll);
-        //obj = parser.parse(resultGetAll);
-        //29.12
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
-        //29.12 - FIM
 
         ObjectMapper objectMapper=new ObjectMapper();
         JSONObject obj = (JSONObject) results.get(0);
@@ -38,11 +32,7 @@ public class ImovelFinanceiroDAO {
             //throw new RuntimeException(e);
             e.getMessage();
         }
-        //Sysout.s("[[29.12]] " + results.get(0).toString());
-        //ImovelFinanceiro ioccFom = (ImovelFinanceiro) results.get(0);
-        //ImovelFinanceiro ioccFom = getImovelFinanc(iocc);
         return ioccFom;
-
     }
 
     public void update(ImovelFinanceiro imovelFin) {
@@ -59,7 +49,6 @@ public class ImovelFinanceiroDAO {
         Sysout.s(">> " + obj.toJSONString());
         String opResult = canDb.update(URL_UPD, obj.toJSONString());
         Sysout.s(" RESULT >> " + opResult);
-
     }
 
     private JSONObject convertIFtoJSON(ImovelFinanceiro imovelFinanceiro) {
@@ -80,26 +69,12 @@ public class ImovelFinanceiroDAO {
         jo.put("nr_contrato", imovelFinanceiro.getNr_contrato());
         jo.put("nr_inscr", imovelFinanceiro.getNr_inscr());
 
-//        if(imovelFinanceiro.getDtInicioContrato() != null && !("".equals(imovelFinanceiro.getDtFimContrato()))) {
-//            jo.put("dtInicioContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtInicioContrato()));
-//        }
-//
-//        Sysout.s(" >> dtFimContrato antes : " + imovelFinanceiro.getDtFimContrato());
-//
-//        if(imovelFinanceiro.getDtFimContrato() != null && !("".equals(imovelFinanceiro.getDtFimContrato()))) {
-//            jo.put("dtFimContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtFimContrato()));
-//        }
-
         jo.put("dtInicioContr", imovelFinanceiro.getDtInicioContr());
         jo.put("dtFimContr", imovelFinanceiro.getDtFimContr());
 
         jo.put("sindico", imovelFinanceiro.getSindico());
         jo.put("administradora", imovelFinanceiro.getAdministradora());
 
-        //jo.put("numero_ref", imovelOcorrencia.getNumero_ref());
-        //jo.put("status_final", imovelOcorrencia.getStatus_final());
-        //jo.put("createdBy" , imovelFinanceiro.getCreatedBy());
-        //jo.put("updatedBy" , imovelFinanceiro.getUpdatedBy());
         return jo;
     }
 

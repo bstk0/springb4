@@ -25,12 +25,12 @@ public class ImovelFinanceiroController {
     private ImovelFinanceiroDAO dao; // = new ImovelOcorrenciaDAO();
 
     @GetMapping("/imovelFinanceiroDetail")
-    public String imovelFinanceiroDetail(Model model, @RequestParam String imovelId) {
-        //List<ImovelOcorrForm> iOccListForm = dao.getListForm(imovelId);
-        ImovelFinanceiro iFin = dao.getItem(Integer.valueOf(imovelId));
+    public String imovelFinanceiroDetail(Model model, @RequestParam int imovelId) {
+        //ImovelFinanceiro iFin = dao.getItem(Integer.valueOf(imovelId));
+        ImovelFinanceiro iFin = dao.getItem(imovelId);
         // Descriçáo do Imovel
-        String imovelDescr = new ImovelDAO().getItem(imovelId).getDescricao();
-
+        Imovel desc = new ImovelDAO().getItem(imovelId);
+        String imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);
         model.addAttribute("imovelFinanceiro", iFin);
@@ -41,9 +41,7 @@ public class ImovelFinanceiroController {
     public String imovelFinancUpdate(@ModelAttribute ImovelFinanceiro imovelFinanceiro,
                                   Authentication authentication) {
         //Sysout.s("UPDATE imovelFinanceiro..." + imovelFinanceiro.getImovel_id());
-        //imovelFinanceiro.setUpdatedBy(authentication.getName());
         dao.update(imovelFinanceiro);
-        //String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelFinanceiro.getImovel_id();
         String redirect = "redirect:/imovelList";
         return redirect;
     }

@@ -30,12 +30,9 @@ public class SecProperties {
 
     @PostConstruct
     public void init() {
-        System.out.println("================== >> " + canonicKey + " << ================== ");
-        System.out.println("================== >> " + emailKey + " << ================== ");
-        System.out.println("================== >> " + threadPoolKey + " << ================== ");
-        //this.canonicKey = canonicKey;
-        //this.emailKey = emailKey;
-        //this.threadPoolKey = threadPoolKey;
+        //System.out.println("================== >> " + canonicKey + " << ================== ");
+        //System.out.println("================== >> " + emailKey + " << ================== ");
+        //System.out.println("================== >> " + threadPoolKey + " << ================== ");
         Sysout.CANONIC_KEY = canonicKey;
         Sysout.HARPER_KEY = harperKey;
     }

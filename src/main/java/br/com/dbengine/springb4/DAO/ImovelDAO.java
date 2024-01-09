@@ -33,24 +33,17 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         //JSONParser parser = new JSONParser();
         Object obj = null;
         String resultGetAll;
-            //resultGetAll = harperDb.getList();
             resultGetAll = canDb.getList("imovel");
             //Sysout.s(resultGetAll);
-            //obj = parser.parse(resultGetAll);
             JSONArray results = canDb.CanonicJSONList(resultGetAll);
-            //JSONArray results = (JSONArray) (obj);
-            //List<Imovel> imovelList = (ArrayList<Imovel>) results;
             List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
             //singleton
-            //ImovelListSingleton.setInstance(imovelList);
             ImovelListSingleton.setInstaceJSON((JSONArray) results);
             return imovelList;      // (ArrayList<Imovel>) results;
-
     }
 
     @Override
     public void add(Imovel obj) {
-
     }
 
     @Override
@@ -114,9 +107,6 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     }
 
     private List<Imovel> getImovelList(JSONArray results) {
-  //private List<Imovel> getImovelList(String sjon) {
-        //JSONArray results = canDb.CanonicJSONList(sjon);
-        //Iterator<String> iterator = results.iterator();
         List<Imovel> retorno = new ArrayList<Imovel>();
         //Imovel imov = new Imovel();
         ObjectMapper objectMapper=new ObjectMapper();
@@ -134,7 +124,6 @@ public class ImovelDAO implements DAOInterface<Imovel> {
             //System.out.println(iterator.next());
             retorno.add(imov);
         });
-
         return retorno;
     }
 }
