@@ -36,6 +36,10 @@ public final class CanonicClient {
             //Sysout.s(query);
             body = RequestBody.create(mediaType,query);
         }
+
+        //MediaType mediaType = MediaType.parse("text/plain");
+        //RequestBody body = RequestBody.create(mediaType, "");
+        //RequestBody body = RequestBody.create("");
         try {
         Request request = new Request.Builder()
                 .url("https://can.canonic.dev/rep1-180hdf/api/" + cObj)
@@ -50,57 +54,29 @@ public final class CanonicClient {
             //throw new RuntimeException(e);
         }
     }
-
-    public String getItemById(String URL, String cObjId) { //throws IOException {
-        return opItemById("POST", URL, cObjId);
+public String getPeopleList() throws IOException {
+    OkHttpClient client = new OkHttpClient().newBuilder()
+            .build();
+    //MediaType mediaType = MediaType.parse("text/plain");
+    //RequestBody body = RequestBody.create(mediaType, "");
+    //RequestBody body = RequestBody.create("");
+    Request request = new Request.Builder()
+            .url("https://can.canonic.dev/rep1-180hdf/api/people")
+            .method("GET", null)
+            .addHeader("Authorization", Sysout.CANONIC_KEY)
+            .build();
+    Response response = client.newCall(request).execute();
+    try {
+        return response.body().string();
+    } catch (IOException e) {
+        throw new RuntimeException(e);
     }
-    public void deleteItemById(String URL, String cObjId) { //throws IOException {
-        String strDelete = opItemById("DELETE", URL, cObjId);
-        Sysout.s( "DELETE - RETURN : " + strDelete);
-    }
+}
 
-    private String opItemById(String METHOD, String URL, String cObjId) { //throws IOException {
-        String query = null;
-        //String METHOD = "POST";
-        Sysout.s(">> KEY:" + Sysout.CANONIC_KEY);
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = null; //RequestBody.create(mediaType,query);
-        query = "{\"_id\" : \"" + cObjId + "\"}";
-        Sysout.s(query);
-        body = RequestBody.create(mediaType,query);
+/*    public String getPeopleJSONList() {
+        String resp = this.getPeopleList();
 
-        try {
-            Request request = new Request.Builder()
-                    .url(URL)
-                    .method(METHOD, body)   //null
-                    .addHeader("Authorization", Sysout.CANONIC_KEY)
-                    .build();
-            Response response = client.newCall(request).execute();
-
-            return response.body().string();
-        } catch (IOException e) {
-            return e.getMessage();
-            //throw new RuntimeException(e);
-        }
-    }
-    public String getPeopleList() throws IOException {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        Request request = new Request.Builder()
-                .url("https://can.canonic.dev/rep1-180hdf/api/people")
-                .method("GET", null)
-                .addHeader("Authorization", Sysout.CANONIC_KEY)
-                .build();
-        Response response = client.newCall(request).execute();
-        try {
-            return response.body().string();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    }*/
     public String add(String URL, String sobj) {
         Response response = execute(Sysout.CANONIC_KEY, "POST", URL, sobj);
         return response.toString();
@@ -132,25 +108,6 @@ public final class CanonicClient {
         return response;
     }
 
-
-    public JSONObject CanonicJSONItem(String sjson) {
-        //JSONArray result = new JSONArray();
-        JSONParser parser = new JSONParser();
-        JSONObject jobj = null;
-        JSONObject jobj2 = null;
-        try {
-            jobj = (JSONObject) parser.parse(sjson);
-            jobj2 = (JSONObject) jobj.get("data");
-
-            System.out.print(jobj2.toJSONString());
-        } catch (ParseException e) {
-            //return e.getMessage();
-            throw new RuntimeException(e);
-        }
-        return jobj2;
-    }
-
-
     public JSONArray CanonicJSONList(String sjson) {
         JSONArray result = new JSONArray();
         JSONParser parser = new JSONParser();
@@ -167,6 +124,8 @@ public final class CanonicClient {
                 jobj = (JSONObject) jobj2.get(key.toString());
                 result.add(jobj);
             }
+            //JSONArray sportsArray = (JSONArray) jobj.get("data");
+            //Sysout.s(result.toJSONString());
         } catch (ParseException e) {
             //return e.getMessage();
             throw new RuntimeException(e);

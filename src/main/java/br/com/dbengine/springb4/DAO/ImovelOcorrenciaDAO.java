@@ -18,26 +18,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
+public class ImovelOcorrenciaDAO implements DAOInterface<ImovelOcorrencia> {
     private final String URL_ADD = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia";
-    private final String URL_GET = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
-    private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
-    private final String URL_DEL = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
-    //private static HarperDBClient harperDb = new HarperDBClient();
+    private static HarperDBClient harperDb = new HarperDBClient();
     private static CanonicClient canDb = new CanonicClient();
 
 
     public List<ImovelOcorrencia> getList(int imovelId) {
+        //Object obj = null;
+        //resultGetAll = canDb.getList("imovel");
         String resultGetAll = canDb.getList("getImovelOcorrByImovelId",imovelId);
-        //Sysout.s(resultGetAll);
+        Sysout.s(resultGetAll);
+        //obj = parser.parse(resultGetAll);
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
+        //JSONArray results = (JSONArray) (obj);
+        //List<Imovel> imovelList = (ArrayList<Imovel>) results;
         List<ImovelOcorrencia> imovelOcorrList = this.getImovelOcorrList(results); //resultGetAll);
-        return imovelOcorrList;
+        //singleton
+        //ImovelListSingleton.setInstance(imovelList);
+        return imovelOcorrList;      // (ArrayList<Imovel>) results;
     }
 
     public List<ImovelOcorrForm> getListForm(int imovelId) {
         String resultGetAll = canDb.getList("getImovelOcorrByImovelId",imovelId);
-        //Sysout.s(resultGetAll);
+        Sysout.s(resultGetAll);
+        //obj = parser.parse(resultGetAll);
         JSONArray imovelOccList = canDb.CanonicJSONList(resultGetAll);
         List<ImovelOcorrForm> iOccListForm = new ArrayList<ImovelOcorrForm>();
         for (Object o : imovelOccList) {
@@ -46,9 +51,16 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
             iOccListForm.add(ioccFom);
         }
         return iOccListForm;
+
     }
 
 
+    @Override
+    public List<ImovelOcorrencia> getList() {
+        return null;
+    }
+
+    @Override
     public void add(ImovelOcorrencia imovelOcorrencia) {
 
         JSONObject obj = new JSONObject();
@@ -58,38 +70,92 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         innerObj = this.convertIOtoJSON(imovelOcorrencia);
         obj.put("input", innerObj);
 
-        Sysout.s(" ADD ANTES >> " + obj.toJSONString());
+        Sysout.s(" ANTES >> " + obj.toJSONString());
         String opResult = canDb.add(URL_ADD, obj.toJSONString());
-        Sysout.s(" ADD RESULT >> " + opResult);
+        Sysout.s(" RESULT >> " + opResult);
 
     }
 
+    @Override
     public void update(ImovelOcorrencia imovelOcc) {
-        //System.out.println("DAO - ImovelOcorrenciaDAO.update...");
-        JSONObject obj = new JSONObject();
+        System.out.println("ImovelOcorrenciaDAO.update...");
+        JSONObject objJS = new JSONObject();
+//        try {
+        objJS.put("operation", "update");
+        objJS.put("schema", "rep1");
+        objJS.put("table", "imovelOcorrencia");
+
+        JSONArray list = new JSONArray();
+
         JSONParser parser = new JSONParser();
         JSONObject innerObj = null;
 
         innerObj = convertIOtoJSON(imovelOcc);
-        obj.put("_id", imovelOcc.getId());
-        obj.put("input", innerObj);
+        list.add(innerObj);
+        objJS.put("records", list);
 
-        Sysout.s("UPDATE ANTES >> " + obj.toJSONString());
-        String opResult = canDb.update(URL_UPD, obj.toJSONString());
-        Sysout.s(" UPDATE RESULT >> " + opResult);
+        Sysout.s("DAO-117: " + objJS.toJSONString());
+
+        String opResult = harperDb.execOperation(objJS.toJSONString());
+
+        Sysout.s("UPDATE: " + opResult);
+
+    }
+
+    public ImovelOcorrencia getItem(String id) {
+        return null;
     }
 
     public ImovelOcorrForm getItemForm(String id) {
-        String resultGetAll = canDb.getItemById(URL_GET,id);
-        Sysout.s(resultGetAll);
-        JSONObject iocc = canDb.CanonicJSONItem(resultGetAll);
+        //return DAOInterface.super.getItem(id);
+        //TODO: Vai ter que fazer algo igual ao getJSONList ...
+
+        //JSONObject iocc = getJSONItem(id);
+        String strQuery = "select * FROM rep1.imovelOcorrencia where id = '" + id + "'";
+        JSONObject iocc = harperDb.getJSONItem(strQuery);
+
         ImovelOcorrForm ioccFom = getImovelOcorrForm(iocc);
+//
+//        String formattedDate = JSONValidations.parseAttrToDateBR(iocc.get("__createdtime__"));
+//        //System.out.println("COM FORMAT: " + formattedDate);
+//
+//        ImovelOcorrForm ioccFom = new ImovelOcorrForm(
+//                JSONValidations.validaAtributo(iocc.get("id")),
+//                JSONValidations.parseAttrToInteger(iocc.get("imovel_id")),
+//                JSONValidations.validaAtributo(iocc.get("descricao")),
+//                JSONValidations.validaAtributo(iocc.get("numero_ref")),
+//                JSONValidations.validaAtributo(iocc.get("status_final")),
+//                formattedDate);
         return ioccFom;
     }
 
-    //@Override
-    public void delete(String id) {
-        canDb.deleteItemById(URL_DEL,id);
+    @Override
+    public String getCount() {
+        return null;
+    }
+
+    @Override
+    public String delete(String id) {
+        //return null;
+        JSONObject obj = new JSONObject();
+//        try {
+        obj.put("operation", "delete");
+        obj.put("schema", "rep1");
+        obj.put("table", "imovelOcorrencia");
+
+        JSONArray list = new JSONArray();
+        JSONParser parser = new JSONParser();
+
+        List<String> listString = new ArrayList<String>();
+        listString.add(id);
+
+        obj.put("hash_values", listString); //list);
+
+        Sysout.s(">> " + obj.toJSONString());
+
+        String opResult = harperDb.execOperation(obj.toJSONString());
+        Sysout.s("DELETE: " + opResult);
+        return opResult;
     }
 
     private JSONObject convertIOtoJSON(ImovelOcorrencia imovelOcorrencia) {
@@ -110,25 +176,21 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         //String formattedDate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__createdtime__"));
         //String dataUpdate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__updatedtime__"));
 
-        Sysout.s(" DAO - getImovelOcorrForm : " + iocc.toJSONString());
-
-        String ioId = JSONValidations.validaAtributo(iocc.get("id"));
-        if (ioId.equals("")) {
-            ioId = JSONValidations.validaAtributo(iocc.get("_id"));
-        }
-
         ImovelOcorrForm ioccFom = new ImovelOcorrForm(
-                ioId,
+                JSONValidations.validaAtributo(iocc.get("id")),
                 JSONValidations.parseAttrToInteger(iocc.get("imovelId")),
                 JSONValidations.validaAtributo(iocc.get("descricao")),
                 JSONValidations.validaAtributo(iocc.get("nr_ref")),
-                JSONValidations.validaAtributo(iocc.get("statusFinal")),
+                JSONValidations.validaAtributo(iocc.get("status_final")),
                 JSONValidations.validaAtributo(iocc.get("createdAt")), //formattedDate,
                 JSONValidations.validaAtributo(iocc.get("updatedAt"))); //dataUpdate);
         return ioccFom;
     }
 
     private List<ImovelOcorrencia> getImovelOcorrList(JSONArray results) {
+        //private List<Imovel> getImovelList(String sjon) {
+        //JSONArray results = canDb.CanonicJSONList(sjon);
+        //Iterator<String> iterator = results.iterator();
         List<ImovelOcorrencia> retorno = new ArrayList<ImovelOcorrencia>();
         //Imovel imov = new Imovel();
         ObjectMapper objectMapper=new ObjectMapper();
@@ -138,7 +200,7 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
             ImovelOcorrencia imov = null;
             try {
                 imov = objectMapper.readValue(obj.toString(), ImovelOcorrencia.class);
-                //Sysout.s(">>>" + imov.getId());
+                Sysout.s(">>>" + imov.getId());
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 //throw new RuntimeException(e);
