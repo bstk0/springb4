@@ -21,8 +21,8 @@ public class ImovelFinanceiroDAO {
     public ImovelFinanceiro getItem(Integer id) {
 
         String resultGetAll = canDb.getList("getImovelFinancByImovelId",id);
-        //Sysout.s(resultGetAll);
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
+
         ObjectMapper objectMapper=new ObjectMapper();
         JSONObject obj = (JSONObject) results.get(0);
         ImovelFinanceiro ioccFom = null;
@@ -49,6 +49,7 @@ public class ImovelFinanceiroDAO {
         //Sysout.s("UPDATE ANTES >> " + obj.toJSONString());
         String opResult = canDb.update(URL_UPD, obj.toJSONString());
         //Sysout.s("UPDATE RESULT >> " + opResult);
+
     }
 
     private JSONObject convertIFtoJSON(ImovelFinanceiro imovelFinanceiro) {
@@ -67,16 +68,6 @@ public class ImovelFinanceiroDAO {
         jo.put("cpfCadastrado", imovelFinanceiro.getCpfCadastrado());
         jo.put("nr_contrato", imovelFinanceiro.getNr_contrato());
         jo.put("nr_inscr", imovelFinanceiro.getNr_inscr());
-
-//        if(imovelFinanceiro.getDtInicioContrato() != null && !("".equals(imovelFinanceiro.getDtFimContrato()))) {
-//            jo.put("dtInicioContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtInicioContrato()));
-//        }
-//
-//        Sysout.s(" >> dtFimContrato antes : " + imovelFinanceiro.getDtFimContrato());
-//
-//        if(imovelFinanceiro.getDtFimContrato() != null && !("".equals(imovelFinanceiro.getDtFimContrato()))) {
-//            jo.put("dtFimContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtFimContrato()));
-//        }
 
         jo.put("dtInicioContr", imovelFinanceiro.getDtInicioContr());
         jo.put("dtFimContr", imovelFinanceiro.getDtFimContr());

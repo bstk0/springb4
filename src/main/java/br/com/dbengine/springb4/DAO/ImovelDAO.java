@@ -37,6 +37,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         // Singleton
         ImovelListSingleton.setInstaceJSON((JSONArray) results);
         return imovelList;      // (ArrayList<Imovel>) results;
+
     }
 
     @Override
