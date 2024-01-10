@@ -66,6 +66,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     public Imovel getItem(int id) {
         //Sysout.s("getItem.param " + id);
         List<Imovel> imovelList = ImovelListSingleton.getInstance();
+        if (imovelList == null) return new Imovel();
         if(!imovelList.isEmpty()) {
             for (Imovel imovel : imovelList) {
                 //Sysout.s("imovel.getImovelId() : " + imovel.getImovelId());
@@ -126,6 +127,9 @@ public class ImovelDAO implements DAOInterface<Imovel> {
             imovelDescr = "SINGLETON NAO CARREGADO - IMOVEL NAO LOCALIZADO";
         } else {
             imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
+            if (imovelDescr.equals("null - null")) {
+                imovelDescr = "SINGLETON NAO CARREGADO - IMOVEL NAO LOCALIZADO";
+            }
         }
         return imovelDescr;
     }

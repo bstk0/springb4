@@ -3,7 +3,7 @@ package br.com.dbengine.springb4.controller;
 import br.com.dbengine.springb4.DAO.ImovelDAO;
 import br.com.dbengine.springb4.DAO.ImovelFinanceiroDAO;
 import br.com.dbengine.springb4.DAO.ReportsDAO;
-import br.com.dbengine.springb4.dbUtil.Sysout;
+import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.*;
 import br.com.dbengine.springb4.form.ImovelPagtoListForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,10 @@ public class ImovelFinanceiroController {
         // Descriçáo do Imovel
         String imovelDescr = new ImovelDAO().getTitulo(imovelId);
 
+        // Formata Datas
+        iFin.setDtInicioContr(JSONValidations.cvtUTCDateToBr(iFin.getDtInicioContr()));
+        iFin.setDtFimContr(JSONValidations.cvtUTCDateToBr(iFin.getDtFimContr()));
+
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);
         model.addAttribute("imovelFinanceiro", iFin);
@@ -52,4 +56,5 @@ public class ImovelFinanceiroController {
         model.addAttribute("imovelPagtoList",imovelPagtoList);
         return "imovelFinanceiro/pagtoList";
     }
+
 }

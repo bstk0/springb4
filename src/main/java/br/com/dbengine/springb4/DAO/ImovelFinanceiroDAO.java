@@ -68,18 +68,17 @@ public class ImovelFinanceiroDAO {
         jo.put("nr_contrato", imovelFinanceiro.getNr_contrato());
         jo.put("nr_inscr", imovelFinanceiro.getNr_inscr());
 
-//        if(imovelFinanceiro.getDtInicioContrato() != null && !("".equals(imovelFinanceiro.getDtFimContrato()))) {
-//            jo.put("dtInicioContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtInicioContrato()));
-//        }
-//
-//        Sysout.s(" >> dtFimContrato antes : " + imovelFinanceiro.getDtFimContrato());
-//
-//        if(imovelFinanceiro.getDtFimContrato() != null && !("".equals(imovelFinanceiro.getDtFimContrato()))) {
-//            jo.put("dtFimContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtFimContrato()));
-//        }
+        if(imovelFinanceiro.getDtInicioContr() != null && !("".equals(imovelFinanceiro.getDtFimContr()))) {
+            //jo.put("dtInicioContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtInicioContrato()));
+            jo.put("dtInicioContr", JSONValidations.cvtBRDateToUTC(imovelFinanceiro.getDtInicioContr()));
+        }
+        if(imovelFinanceiro.getDtFimContr() != null && !("".equals(imovelFinanceiro.getDtFimContr()))) {
+            //jo.put("dtFimContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtFimContrato()));
+            jo.put("dtFimContr", JSONValidations.cvtBRDateToUTC(imovelFinanceiro.getDtFimContr()));
+        }
 
-        jo.put("dtInicioContr", imovelFinanceiro.getDtInicioContr());
-        jo.put("dtFimContr", imovelFinanceiro.getDtFimContr());
+//        jo.put("dtInicioContr", imovelFinanceiro.getDtInicioContr());
+//        jo.put("dtFimContr", imovelFinanceiro.getDtFimContr());
 
         jo.put("sindico", imovelFinanceiro.getSindico());
         jo.put("administradora", imovelFinanceiro.getAdministradora());
