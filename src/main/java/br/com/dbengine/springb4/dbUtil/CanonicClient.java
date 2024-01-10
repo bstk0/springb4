@@ -49,14 +49,25 @@ public final class CanonicClient {
             //throw new RuntimeException(e);
         }
     }
+public String getPeopleList() throws IOException {
+    OkHttpClient client = new OkHttpClient().newBuilder()
+            .build();
+    //MediaType mediaType = MediaType.parse("text/plain");
+    //RequestBody body = RequestBody.create(mediaType, "");
+    //RequestBody body = RequestBody.create("");
+    Request request = new Request.Builder()
+            .url("https://can.canonic.dev/rep1-180hdf/api/people")
+            .method("GET", null)
+            .addHeader("Authorization", Sysout.CANONIC_KEY)
+            .build();
+    Response response = client.newCall(request).execute();
+    try {
+        return response.body().string();
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
+}
 
-    public String getItemById(String URL, String cObjId) { //throws IOException {
-        return opItemById("POST", URL, cObjId);
-    }
-    public void deleteItemById(String URL, String cObjId) { //throws IOException {
-        String strDelete = opItemById("DELETE", URL, cObjId);
-        Sysout.s( "DELETE - RETURN : " + strDelete);
-    }
 
     private String opItemById(String METHOD, String URL, String cObjId) { //throws IOException {
         String query = null;
@@ -130,25 +141,6 @@ public final class CanonicClient {
         }
         return response;
     }
-
-
-    public JSONObject CanonicJSONItem(String sjson) {
-        //JSONArray result = new JSONArray();
-        JSONParser parser = new JSONParser();
-        JSONObject jobj = null;
-        JSONObject jobj2 = null;
-        try {
-            jobj = (JSONObject) parser.parse(sjson);
-            jobj2 = (JSONObject) jobj.get("data");
-
-            System.out.print(jobj2.toJSONString());
-        } catch (ParseException e) {
-            //return e.getMessage();
-            throw new RuntimeException(e);
-        }
-        return jobj2;
-    }
-
 
     public JSONArray CanonicJSONList(String sjson) {
         JSONArray result = new JSONArray();

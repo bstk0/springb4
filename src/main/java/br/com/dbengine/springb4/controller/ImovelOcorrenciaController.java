@@ -22,7 +22,6 @@ public class ImovelOcorrenciaController {
     @Autowired
     private ImovelOcorrenciaDAO dao; // = new ImovelOcorrenciaDAO();
 
-
     @GetMapping("/imovelOcorrenciaList")
     public String imovelOcorrenciaList(Model model, @RequestParam int imovelId) {
         List<ImovelOcorrForm> iOccListForm = dao.getListForm(imovelId);

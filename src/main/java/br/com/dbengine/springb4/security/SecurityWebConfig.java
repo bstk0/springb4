@@ -32,6 +32,7 @@ public class SecurityWebConfig {
     };
     @Autowired
     private CustomAuthenticationProvider authProvider;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         System.out.println(">> Inicio filterChain ..");
