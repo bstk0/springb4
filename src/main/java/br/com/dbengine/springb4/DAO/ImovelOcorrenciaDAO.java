@@ -1,17 +1,14 @@
 package br.com.dbengine.springb4.DAO;
 
-import br.com.dbengine.springb4.Singleton.*;
 import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.*;
 import br.com.dbengine.springb4.form.ImovelOcorrForm;
-import br.com.dbengine.springb4.interfaces.DAOInterface;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -106,6 +103,8 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
     private static ImovelOcorrForm getImovelOcorrForm(JSONObject iocc) {
         //String formattedDate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__createdtime__"));
         //String dataUpdate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__updatedtime__"));
+        String createdAt = JSONValidations.cvtUTCDateToBr(iocc.get("createdAt"));
+        String updatedAt = JSONValidations.cvtUTCDateToBr(iocc.get("updatedAt"));
 
         //Sysout.s(" DAO - getImovelOcorrForm : " + iocc.toJSONString());
 
@@ -120,8 +119,8 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
                 JSONValidations.validaAtributo(iocc.get("descricao")),
                 JSONValidations.validaAtributo(iocc.get("nr_ref")),
                 JSONValidations.validaAtributo(iocc.get("statusFinal")),
-                JSONValidations.validaAtributo(iocc.get("createdAt")), //formattedDate,
-                JSONValidations.validaAtributo(iocc.get("updatedAt"))); //dataUpdate);
+                createdAt,   //JSONValidations.validaAtributo(iocc.get("createdAt")), //formattedDate,
+                updatedAt);  //JSONValidations.validaAtributo(iocc.get("updatedAt"))); //dataUpdate);
         return ioccFom;
     }
 

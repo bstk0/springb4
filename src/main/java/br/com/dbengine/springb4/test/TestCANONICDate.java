@@ -22,6 +22,18 @@ public class TestCANONICDate {
 
         String outputBR = outputFormatBR.format(date);
         System.out.println(outputBR);  // Outputs: "01-01-2022"
+
+        //VOLTANDO A DATA ....
+        SimpleDateFormat inputFormatBR = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat outputFormatUTC = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+            date = inputFormatBR.parse("15/01/2023");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        output = outputFormatUTC.format(date);
+        System.out.println("UTC: " + output);  // Outputs: "01-01-2022"
     }
 
 }

@@ -26,8 +26,7 @@ public class ImovelOcorrenciaController {
     public String imovelOcorrenciaList(Model model, @RequestParam int imovelId) {
         List<ImovelOcorrForm> iOccListForm = dao.getListForm(imovelId);
         // Descriçáo do Imovel
-        Imovel desc = new ImovelDAO().getItem(imovelId);
-        String imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
+        String imovelDescr = new ImovelDAO().getTitulo(imovelId);
 
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);
@@ -40,8 +39,7 @@ public class ImovelOcorrenciaController {
         ImovelOcorrencia imovOccAdd = new ImovelOcorrencia();
         imovOccAdd.setImovelId(imovelId);
         // Descriçáo do Imovel
-        Imovel desc = new ImovelDAO().getItem(imovelId);
-        String imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
+        String imovelDescr = new ImovelDAO().getTitulo(imovelId);
 
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);
@@ -71,8 +69,7 @@ public class ImovelOcorrenciaController {
         String imovelDescr = "";
         int imovelId = imovelOccUpd.getImovelId();
         if (imovelId > 0) {
-            Imovel desc = new ImovelDAO().getItem(imovelId);
-            imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
+            imovelDescr = new ImovelDAO().getTitulo(imovelId);
         }
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelOcorrencia", imovelOccUpd);

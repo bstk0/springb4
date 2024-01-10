@@ -35,7 +35,8 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
         List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
         // Singleton
-        ImovelListSingleton.setInstaceJSON((JSONArray) results);
+        //ImovelListSingleton.setInstaceJSON((JSONArray) results);
+        ImovelListSingleton.setInstance(imovelList);
         return imovelList;      // (ArrayList<Imovel>) results;
 
     }
@@ -66,10 +67,13 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     public Imovel getItem(int id) {
         //Sysout.s("getItem.param " + id);
         List<Imovel> imovelList = ImovelListSingleton.getInstance();
-        for(Imovel imovel : imovelList) {
-            //Sysout.s("imovel.getImovelId() : " + imovel.getImovelId());
-            if(imovel.getImovelId() == id) {
-                return imovel;
+        if (imovelList == null) return new Imovel();
+        if(!imovelList.isEmpty()) {
+            for (Imovel imovel : imovelList) {
+                //Sysout.s("imovel.getImovelId() : " + imovel.getImovelId());
+                if (imovel.getImovelId() == id) {
+                    return imovel;
+                }
             }
         }
         return new Imovel(); //DAOInterface.super.getItem(id);
@@ -115,5 +119,19 @@ public class ImovelDAO implements DAOInterface<Imovel> {
             retorno.add(imov);
         });
         return retorno;
+    }
+
+    public String getTitulo(int imovelId) {
+        Imovel desc = this.getItem(imovelId);
+        String imovelDescr;
+        if (desc == null) {
+            imovelDescr = "SINGLETON NAO CARREGADO - IMOVEL NAO LOCALIZADO";
+        } else {
+            imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
+            if (imovelDescr.equals("null - null")) {
+                imovelDescr = "SINGLETON NAO CARREGADO - IMOVEL NAO LOCALIZADO";
+            }
+        }
+        return imovelDescr;
     }
 }

@@ -1,7 +1,6 @@
 package br.com.dbengine.springb4.dbUtil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -65,10 +64,55 @@ public class JSONValidations {
     private static String getBRDate(String unixmilliseconds) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         long milliSeconds= Long.parseLong(unixmilliseconds);
-        Sysout.s(" >> milliSeconds : " + milliSeconds);
+        //Sysout.s(" >> milliSeconds : " + milliSeconds);
         Date date = new Date(milliSeconds * 1000);
         String java_date = formatter.format(date);
         return java_date;
     }
 
+    public static String cvtUTCDateToBr(Object o) {
+        String inputData = (String) o;
+        return cvtUTCDateToBr(inputData);
+    }
+
+    public static String cvtUTCDateToBr(String utcDate) {
+        //String inputData = (String) o;
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat outputFormatBR = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = null;
+        String outputBR = "";
+        if(utcDate == null) return "";
+        if (!utcDate.equals("")) {
+            try {
+                //Sysout.s("cvtUTCDateToBr - ANTES:" + utcDate );
+                date = inputFormat.parse(utcDate);
+                outputBR = outputFormatBR.format(date);
+                //Sysout.s("cvtUTCDateToBr - DEPOIS:" + outputBR );
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return outputBR;
+    }
+
+
+    public static String cvtBRDateToUTC(String brDate) {
+        //VOLTANDO A DATA ....
+        SimpleDateFormat inputFormatBR = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat outputFormatUTC = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        String output = "";
+        if(brDate == null) return "";
+        if (!brDate.equals("")) {
+            try {
+                //Sysout.s("cvtBRDateToUTC - ANTES:" + brDate );
+                date = inputFormatBR.parse(brDate);
+                output = outputFormatUTC.format(date);
+                //Sysout.s("cvtBRDateToUTC - DEPOIS:" + output );
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return output;
+    }
 }

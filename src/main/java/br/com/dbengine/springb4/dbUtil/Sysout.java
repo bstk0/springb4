@@ -42,7 +42,7 @@ public class Sysout {
         //if (SHOW_SYSOUT) {
         //if (InetAddress.getLoopbackAddress().getHostName() == "localhost") {
         if (UBUNTU.equals(localHostName)) {
-            Sysout.s(texto);
+            System.out.println(texto);
         }
     }
 
