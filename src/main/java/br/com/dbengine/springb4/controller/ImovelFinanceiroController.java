@@ -28,8 +28,7 @@ public class ImovelFinanceiroController {
     public String imovelFinanceiroDetail(Model model, @RequestParam int imovelId) {
         ImovelFinanceiro iFin = dao.getItem(imovelId);
         // Descriçáo do Imovel
-        Imovel desc = new ImovelDAO().getItem(imovelId);
-        String imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
+        String imovelDescr = new ImovelDAO().getTitulo(imovelId);
 
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);
