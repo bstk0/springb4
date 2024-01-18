@@ -17,6 +17,8 @@ public class Sysout {
     public static String CANONIC_KEY;
     public static String HARPER_KEY;
 
+    public static String RESTDB_KEY;
+
     private static final String UBUNTU = "rodrigo-U46E";
     public static void s(String texto) {
         //InetAddress.getByName(new URL(urlString).getHost());

@@ -14,7 +14,6 @@ public final class RestDBClient {
     private final String TAG = RestDBClient.class.getSimpleName();
     // You can find your API KEYS here : https://restdb.io/docs/apikeys-and-cors
     private final String BASE_URI = "https://bstk1-1e0a.restdb.io/rest/";//"https://rdb-examples.restdb.io/rest/"; // change to your BASE URI
-    private final String API_KEY = "b5c27f4bcf96c37fe24f926f4869b0503f588"; //"58aef41e2c4ed27f0da9dd05a1720d6698be3"; // change to your API KEY
     private final String CONTENT_TYPE = "application/json";
     private final int TIMEOUT = 2000;// 2000ms = 2seconds
 
@@ -26,8 +25,6 @@ public final class RestDBClient {
 
     private final String QUERY_COUNT = "?q={}&h={\"$aggregate\":[\"COUNT:\"]}";
 
-
-
     /**
      * Create connection to the server
      * @param requestMethod Method to the request (PUT,GET,DELETE,POST)
@@ -38,9 +35,11 @@ public final class RestDBClient {
     private  HttpURLConnection createConnection(final String requestMethod, final String url) throws IOException {
         HttpURLConnection connection = null;
         URL finalUrl = new URL(BASE_URI + url);
+        //Sysout.s(" finalURL: " + finalUrl);
+        //Sysout.s(" Sysout.RESTDB_KEY: " + Sysout.RESTDB_KEY );
         connection = (HttpURLConnection)finalUrl.openConnection();
         connection.setRequestMethod(requestMethod);
-        connection.setRequestProperty("X-apikey", API_KEY);
+        connection.setRequestProperty("X-apikey", Sysout.RESTDB_KEY);
         connection.setRequestProperty("Content-Type", CONTENT_TYPE);
         connection.setConnectTimeout(TIMEOUT);
         connection.setUseCaches(false);
