@@ -16,6 +16,8 @@ public class Sysout {
     //private static final Boolean SHOW_SYSOUT = true ;
     public static String CANONIC_KEY;
     public static String HARPER_KEY;
+    public static String HASURA_KEY;
+    public static String RESTDB_KEY;
 
     private static final String UBUNTU = "rodrigo-U46E";
     public static void s(String texto) {

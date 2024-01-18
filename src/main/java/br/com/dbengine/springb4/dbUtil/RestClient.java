@@ -1,20 +1,21 @@
 package br.com.dbengine.springb4.dbUtil;
 
+import org.json.simple.*;
+import org.json.simple.parser.*;
+
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.*;
+import java.util.*;
 
-import java.util.logging.Logger;
+public final class RestClient {
 
-/**
- * Created by guillaumeagis on 15/03/2016.
- */
-public final class RestDBClient {
-
-    private final String TAG = RestDBClient.class.getSimpleName();
+    private final String TAG = RestClient.class.getSimpleName();
     // You can find your API KEYS here : https://restdb.io/docs/apikeys-and-cors
-    private final String BASE_URI = "https://bstk1-1e0a.restdb.io/rest/";//"https://rdb-examples.restdb.io/rest/"; // change to your BASE URI
-    private final String CONTENT_TYPE = "application/json";
+    private String BASE_URI; //"https://rdb-examples.restdb.io/rest/"; // change to your BASE URI
+    private String CONTENT_TYPE; // = "application/json";
+
+    private List<String> AUTH_KEY;
+
     private final int TIMEOUT = 2000;// 2000ms = 2seconds
 
     //HTTP protocol
@@ -25,6 +26,32 @@ public final class RestDBClient {
 
     private final String QUERY_COUNT = "?q={}&h={\"$aggregate\":[\"COUNT:\"]}";
 
+//    public RestClient(String baseURI) {
+//        BASE_URI = "https://bstk1-1e0a.restdb.io/rest/";
+//    }
+
+//    public void createConnection(String url, String contentType, List<String> authKey) {
+//        this.BASE_URI = url;
+//        this.CONTENT_TYPE = contentType;
+//        this.AUTH_KEY = authKey;
+//    }
+
+    public RestClient(String BASE_URI, String CONTENT_TYPE, List<String> AUTH_KEY) {
+        Sysout.s(" ** RestClient constructor ... ");
+        this.BASE_URI = BASE_URI;
+        this.CONTENT_TYPE = CONTENT_TYPE;
+        this.AUTH_KEY = AUTH_KEY;
+        Sysout.s("   >> this.BASE_URI : " +  this.BASE_URI);
+        Sysout.s("   >> this.CONTENT_TYPE : " +  this.CONTENT_TYPE);
+        Sysout.s("   >> this.AUTH_KEY : " +  this.AUTH_KEY.toString());
+        Sysout.s(" ** RestClient constructor ... ");
+    }
+
+    public void setAUTH_KEY(List<String> AUTH_KEY) {
+        this.AUTH_KEY = AUTH_KEY;
+        Sysout.s(" >> setAUTH_KEY : " + this.AUTH_KEY.toString());
+    }
+
     /**
      * Create connection to the server
      * @param requestMethod Method to the request (PUT,GET,DELETE,POST)
@@ -33,13 +60,20 @@ public final class RestDBClient {
      * @throws IOException throw exception if wrong parameters or cant' open a connection
      */
     private  HttpURLConnection createConnection(final String requestMethod, final String url) throws IOException {
+        Sysout.s(" ** HttpURLConnection ... ");
         HttpURLConnection connection = null;
-        URL finalUrl = new URL(BASE_URI + url);
-        //Sysout.s(" finalURL: " + finalUrl);
-        //Sysout.s(" Sysout.RESTDB_KEY: " + Sysout.RESTDB_KEY );
+//        if (AUTH_KEY.isEmpty()) {
+//            Sysout.s(" >> ERRO DE CONEXAO, AUSENCIA DE KEY <<");
+//            return connection;
+//        }
+        Sysout.s(" >> BASE_URI: " + this.BASE_URI);
+        URL finalUrl = new URL(BASE_URI);
+        Sysout.s(" >> finalURL: " + finalUrl);
+        Sysout.s(" >> Sysout.RESTDB_KEY: " + AUTH_KEY.get(0) + " / " + AUTH_KEY.get(1) );
+        Sysout.s(" >> CONTENT_TYPE: " + CONTENT_TYPE);
         connection = (HttpURLConnection)finalUrl.openConnection();
         connection.setRequestMethod(requestMethod);
-        connection.setRequestProperty("X-apikey", Sysout.RESTDB_KEY);
+        connection.setRequestProperty(AUTH_KEY.get(0),AUTH_KEY.get(1));
         connection.setRequestProperty("Content-Type", CONTENT_TYPE);
         connection.setConnectTimeout(TIMEOUT);
         connection.setUseCaches(false);
@@ -78,6 +112,7 @@ public final class RestDBClient {
      * @return
      */
     private  String executeHTTPRequest(final String requestMethod, final String url, final String parameters)  {
+        Sysout.s(" ** executeHTTPRequest ...");
         HttpURLConnection connection = null;
         StringBuilder response = new StringBuilder(); // or StringBuffer if not Java 5+
         try {
@@ -151,6 +186,28 @@ public final class RestDBClient {
      */
     public String getCount(final String collection) {
         return executeHTTPRequest(GET, collection + QUERY_COUNT);
+    }
+
+    public JSONArray HasuraJSONList(String sjson, String tableName) {
+        JSONArray result = new JSONArray();
+        JSONParser parser = new JSONParser();
+        JSONObject jobj = null;
+        try {
+            jobj = (JSONObject) parser.parse(sjson);
+//            JSONObject jobj2 = (JSONObject) jobj.get(tableName);
+//            Iterator<?> iterator = jobj2.keySet().iterator();
+//            while (iterator.hasNext()) {
+//                Object key = iterator.next();
+//                jobj = (JSONObject) jobj2.get(key.toString());
+//                result.add(jobj);
+//            }
+            result = (JSONArray) jobj.get(tableName);
+        } catch (ParseException e) {
+            //return e.getMessage();
+            //throw new RuntimeException(e);
+            Sysout.s( "ERROR:" + e.getMessage());
+        }
+        return result;
     }
 }
 

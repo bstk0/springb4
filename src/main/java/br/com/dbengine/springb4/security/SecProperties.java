@@ -25,6 +25,12 @@ public class SecProperties {
     @Value("${harper-key}")
     private String harperKey;
 
+    @Value("${restdb-key}")
+    private String restdbKey;
+
+    @Value("${hasura-key}")
+    private String hasuraKey;
+
     public SecProperties() {
     }
 
@@ -33,8 +39,12 @@ public class SecProperties {
         //Sysout.s("================== >> " + canonicKey + " << ================== ");
         //Sysout.s("================== >> " + emailKey + " << ================== ");
         //Sysout.s("================== >> " + threadPoolKey + " << ================== ");
+        //Sysout.s("================== >> " + restdbKey + " << ================== ");
+        Sysout.s("================== >> " + hasuraKey + " << ================== ");
         Sysout.CANONIC_KEY = canonicKey;
         Sysout.HARPER_KEY = harperKey;
+        Sysout.RESTDB_KEY = restdbKey;
+        Sysout.HASURA_KEY = hasuraKey;
     }
 
 }
