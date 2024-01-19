@@ -24,34 +24,34 @@
 </head>
 <body>
 <div class="container" style="margin-top: 30px;">
-    <h5>Adicionando Cultura</h5>
+    <h5>Adicionando HPeople</h5>
 
     <!-- <form action="\culturaAdd"> -->
-    <form action="#" th:action="@{/culturaAdd}" th:object="${cultura}" method="post">
+    <form action="#" th:action="@{/hpeopleAdd}" th:object="${hpeople}" method="post">
 
         <!--
         <input type="hidden" class="form-control" id="cultura.id"
                name="cultura._id" value="">
         -->
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="codigo">Código</label>
+            <label class="col-sm-3 col-form-label" for="id">Código</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="codigo" th:field="*{codigo}">
+                <input type="text" class="form-control" id="id" th:field="*{id}">
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="descricao">Descrição</label>
+            <label class="col-sm-3 col-form-label" for="nome">Nome</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="descricao"
-                        th:field="*{descricao}">
+                <input type="text" class="form-control" id="nome"
+                        th:field="*{nome}">
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-9 offset-sm-3">
                 <button type="submit" class="btn btn-success save-btn">Save</button>
-                <a href="/" class="btn btn-light"
+                <a href="/hpeopleList" class="btn btn-light"
                    role="button">Voltar</a>
             </div>
         </div>

@@ -27,30 +27,31 @@
     <h5>Atualizando Cultura</h5>
 
     <!-- <form action="\culturaAdd"> -->
-    <form action="#" th:action="@{/culturaUpdate}" th:object="${cultura}" method="post">
+    <form action="#" th:action="@{/hpeopleUpdate}" th:object="${hpeople}" method="post">
 
-        <input type="hidden"  id="_id" th:field="*{_id}">
-        <input type="hidden"  name="culturaId" id="culturaId">
+<!--        <input type="hidden"  id="_id" th:field="*{_id}">-->
+        <input type="hidden"  id="id" th:field="*{id}">
+        <input type="hidden"  name="hpeopleId" id="hpeopleId">
+
+<!--        <div class="form-group row">-->
+<!--            <label class="col-sm-3 col-form-label" for="codigo">Código</label>-->
+<!--            <div class="col-sm-9">-->
+<!--                <input type="text" class="form-control" id="codigo" th:field="*{codigo}">-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="codigo">Código</label>
+            <label class="col-sm-3 col-form-label" for="descricao">Nome</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="codigo" th:field="*{codigo}">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="descricao">Descrição</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="descricao"
-                        th:field="*{descricao}">
+                <input type="text" class="form-control" id="nome"
+                        th:field="*{nome}">
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-9 offset-sm-3">
                 <button type="submit" class="btn btn-success save-btn">Save</button>
-                <a href="/" class="btn btn-light"
+                <a href="/hpeopleList" class="btn btn-light"
                    role="button">Voltar</a>
             </div>
         </div>

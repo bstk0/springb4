@@ -36,7 +36,7 @@ pageEncoding="UTF-8" errorPage=""%>
 </head>
 <body>
 <h1>People - from HASURA.NEON</h1>
-<a href="/">Voltar</a>&nbsp;||&nbsp;<a href="/cultura/form">ADD</a>
+<a href="/">Voltar</a>&nbsp;||&nbsp;<a href="/hpeople/addform">ADD</a>
 <div class="bs-example">
   <table id="hpeoplelist" class="table table-hover">
     <thead class="thead-light">
@@ -70,7 +70,7 @@ pageEncoding="UTF-8" errorPage=""%>
       <td th:text="${data.id}"></td>
       <td th:text="${data.nome}"></td>
       <td>
-        <a th:href="@{/culturaUpdForm(culturaId=${data.id})}" class="btn btn-info">Update</a>
+        <a th:href="@{/hpeopleUpdForm(hpeopleId=${data.id})}" class="btn btn-info">Update</a>
       </td>
       <td><a href="#"   th:attr="data-id=${data.id}"
                   th:data-descr="${data.nome}"
@@ -141,8 +141,8 @@ pageEncoding="UTF-8" errorPage=""%>
 				var delId = $('#confirm-delete').data('id');
 				//var urlAction = "${linkTo[CulturaController].delete}";
 				//th:href="@{/culturaDelete(culturaId=${data._id})}"
-				var urlAction = "/culturaDelete";
-				urlAction += "?culturaId="+delId
+				var urlAction = "/hpeopleDelete";
+				urlAction += "?hpeopleId="+delId
 				//alert("confirm:" + id);
 				//$('[data-id='+id+']').remove();
 				window.location.href = urlAction;

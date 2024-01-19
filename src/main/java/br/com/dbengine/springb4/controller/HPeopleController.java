@@ -3,6 +3,7 @@ package br.com.dbengine.springb4.controller;
 HASURA - PEOPLE 1 - NEON.TECH
  */
 import br.com.dbengine.springb4.DAO.*;
+import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.*;
 import org.json.simple.*;
 import org.springframework.beans.factory.annotation.*;
@@ -20,11 +21,13 @@ public class HPeopleController {
     @Autowired
     private HPeopleDAO dao;
 
-//    @GetMapping("/cultura/form")
-//    public String culturaForm(Model model) {
-//        model.addAttribute("cultura", new Cultura());
-//        return "cultura_form";
-//    }
+    @GetMapping("/hpeople/addform")
+    public String hpeopleAddForm(Model model) {
+        HPeople hpeople = new HPeople();
+        hpeople.setId(String.valueOf(dao.getNCOUNT() + 1));
+        model.addAttribute("hpeople", hpeople);
+        return "/hasura/people1_addform";
+    }
 
     //culturaList
     @GetMapping("/hpeopleList")
@@ -37,40 +40,36 @@ public class HPeopleController {
         return "/hasura/people1_list";
     }
 
-//    @PostMapping("/culturaAdd")
-//    public String add(Model model, @ModelAttribute Cultura cultura) {
-//        dao.add(cultura);
-//        return "redirect:/culturaList";
-//    }
+    @PostMapping("/hpeopleAdd")
+    public String hpeopleAdd(Model model, @ModelAttribute HPeople hpeople) {
+        dao.add(hpeople);
+        return "redirect:/hpeopleList";
+    }
 
-//    @GetMapping("/culturaUpdForm")
-//    public String culturaUpdForm(@RequestParam String culturaId,Model model) {
-//        Cultura culturaUpd = new Cultura();
-//        culturaUpd = dao.getItem(culturaId);
-//        model.addAttribute("cultura", culturaUpd);
-//        return "cultura_updform";
-//    }
+    @GetMapping("/hpeopleUpdForm")
+    public String hpeopleUpdForm(@RequestParam String hpeopleId,Model model) {
+        //Cultura culturaUpd = new Cultura();
+        //culturaUpd = dao.getItem(culturaId);
+        HPeople  hPeople = dao.getItem(hpeopleId);
+        model.addAttribute("hpeople", hPeople);
+        return "/hasura/people1_updform";
+    }
 
-//    @PostMapping("/culturaUpdate")
-//    public String culturaUpdate(@ModelAttribute Cultura cultura, @RequestParam("culturaId") String culturaId) {
-//        //Sysout.s("UPDATE cultura..." + cultura.get_id());
-//        //Sysout.s("UPDATE culturaId..." + culturaId);
-//        if (cultura.get_id() == null) { cultura.set_id(culturaId); };
-//        dao.update(cultura);
-//        return "redirect:/culturaList";
-//    }
+    @PostMapping("/hpeopleUpdate")
+    public String hpeopleUpdate(@ModelAttribute HPeople hpeople,
+                                @RequestParam("hpeopleId") String hpeopleId) {
+        //Sysout.s("UPDATE cultura..." + cultura.get_id());
+        Sysout.s("UPDATE hpeopleId..." + hpeopleId);
+        //if (cultura.get_id() == null) { cultura.set_id(culturaId); };
+        dao.update(hpeople);
+        return "redirect:/hpeopleList";
+    }
 
-//    @GetMapping("/culturaDelete")
-//    public String culturaDelete(@RequestParam String culturaId) {
-//         dao.delete(culturaId);
-//        return "redirect:/culturaList";
-//    }
+    @GetMapping("/hpeopleDelete")
+    public String hpeopleDelete(@RequestParam String hpeopleId) {
+         dao.delete(hpeopleId);
+        return "redirect:/hpeopleList";
+    }
 
-//    private JSONObject culturaToJSON(Cultura cultura) {
-//        JSONObject snuttgly = new JSONObject();
-//        snuttgly.put("CulturaCodigo", cultura.getCodigo());
-//        snuttgly.put("CulturaDescricao", cultura.getDescricao() );
-//        //snuttgly.put("NovaColuna", "They are the best");
-//        return snuttgly;
-//    }
+
 }

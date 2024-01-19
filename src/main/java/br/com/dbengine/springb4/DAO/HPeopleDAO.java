@@ -14,17 +14,16 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 @Component
 public class HPeopleDAO { //implements DAOInterface<Cultura> {
-    /**
-     * Collection name
-     */
+
     private static final String COLLECTION = "people1";
+    private int NCOUNT = 0;
     //private static restClient rest = new restClient();
 
 //    private static final List<String> authKey = new ArrayList<String>(
 //            Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY)
 //    );
     private static final RestClient rest = new RestClient(
-            "https://funny-vervet-43.hasura.app/api/rest/people1",
+            "https://funny-vervet-43.hasura.app/api/rest/",
             "text/plain",
             new ArrayList<String>(
                     Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY)
@@ -46,58 +45,54 @@ public class HPeopleDAO { //implements DAOInterface<Cultura> {
             JSONArray results = rest.HasuraJSONList(resultGetAll,COLLECTION);
 
             Sysout.s( " >> getList - results : " + results.size());
+            this.NCOUNT = results.size();
 
         List<HPeople> hPeopleList = this.getListFromJSON(results); //resultGetAll);
         return hPeopleList;
-
-//            return (ArrayList<HPeople>) results;
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return new ArrayList<HPeople>();
     }
 
-    public void add(Cultura cultura) {
+    public void add(HPeople hpeople) {
         //Sysout.s("CulturaCodigo :" + cultura.getCodigo());
         //Sysout.s("CulturaDescricao :" + cultura.getDescricao() );
-        JSONObject snuttgly = culturaToJSON(cultura);
+        JSONObject snuttgly = hpeopleToJSON(hpeople);
+        Sysout.s(" >> add : " + snuttgly.toJSONString());
         String resultWoobly = rest.post(COLLECTION, snuttgly.toJSONString());
 
     }
 
 
-    public void update(Cultura cultura) {
-        String culturaId = cultura.get_id();
+    public void update(HPeople hPeople) {
+        String hPeopleId = hPeople.getId();
         //Sysout.s("CULTURA ID:" + culturaId);
-        JSONObject snuttgly = culturaToJSON(cultura);
-        //Sysout.s("snuttgly.toJSONString():" + snuttgly.toJSONString());
-        String reString = rest.put(COLLECTION + "/" + culturaId, snuttgly.toJSONString());
+        JSONObject snuttgly = hpeopleToJSON(hPeople);
+        Sysout.s(">> snuttgly.toJSONString():" + snuttgly.toJSONString());
+
+        //rest.setCONTENT_TYPE("application/json");
+        //String reString = rest.put(COLLECTION + "/" + hPeopleId, snuttgly.toJSONString());
+        String reString = rest.post(COLLECTION + "/" + hPeopleId, snuttgly.toJSONString());
+
         //Sysout.s(reString);
     }
 
 
-    public Cultura getItem(String id) {
+    public HPeople getItem(String id) {
+        final String PREFIX = "people1_by_pk";
+        ObjectMapper objectMapper=new ObjectMapper();
         JSONParser parser = new JSONParser();
-        //JSONObject jsonQuery = new JSONObject();
-        String culturaItem = rest.get(COLLECTION + "/" + id);
-        //Sysout.s("getItem:" + culturaItem);
-        JSONObject result = null;
+        String hpeopleItem = rest.get(COLLECTION + "/" + id);
+        Sysout.s("getItem:" + hpeopleItem);
+        HPeople imov = null;
         try {
-            Object obj = parser.parse(culturaItem);
-            result = (JSONObject) obj;
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
+            JSONObject jobj = (JSONObject) parser.parse(hpeopleItem);
+            JSONObject obj = (JSONObject) jobj.get(PREFIX);
+
+            imov = objectMapper.readValue(obj.toString(), HPeople.class);
+            Sysout.s(">>> id + nome : " + imov.getId() + " / " + imov.getNome());
+        } catch (JsonProcessingException | ParseException e) {
             e.printStackTrace();
+            //throw new RuntimeException(e);
         }
-        if (result == null) {
-            return new Cultura("", 0,"CULTURA NULL...");
-
-        } else {
-            return new Cultura(result.get("_id").toString(),
-                    Integer.parseInt(result.get("CulturaCodigo").toString()),
-                    result.get("CulturaDescricao").toString());
-
-        }
+        return imov;
     }
 
     public String getCount() {
@@ -116,50 +111,20 @@ public class HPeopleDAO { //implements DAOInterface<Cultura> {
     }
 
     public String delete(String id) {
-        String culturaDeleteItem = rest.delete(COLLECTION + "/" + id);
-        return culturaDeleteItem;
+        //String culturaDeleteItem = rest.delete(COLLECTION + "/" + id);
+        String hpeopleDeleteItem = rest.delete(COLLECTION + "/" + id);
+        return hpeopleDeleteItem;
     }
 
 
-    private JSONObject culturaToJSON(Cultura cultura) {
+    private JSONObject hpeopleToJSON(HPeople hpeople) {
+        JSONObject result = new JSONObject();
         JSONObject snuttgly = new JSONObject();
-        snuttgly.put("CulturaCodigo", cultura.getCodigo());
-        snuttgly.put("CulturaDescricao", cultura.getDescricao() );
-        //snuttgly.put("NovaColuna", "They are the best");
-        return snuttgly;
+        snuttgly.put("id", hpeople.getId());
+        snuttgly.put("nome", hpeople.getNome() );
+        result.put("object", snuttgly);
+        return result;
     }
-
-
-    /**
-     * Create 2 JSON Objects and add them to the collection
-     *
-     * @param client rest client
-     */
-    @SuppressWarnings("unused")
-    private static void postRequest(final RestClient client) {
-        JSONObject woobly = new JSONObject();
-        woobly.put("title", "Wobbly bubbles");
-        woobly.put("description", "They are the best");
-        woobly.put("count", 4);
-        woobly.put("email", "wobble@wobble.com");
-
-        JSONObject snuttgly = new JSONObject();
-        snuttgly.put("title", "Snuggly snuggles");
-        snuttgly.put("description", "They are the worst");
-        snuttgly.put("count", 8);
-        snuttgly.put("email", "snuggle@snuggle.com");
-
-        String resultWoobly = client.post(COLLECTION, woobly.toJSONString());
-
-        Sysout.s("result Woobly postRequest : " + resultWoobly);
-        String resultSnuttgly = client.post(COLLECTION, snuttgly.toJSONString());
-        Sysout.s("result Snuttgly postRequest : " + resultSnuttgly);
-
-        // call Garbage collection
-        snuttgly = null;
-        woobly = null;
-    }
-
 
     private String getRequest() {
         rest.setAUTH_KEY(new ArrayList<String>(
@@ -241,6 +206,10 @@ public class HPeopleDAO { //implements DAOInterface<Cultura> {
             retorno.add(imov);
         });
         return retorno;
+    }
+
+    public int getNCOUNT() {
+        return NCOUNT;
     }
 
 }
