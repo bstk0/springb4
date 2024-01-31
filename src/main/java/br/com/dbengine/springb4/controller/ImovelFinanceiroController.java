@@ -49,12 +49,16 @@ public class ImovelFinanceiroController {
         return redirect;
     }
 
-    @GetMapping("/imovelPagtoList")
+/*    @GetMapping("/imovelPagtoList")
     public String imovelPagtoList(Model model) {
         List<ImovelPagtoListForm> imovelPagtoList = new ArrayList<ImovelPagtoListForm>();
         imovelPagtoList = new ReportsDAO().getImovelPagtosList();
         model.addAttribute("imovelPagtoList",imovelPagtoList);
         return "imovelFinanceiro/pagtoList";
-    }
+    }*/
 
+    @GetMapping("/imovelPagtoList")
+    public String imovelPagtoList(Model model) {
+        return "ops";
+    }
 }

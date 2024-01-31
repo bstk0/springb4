@@ -15,13 +15,17 @@ public class ImobiliariaController {
 
     private ImobiliariaDAO dao = new ImobiliariaDAO();
 
-    @GetMapping("/imobiliariaList")
+/*    @GetMapping("/imobiliariaList")
     public String imovelList(Model model) {
         List<Imobiliaria> imobiliarialList = new ArrayList<Imobiliaria>();
         imobiliarialList = dao.getList();
         //Sysout.s("imobiliarialList size: " + imobiliarialList.size());
         model.addAttribute("imobiliariaList",imobiliarialList);
         return "imobiliaria/list";
-    }
+    }*/
 
+    @GetMapping("/imobiliariaList")
+    public String imovelList(Model model) {
+        return "ops";
+    }
 }
