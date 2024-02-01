@@ -2,7 +2,7 @@ package br.com.dbengine.springb4.DAO;
 
 import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.*;
-import br.com.dbengine.springb4.form.ImovelOcorrForm;
+import br.com.dbengine.springb4.form.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +31,13 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         return imovelOcorrList;
     }
 
+    public List<ImovelOcorrEmAberto> getListEmAberto() {
+        String resultGetAll = canDb.getList("getImovelOcorrenciaEmAndamento");
+        //Sysout.s(resultGetAll);
+        JSONArray results = canDb.CanonicJSONList(resultGetAll);
+        List<ImovelOcorrEmAberto> imovelOcorrList = this.getImovelOcorrEmAbertoList(results); //resultGetAll);
+        return imovelOcorrList;
+    }
     public List<ImovelOcorrForm> getListForm(int imovelId) {
         String resultGetAll = canDb.getList("getImovelOcorrByImovelId",imovelId);
         //Sysout.s(resultGetAll);
@@ -132,7 +139,34 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
             ImovelOcorrencia imov = null;
             try {
                 imov = objectMapper.readValue(obj.toString(), ImovelOcorrencia.class);
-                Sysout.s(">>>" + imov.getId());
+                //Sysout.s(">>>" + imov.getId());
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                //throw new RuntimeException(e);
+            }
+            retorno.add(imov);
+        });
+        return retorno;
+    }
+
+    private List<ImovelOcorrEmAberto> getImovelOcorrEmAbertoList(JSONArray results) {
+        List<ImovelOcorrEmAberto> retorno = new ArrayList<ImovelOcorrEmAberto>();
+        ObjectMapper objectMapper=new ObjectMapper();
+        results.forEach(item -> {
+            JSONObject obj = (JSONObject) item;
+            ImovelOcorrEmAberto imov = null;
+            try {
+                imov = objectMapper.readValue(obj.toString(), ImovelOcorrEmAberto.class);
+                //Sysout.s(">>>" + imov.getId());
+                // Descriçáo do Imovel
+                if (imov != null) {
+                    String imovelDescr = new ImovelDAO().getApelido(imov.getImovelId());
+                    imov.setImovelDescricao(imovelDescr);
+                    imov.setCreatedAt(JSONValidations.cvtUTCDateToBr(imov.getCreatedAt()));
+                    imov.setUpdatedAt(JSONValidations.cvtUTCDateToBr(imov.getUpdatedAt()));
+                    //String createdAt = JSONValidations.cvtUTCDateToBr(iocc.get("createdAt"));
+                    //String updatedAt = JSONValidations.cvtUTCDateToBr(iocc.get("updatedAt"));
+                }
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 //throw new RuntimeException(e);

@@ -4,7 +4,7 @@ import br.com.dbengine.springb4.DAO.ImovelDAO;
 import br.com.dbengine.springb4.DAO.ImovelOcorrenciaDAO;
 import br.com.dbengine.springb4.dbUtil.Sysout;
 import br.com.dbengine.springb4.entity.*;
-import br.com.dbengine.springb4.form.ImovelOcorrForm;
+import br.com.dbengine.springb4.form.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -33,6 +33,20 @@ public class ImovelOcorrenciaController {
         model.addAttribute("imovelIdDescr",imovelDescr);
         model.addAttribute("imovelOccList",iOccListForm);
         return "imovelOcorrencia/list";
+    }
+
+    //imovelOccorEmAberto
+    @GetMapping("/imovelOcorrEmAberto")
+    public String imovelOcorrEmAberto(Model model) {
+
+        List<ImovelOcorrEmAberto> iOccListForm = dao.getListEmAberto();
+        // Descriçáo do Imovel
+        //String imovelDescr = new ImovelDAO().getTitulo(imovelId);
+
+        //model.addAttribute("imovelIdAttr",imovelId);
+        //model.addAttribute("imovelIdDescr",imovelDescr);
+        model.addAttribute("imovelOccEmAbertoList",iOccListForm);
+        return "imovelOcorrencia/listEmAberto";
     }
 
     @GetMapping("/imovelOcorrenciaAdd")

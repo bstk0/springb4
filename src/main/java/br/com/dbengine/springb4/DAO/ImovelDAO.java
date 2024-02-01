@@ -133,4 +133,18 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         }
         return imovelDescr;
     }
+    public String getApelido(int imovelId) {
+        Imovel desc = this.getItem(imovelId);
+        String imovelDescr;
+        if (desc == null) {
+            imovelDescr = "SINGLETON NAO CARREGADO";
+        } else {
+            imovelDescr = desc.getApelido(); // + " - " + desc.getDescricao();
+            Sysout.s(" ^^^ " + imovelDescr);
+            if ((imovelDescr == null) || (imovelDescr.equals("null"))) {
+                imovelDescr = "SINGLETON NAO CARREGADO";
+            }
+        }
+        return imovelDescr;
+    }
 }
