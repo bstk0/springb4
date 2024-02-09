@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.*;
 import java.util.List;
 
 @Controller
@@ -75,7 +76,11 @@ public class ImovelOcorrenciaController {
 
     @GetMapping("/imovelOccUpdForm")
     public String imovelOccUpdForm(@RequestParam String imovelOccId,
-                                   Model model) {
+                                   Model model,
+                                   HttpServletRequest request) {
+
+        String referer = request.getHeader("Referer"); //Get previous URL before call '/login'
+        Sysout.s(" REFERER : >> " + referer);
         //Sysout.s("imovelOccUpdForm...");
         ImovelOcorrForm imovelOccUpd = new ImovelOcorrForm();
         imovelOccUpd = dao.getItemForm(imovelOccId);
@@ -89,6 +94,7 @@ public class ImovelOcorrenciaController {
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelOcorrencia", imovelOccUpd);
         model.addAttribute("imovelIdDescr",imovelDescr);
+        model.addAttribute("previousUrl", referer);
         return "imovelOcorrencia/update";
     }
 
