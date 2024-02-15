@@ -23,6 +23,15 @@ public class ImovelOcorrenciaController {
     @Autowired
     private ImovelOcorrenciaDAO dao; // = new ImovelOcorrenciaDAO();
 
+    private String backURL;
+
+    public String getBackURL() {
+        return backURL;
+    }
+
+    public void setBackURL(String backURL) {
+        this.backURL = backURL;
+    }
 
     @GetMapping("/imovelOcorrenciaList")
     public String imovelOcorrenciaList(Model model, @RequestParam int imovelId) {
@@ -81,6 +90,10 @@ public class ImovelOcorrenciaController {
 
         String referer = request.getHeader("Referer"); //Get previous URL before call '/login'
         Sysout.s(" REFERER : >> " + referer);
+
+        //15.02
+        setBackURL(referer);
+
         //Sysout.s("imovelOccUpdForm...");
         ImovelOcorrForm imovelOccUpd = new ImovelOcorrForm();
         imovelOccUpd = dao.getItemForm(imovelOccId);
@@ -103,8 +116,19 @@ public class ImovelOcorrenciaController {
                                   Authentication authentication) {
         //Sysout.s("UPDATE imovelOcorrencia..." + imovelOcorrencia.getId());
         //imovelOcorrencia.setUpdatedBy(authentication.getName());
+
+        // 15.02
+        Sysout.s(" ############## ");
+        Sysout.s(" ## " + getBackURL());
+        Sysout.s(" ############## ");
+
         dao.update(imovelOcorrencia);
-        String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovelId();
+        String redirect;
+        if (checkBackURL("imovelOcorrEmAberto")) {
+            redirect ="redirect:/imovelOcorrEmAberto";
+        } else {
+            redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovelId();
+        }
         return redirect;
     }
 
@@ -112,7 +136,17 @@ public class ImovelOcorrenciaController {
     public String imovelOccDelete(@RequestParam String imovelOccId,
                                   @RequestParam String imovelId) {
         dao.delete(imovelOccId);
-        String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelId;
+        //String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelId;
+        String redirect;
+        if (checkBackURL("imovelOcorrEmAberto")) {
+            redirect ="redirect:/imovelOcorrEmAberto";
+        } else {
+            redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelId;
+        }
         return redirect;
+    }
+
+    public boolean checkBackURL(String texto) {
+        return ((getBackURL().indexOf(texto) > 0) ? true : false);
     }
 }
