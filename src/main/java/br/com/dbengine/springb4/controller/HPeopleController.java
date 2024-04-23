@@ -16,8 +16,6 @@ import java.util.*;
 @Controller
 public class HPeopleController {
 
-    //@Inject
-    //private CulturaDAO dao = new CulturaDAO();
     @Autowired
     private HPeopleDAO dao;
 
@@ -29,7 +27,6 @@ public class HPeopleController {
         return "/hasura/people1_addform";
     }
 
-    //culturaList
     @GetMapping("/hpeopleList")
     public String hpeopleList(Model model) {
         //return dao.getList();

@@ -1,13 +1,20 @@
 package br.com.dbengine.springb4.dbUtil;
 
+import br.com.dbengine.springb4.entity.*;
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.*;
+import org.json.simple.*;
+
+import java.lang.reflect.*;
 import java.text.*;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 public class JSONValidations {
 
     public static String validaAtributo(Object o) {
-        if (o == null) { return ""; }
+        if (o == null) {
+            return "";
+        }
         if (o.getClass().getSimpleName().equals("Long")) {
             return Long.toString((Long) o);
         } else {
@@ -17,7 +24,9 @@ public class JSONValidations {
     }
 
     public static Integer parseAttrToInteger(Object o) {
-        if (o == null) { return 0; }
+        if (o == null) {
+            return 0;
+        }
         //Sysout.s(">>> parseAttrToInteger : " + o.getClass().getSimpleName());
         if (o.getClass().getSimpleName().equals("Long")) {
             return Math.toIntExact((long) o);
@@ -30,7 +39,9 @@ public class JSONValidations {
     }
 
     public static String parseAttrToDateTimeBR(Object o) {
-        if (o == null) { return ""; }
+        if (o == null) {
+            return "";
+        }
         if (o.getClass().getSimpleName().equals("Long")) {
             Long aux = (Long) o;
             return getBRDateTime(Long.toString(aux));
@@ -42,7 +53,7 @@ public class JSONValidations {
 
     private static String getBRDateTime(String unixmilliseconds) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss z");
-        long milliSeconds= Long.parseLong(unixmilliseconds);
+        long milliSeconds = Long.parseLong(unixmilliseconds);
         //Sysout.s(milliSeconds);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
@@ -51,7 +62,9 @@ public class JSONValidations {
     }
 
     public static String parseAttrToDateBR(Object o) {
-        if (o == null) { return ""; }
+        if (o == null) {
+            return "";
+        }
         if (o.getClass().getSimpleName().equals("Long")) {
             Long aux = (Long) o;
             return getBRDate(Long.toString(aux));
@@ -63,7 +76,7 @@ public class JSONValidations {
 
     private static String getBRDate(String unixmilliseconds) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        long milliSeconds= Long.parseLong(unixmilliseconds);
+        long milliSeconds = Long.parseLong(unixmilliseconds);
         //Sysout.s(" >> milliSeconds : " + milliSeconds);
         Date date = new Date(milliSeconds * 1000);
         String java_date = formatter.format(date);
@@ -81,7 +94,7 @@ public class JSONValidations {
         SimpleDateFormat outputFormatBR = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
         String outputBR = "";
-        if(utcDate == null) return "";
+        if (utcDate == null) return "";
         if (!utcDate.equals("")) {
             try {
                 //Sysout.s("cvtUTCDateToBr - ANTES:" + utcDate );
@@ -102,7 +115,7 @@ public class JSONValidations {
         SimpleDateFormat outputFormatUTC = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         String output = "";
-        if(brDate == null) return "";
+        if (brDate == null) return "";
         if (!brDate.equals("")) {
             try {
                 //Sysout.s("cvtBRDateToUTC - ANTES:" + brDate );
@@ -114,5 +127,40 @@ public class JSONValidations {
             }
         }
         return output;
+    }
+
+
+    public static <T> List<T> getListFromJSON(JSONArray results, Class<T> listItemType) {
+        List<T> retorno = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        results.forEach(item -> {
+            JSONObject obj = (JSONObject) item;
+            T objItem = null;
+            try {
+                objItem = listItemType.getConstructor().newInstance();
+
+                objItem = objectMapper.readValue(obj.toString(), listItemType);
+                //Sysout.s(">>> id + nome : " + imov.getId() + " / " + imov.getNome());
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                //throw new RuntimeException(e);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+            retorno.add(objItem);
+        });
+        //return retorno;
+        //} catch (Exception ex) {
+        //Logger.getLogger(NewMain.class.getName()).log(Level.SEVERE, null, ex);
+        //    ex.printStackTrace();
+        //}
+        return retorno;
     }
 }

@@ -44,10 +44,11 @@ public class HPeopleDAO { //implements DAOInterface<Cultura> {
 
             JSONArray results = rest.HasuraJSONList(resultGetAll,COLLECTION);
 
-            Sysout.s( " >> getList - results : " + results.size());
+            Sysout.s( " >> HPeopleDAO.getList - results : " + results.size());
             this.NCOUNT = results.size();
 
-        List<HPeople> hPeopleList = this.getListFromJSON(results); //resultGetAll);
+        //List<HPeople> hPeopleList = this.getListFromJSON(results); //resultGetAll);
+        List<HPeople> hPeopleList = JSONValidations.getListFromJSON(results,HPeople.class); //resultGetAll);
         return hPeopleList;
     }
 
@@ -188,24 +189,6 @@ public class HPeopleDAO { //implements DAOInterface<Cultura> {
     private static void deleteRequest(final RestClient client, final String id) {
         String resultDelete = client.delete(COLLECTION + "/" + id);
         Sysout.s(resultDelete);
-    }
-
-    private List<HPeople> getListFromJSON(JSONArray results) {
-        List<HPeople> retorno = new ArrayList<HPeople>();
-        ObjectMapper objectMapper=new ObjectMapper();
-        results.forEach(item -> {
-            JSONObject obj = (JSONObject) item;
-            HPeople imov = null;
-            try {
-                imov = objectMapper.readValue(obj.toString(), HPeople.class);
-                Sysout.s(">>> id + nome : " + imov.getId() + " / " + imov.getNome());
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                //throw new RuntimeException(e);
-            }
-            retorno.add(imov);
-        });
-        return retorno;
     }
 
     public int getNCOUNT() {

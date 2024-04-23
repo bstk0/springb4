@@ -27,7 +27,8 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         String resultGetAll = canDb.getList("getImovelOcorrByImovelId",imovelId);
         //Sysout.s(resultGetAll);
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
-        List<ImovelOcorrencia> imovelOcorrList = this.getImovelOcorrList(results); //resultGetAll);
+        //List<ImovelOcorrencia> imovelOcorrList = this.getImovelOcorrList(results); //resultGetAll);
+        List<ImovelOcorrencia> imovelOcorrList = JSONValidations.getListFromJSON(results, ImovelOcorrencia.class); //resultGetAll);
         return imovelOcorrList;
     }
 
@@ -131,23 +132,6 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         return ioccFom;
     }
 
-    private List<ImovelOcorrencia> getImovelOcorrList(JSONArray results) {
-        List<ImovelOcorrencia> retorno = new ArrayList<ImovelOcorrencia>();
-        ObjectMapper objectMapper=new ObjectMapper();
-        results.forEach(item -> {
-            JSONObject obj = (JSONObject) item;
-            ImovelOcorrencia imov = null;
-            try {
-                imov = objectMapper.readValue(obj.toString(), ImovelOcorrencia.class);
-                //Sysout.s(">>>" + imov.getId());
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                //throw new RuntimeException(e);
-            }
-            retorno.add(imov);
-        });
-        return retorno;
-    }
 
     private List<ImovelOcorrEmAberto> getImovelOcorrEmAbertoList(JSONArray results) {
         List<ImovelOcorrEmAberto> retorno = new ArrayList<ImovelOcorrEmAberto>();
