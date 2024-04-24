@@ -1,6 +1,5 @@
 package br.com.dbengine.springb4.dbUtil;
 
-import br.com.dbengine.springb4.entity.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
 import org.json.simple.*;
@@ -9,7 +8,7 @@ import java.lang.reflect.*;
 import java.text.*;
 import java.util.*;
 
-public class JSONValidations {
+public class UtilsJSON {
 
     public static String validaAtributo(Object o) {
         if (o == null) {
@@ -140,7 +139,6 @@ public class JSONValidations {
             try {
                 objItem = listItemType.getConstructor().newInstance();
                 objItem = objectMapper.readValue(obj.toString(), listItemType);
-                //Sysout.s(">>> id + nome : " + imov.getId() + " / " + imov.getNome());
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 //throw new RuntimeException(e);
@@ -155,11 +153,6 @@ public class JSONValidations {
             }
             retorno.add(objItem);
         });
-        //return retorno;
-        //} catch (Exception ex) {
-        //Logger.getLogger(NewMain.class.getName()).log(Level.SEVERE, null, ex);
-        //    ex.printStackTrace();
-        //}
         return retorno;
     }
 }

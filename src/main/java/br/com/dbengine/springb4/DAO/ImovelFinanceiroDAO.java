@@ -9,8 +9,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-
 @Component
 public class ImovelFinanceiroDAO {
 
@@ -70,11 +68,11 @@ public class ImovelFinanceiroDAO {
 
         if(imovelFinanceiro.getDtInicioContr() != null && !("".equals(imovelFinanceiro.getDtFimContr()))) {
             //jo.put("dtInicioContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtInicioContrato()));
-            jo.put("dtInicioContr", JSONValidations.cvtBRDateToUTC(imovelFinanceiro.getDtInicioContr()));
+            jo.put("dtInicioContr", UtilsJSON.cvtBRDateToUTC(imovelFinanceiro.getDtInicioContr()));
         }
         if(imovelFinanceiro.getDtFimContr() != null && !("".equals(imovelFinanceiro.getDtFimContr()))) {
             //jo.put("dtFimContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtFimContrato()));
-            jo.put("dtFimContr", JSONValidations.cvtBRDateToUTC(imovelFinanceiro.getDtFimContr()));
+            jo.put("dtFimContr", UtilsJSON.cvtBRDateToUTC(imovelFinanceiro.getDtFimContr()));
         }
 
 //        jo.put("dtInicioContr", imovelFinanceiro.getDtInicioContr());

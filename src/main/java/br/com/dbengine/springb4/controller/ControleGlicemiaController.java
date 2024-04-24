@@ -17,11 +17,23 @@ public class ControleGlicemiaController {
 
     @GetMapping("/controleGlicemiaList")
     public String controleGlicemiaList(Model model) {
-        //return dao.getList();
         List<ControleGlicemia> hgliceList = new ArrayList<>();
         hgliceList = dao.getList();
-        //Sysout.s("culturaList size: " + culturaList.size());
         model.addAttribute("hgliceList", hgliceList);
         return "/hasura/controleglic_list";
     }
+
+    @GetMapping("/controleglic/addform")
+    public String hpeopleAddForm(Model model) {
+        ControleGlicemia hglic = new ControleGlicemia();
+        model.addAttribute("hglic", hglic);
+        return "/hasura/controleglic_addform";
+    }
+
+    @PostMapping("/controleglicAdd")
+    public String hpeopleAdd(Model model, @ModelAttribute ControleGlicemia hglic) {
+        dao.add(hglic);
+        return "redirect:/controleGlicemiaList";
+    }
+
 }

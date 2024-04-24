@@ -5,14 +5,11 @@ import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
 //import org.json.simple.*;
-import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.databind.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 import org.springframework.stereotype.Component;
 
 
-import java.io.*;
 import java.util.*;
 
 @Component
@@ -34,7 +31,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         resultGetAll = canDb.getList("imovel");
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
         //List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
-        List<Imovel> imovelList = JSONValidations.getListFromJSON(results,Imovel.class); //resultGetAll);
+        List<Imovel> imovelList = UtilsJSON.getListFromJSON(results,Imovel.class); //resultGetAll);
         // Singleton
         //ImovelListSingleton.setInstaceJSON((JSONArray) results);
         ImovelListSingleton.setInstance(imovelList);

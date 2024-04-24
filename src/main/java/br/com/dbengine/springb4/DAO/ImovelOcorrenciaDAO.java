@@ -28,7 +28,7 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
         //Sysout.s(resultGetAll);
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
         //List<ImovelOcorrencia> imovelOcorrList = this.getImovelOcorrList(results); //resultGetAll);
-        List<ImovelOcorrencia> imovelOcorrList = JSONValidations.getListFromJSON(results, ImovelOcorrencia.class); //resultGetAll);
+        List<ImovelOcorrencia> imovelOcorrList = UtilsJSON.getListFromJSON(results, ImovelOcorrencia.class); //resultGetAll);
         return imovelOcorrList;
     }
 
@@ -111,22 +111,22 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
     private static ImovelOcorrForm getImovelOcorrForm(JSONObject iocc) {
         //String formattedDate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__createdtime__"));
         //String dataUpdate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__updatedtime__"));
-        String createdAt = JSONValidations.cvtUTCDateToBr(iocc.get("createdAt"));
-        String updatedAt = JSONValidations.cvtUTCDateToBr(iocc.get("updatedAt"));
+        String createdAt = UtilsJSON.cvtUTCDateToBr(iocc.get("createdAt"));
+        String updatedAt = UtilsJSON.cvtUTCDateToBr(iocc.get("updatedAt"));
 
         //Sysout.s(" DAO - getImovelOcorrForm : " + iocc.toJSONString());
 
-        String ioId = JSONValidations.validaAtributo(iocc.get("id"));
+        String ioId = UtilsJSON.validaAtributo(iocc.get("id"));
         if (ioId.equals("")) {
-            ioId = JSONValidations.validaAtributo(iocc.get("_id"));
+            ioId = UtilsJSON.validaAtributo(iocc.get("_id"));
         }
 
         ImovelOcorrForm ioccFom = new ImovelOcorrForm(
                 ioId,
-                JSONValidations.parseAttrToInteger(iocc.get("imovelId")),
-                JSONValidations.validaAtributo(iocc.get("descricao")),
-                JSONValidations.validaAtributo(iocc.get("nr_ref")),
-                JSONValidations.validaAtributo(iocc.get("statusFinal")),
+                UtilsJSON.parseAttrToInteger(iocc.get("imovelId")),
+                UtilsJSON.validaAtributo(iocc.get("descricao")),
+                UtilsJSON.validaAtributo(iocc.get("nr_ref")),
+                UtilsJSON.validaAtributo(iocc.get("statusFinal")),
                 createdAt,   //JSONValidations.validaAtributo(iocc.get("createdAt")), //formattedDate,
                 updatedAt);  //JSONValidations.validaAtributo(iocc.get("updatedAt"))); //dataUpdate);
         return ioccFom;
@@ -146,8 +146,8 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
                 if (imov != null) {
                     String imovelDescr = new ImovelDAO().getApelido(imov.getImovelId());
                     imov.setImovelDescricao(imovelDescr);
-                    imov.setCreatedAt(JSONValidations.cvtUTCDateToBr(imov.getCreatedAt()));
-                    imov.setUpdatedAt(JSONValidations.cvtUTCDateToBr(imov.getUpdatedAt()));
+                    imov.setCreatedAt(UtilsJSON.cvtUTCDateToBr(imov.getCreatedAt()));
+                    imov.setUpdatedAt(UtilsJSON.cvtUTCDateToBr(imov.getUpdatedAt()));
                     //String createdAt = JSONValidations.cvtUTCDateToBr(iocc.get("createdAt"));
                     //String updatedAt = JSONValidations.cvtUTCDateToBr(iocc.get("updatedAt"));
                 }

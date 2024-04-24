@@ -2,10 +2,8 @@ package br.com.dbengine.springb4.controller;
 
 import br.com.dbengine.springb4.DAO.ImovelDAO;
 import br.com.dbengine.springb4.DAO.ImovelFinanceiroDAO;
-import br.com.dbengine.springb4.DAO.ReportsDAO;
 import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.*;
-import br.com.dbengine.springb4.form.ImovelPagtoListForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -14,9 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class ImovelFinanceiroController {
@@ -31,8 +26,8 @@ public class ImovelFinanceiroController {
         String imovelDescr = new ImovelDAO().getTitulo(imovelId);
 
         // Formata Datas
-        iFin.setDtInicioContr(JSONValidations.cvtUTCDateToBr(iFin.getDtInicioContr()));
-        iFin.setDtFimContr(JSONValidations.cvtUTCDateToBr(iFin.getDtFimContr()));
+        iFin.setDtInicioContr(UtilsJSON.cvtUTCDateToBr(iFin.getDtInicioContr()));
+        iFin.setDtFimContr(UtilsJSON.cvtUTCDateToBr(iFin.getDtFimContr()));
 
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);

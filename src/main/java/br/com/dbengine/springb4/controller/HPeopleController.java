@@ -29,10 +29,8 @@ public class HPeopleController {
 
     @GetMapping("/hpeopleList")
     public String hpeopleList(Model model) {
-        //return dao.getList();
         List<HPeople> hpeopleList = new ArrayList<>();
         hpeopleList = dao.getList();
-        //Sysout.s("culturaList size: " + culturaList.size());
         model.addAttribute("hpeopleList",hpeopleList);
         return "/hasura/people1_list";
     }
@@ -45,8 +43,6 @@ public class HPeopleController {
 
     @GetMapping("/hpeopleUpdForm")
     public String hpeopleUpdForm(@RequestParam String hpeopleId,Model model) {
-        //Cultura culturaUpd = new Cultura();
-        //culturaUpd = dao.getItem(culturaId);
         HPeople  hPeople = dao.getItem(hpeopleId);
         model.addAttribute("hpeople", hPeople);
         return "/hasura/people1_updform";
@@ -55,9 +51,7 @@ public class HPeopleController {
     @PostMapping("/hpeopleUpdate")
     public String hpeopleUpdate(@ModelAttribute HPeople hpeople,
                                 @RequestParam("hpeopleId") String hpeopleId) {
-        //Sysout.s("UPDATE cultura..." + cultura.get_id());
         Sysout.s("UPDATE hpeopleId..." + hpeopleId);
-        //if (cultura.get_id() == null) { cultura.set_id(culturaId); };
         dao.update(hpeople);
         return "redirect:/hpeopleList";
     }
