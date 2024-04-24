@@ -15,7 +15,11 @@
 	<name>springb4</name>
 	<description>Spring Boot B4</description>
 	<properties>
-		<java.version>8</java.version>
+<!--		<java.version>8</java.version>-->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -104,6 +108,12 @@
             <artifactId>spring-test</artifactId>
         </dependency>
 
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>2.0.4</version> <!-- or later-->
+		</dependency>
+
     </dependencies>
 
 	<build>
@@ -126,10 +136,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
+<!--                <configuration>-->
+<!--                    <source>8</source>-->
+<!--                    <target>8</target>-->
+<!--                </configuration>-->
             </plugin>
 
         </plugins>
