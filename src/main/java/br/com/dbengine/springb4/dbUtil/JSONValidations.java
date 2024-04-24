@@ -139,7 +139,6 @@ public class JSONValidations {
             T objItem = null;
             try {
                 objItem = listItemType.getConstructor().newInstance();
-
                 objItem = objectMapper.readValue(obj.toString(), listItemType);
                 //Sysout.s(">>> id + nome : " + imov.getId() + " / " + imov.getNome());
             } catch (JsonProcessingException e) {
