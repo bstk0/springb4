@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>People - ADD</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script th:src="@{/js/lib/RESTBuildTable.js}"></script>s
+    <script>
+
+        jQuery(document).ready(
+        function($) {
+
+                $("#btn-api").click(function(event) {
+
+                  // Case minúsculo
+                  let htmlReturn = "";
+                  let p_url = $("#uri").val();
+                  //let header = document.getElementById('sqlCmd').value
+                  let p_header = $("#header").val();
+
+
+                  //$("#btn-save").prop("disabled", true);
+
+
+                  var settings = {
+                      "url": p_url,
+                      "method": "GET",
+                      "timeout": 0,
+                      "headers": p_header,
+                    };
+
+                    $.ajax(settings).done(function (response) {
+                      //console.log(JSON.parse(response.data));
+                      //const obj = JSON.parse(response.data);
+                      const table = buildTable(response.data);
+                      document.getElementById('results').innerHTML = table;
+                    });
+
+
+ //                 $.ajax({
+ //                          type: "POST",
+ //                          contentType: "application/json",
+ //                          url: "/people/save",
+ //                          data: JSON.stringify(data),
+ //                          dataType: 'json',
+ //                          timeout: 600000,
+ //                          success: function (data) {
+ //                              $("#btn-update").prop("disabled", false);
+ //                              //...
+ //                          },
+ //                       s   error: function (e) {
+ //                              $("#btn-save").prop("disabled", false);
+ //                              //...
+ //                          }
+ //                 });
+
+
+              });
+
+              $("#btn-save-hdb").click(function(event) {
+
+                  let internalId = $("#id").val();
+                  // respeitando Case
+                  var data = {}
+                  if(internalId) {
+                       data["id"] = parseInt(internalId);
+                  }
+                  data["codigoInterno"] = $("#codigoInterno").val();
+                  data["Nome"] = $("#Nome").val();
+                  data["DataNascimento"] = $("#DataNascimento").val();
+                  data["Observacao"] = $("#Observacao").val();
+
+
+                  var settings = {
+                    "url": "https://cloud-dbe-bisterco.harperdbcloud.com",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                      "Content-Type": "application/json",
+                      "Authorization": "Basic YmlzdGVyY286Q2FsbTA2MjNA"
+                    },
+                    "data": JSON.stringify({
+                      "operation": "insert",
+                      "schema": "rep1",
+                      "table": "people",
+                      "records": [ data ]
+                    }),
+                  };
+
+                  $.ajax(settings).done(function (response) {
+                    console.log(response);
+                    alert("Inclusão realizada com sucesso");
+                  });
+              });
+
+          });
+
+      //	    window.onload=function() {
+      //        let myButton = document.getElementById("btn-save");
+      //        myButton.addEventListener('click', getData);
+      //    }
+
+    </script>
+</head>
+<body>
+Validação API
+<br>
+<table>
+    <tr>
+        <td>URI : </td>
+        <td><input type=text class="form-control" id="uri" size="50"></td>
+    </tr>
+    <tr>
+        <td>Headers</td>
+        <td><textarea rows="5" cols="50"  id="header"></textarea></td>
+    </tr>
+</table>
+<button type="submit" id="btn-api"
+        class="btn btn-primary btn-lg">Save REST MVC</button>
+<br>
+<div id="results"></div>
+<br><br>
+<a href="/">Voltar</a>
+</body>
+</html>

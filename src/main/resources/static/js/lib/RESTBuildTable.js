@@ -39,3 +39,23 @@ function buildTable(data) {
     </table>
   `;
 }
+
+// CUSTOM - CANONIC
+function buildCANONICTable(data) {
+  return `
+    <table border=1>
+      <thead>${buildHeadings(data[0])}</thead>
+      <tbody>${buildCANONICRows(data)}</tbody>
+    </table>
+  `;
+ }
+
+ function buildCANONICRows(data) {
+   //const html;
+   //numbers.forEach(myFunction);
+   return data[].map(buildRow).join('');
+ }
+
+//function myFunction(item) {
+//  html += item;
+//}

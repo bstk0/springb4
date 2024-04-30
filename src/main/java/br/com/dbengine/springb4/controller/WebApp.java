@@ -37,6 +37,11 @@ public class WebApp {
         return "versions";
     }
 
+    @GetMapping("/validaApi")
+    public String validaApi() {
+        return "validaApi";
+    }
+
     @GetMapping("/admin")
     public String admin(Model m, Authentication authentication) {
         String localHostAddress = null;
