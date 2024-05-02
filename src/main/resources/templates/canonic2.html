@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CANONIC2</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script th:src="@{/js/lib/RESTBuildTable.js}"></script>
+    <script>
+
+        function getData() {
+           let url = document.getElementById('url').value
+
+           if (url == "") {
+              alert("Informe uma URL");
+              return;
+           }
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "658c9538c6feb36c0d677bb4-1334c248-62e9-4c23-a0a6-93af5972ad7d");
+
+    //var operation = {
+    //    operation : 'sql',
+    //    sql : document.getElementById('sqlCmd').value
+    //};
+
+    //var raw = JSON.stringify(operation);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      //body: raw,
+      //redirect: 'follow'
+    };
+
+    fetch(url, requestOptions)
+      .then(response => { //response.json()
+          console.log("response.status =", response.status);
+          if (response.ok) {
+              //return response.json();
+              return response.text();
+            }
+        return response.text().then((text) => { throw new Error(text) });
+      })
+      .then(data => {
+                console.log(data);
+                //const table = buildCANONICTable(data.data);
+                //document.getElementById('results').innerHTML = table;
+                generateDataTable(data);
+        })
+      .catch(error => {
+            let html='<table border=1>';
+                //console.log('error', error)
+                //console.log('PASSOU AQUI');
+                    html += '<tr>';
+                    html += '<td> ERRO: ' + error + '</td>';
+                    html += '</tr>';
+            html += '</table>';
+            document.getElementById('results').innerHTML = html;
+      });
+}
+
+        function generateDataTable(strJson) {
+            //const strJson = document.getElementById("canonicPeopleList").value;
+            console.log(strJson);
+            const myjson = JSON.parse(strJson);
+            console.log(myjson.data);
+            //console.log(myjson);
+            //console.log(myjson.data);
+            const result = myjson.data;
+            const pluginArrayArg = new Array();
+            for(var k in result) {
+               //console.log(result[k].nome)
+               //console.log(k, result[k]);
+               pluginArrayArg.push(result[k]);
+            }
+            //var pluginArray = JSON.stringify(pluginArrayArg);
+
+            const table = buildTable(pluginArrayArg); //pluginArray);
+            document.getElementById('results').innerHTML = table;
+        }
+
+        window.onload=function() {
+            let myButton = document.getElementById("getData");
+            myButton.addEventListener('click', getData);
+        }
+    </script>
+</head>
+<h1>CANONIC2 HTML</h1>
+<br>
+<a href="/">Voltar</a>&nbsp;
+<br>
+<body>
+<!--        <input type="text" id="canonicPeopleList" th:value="${canonicPeopleList}">-->
+        URL
+        <input type="text" id="url" size="50"><br>
+<!--        <p th:text="'Retorno: ' + ${canonicPeopleList}" />-->
+        <br>
+        <input type="button" id='getData' value="Get TABLE Data"></input>
+        <br>
+        <div id="results"></div>
+<!--    </form>-->
+</body>
+</html>

@@ -157,4 +157,8 @@ public class WebApp {
         return "canonic1";
     }
 
+    @GetMapping("/canonic2")
+    public String canonic2() {
+         return "canonic2";
+    }
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> HarperDB :  ... SQL </title>
+    <script th:src="@{/js/lib/RESTBuildTable.js}"></script>
+    <script>
+
+function getData() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    //myHeaders.append("Authorization", "Basic YmlzdGVyY286Q2FsbTA2MjNA");
+    myHeaders.append("Authorization", "658c9538c6feb36c0d677bb4-1334c248-62e9-4c23-a0a6-93af5972ad7d");
+
+    //var operation = {
+    //    operation : 'sql',
+    //    sql : document.getElementById('sqlCmd').value
+    //};
+
+    //var raw = JSON.stringify(operation);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      //body: raw,
+      //redirect: 'follow'
+    };
+
+    fetch("https://can.canonic.dev/rep1-180hdf/api/people", requestOptions)
+      .then(response => { //response.json()
+          console.log("response.status =", response.status);
+          if (response.ok) {
+              return response.json();
+            }
+        return response.text().then((text) => { throw new Error(text) });
+      })
+      .then(data => {
+                console.log(data);
+                const table = buildCANONICTable(data.data);
+                //container.innerHTML = table;
+                document.getElementById('results').innerHTML = table;
+        })
+      .catch(error => {
+            let html='<table border=1>';
+                //console.log('error', error)
+                //console.log('PASSOU AQUI');
+                    html += '<tr>';
+                    html += '<td> ERRO: ' + error + '</td>';
+                    html += '</tr>';
+            html += '</table>';
+            document.getElementById('results').innerHTML = html;
+      });
+}
+    window.onload=function() {
+        let myButton = document.getElementById("getData");
+        myButton.addEventListener('click', getData);
+    }
+</script>
+</head>
+<body>
+<h1> HarperDB :  ... 1 </h1>
+<br>
+<a href="/">Voltar</a>&nbsp;
+<br>
+<textarea rows="5" cols="50"  id="sqlCmd">select * FROM rep1.dbaas</textarea>
+<br>
+<input type="button" id='getData' value="Get Data"></input>
+<br>
+<div id="results"></div>
+</body>
+</html>
