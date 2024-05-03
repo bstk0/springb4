@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>People - ADD</title>
+    <title>API</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script th:src="@{/js/lib/RESTBuildTable.js}"></script>s
+    <script th:src="@{/js/lib/RESTBuildTable.js}"></script>
     <script>
 
         jQuery(document).ready(
@@ -34,41 +34,28 @@
                     $.ajax(settings).done(function (response) {
                       //console.log(JSON.parse(response.data));
                       //const obj = JSON.parse(response.data);
-                      let table;
+                      let rdata;
 
                       switch (rootData) {
-                        case "":
-                            table = buildTable(response);
+                        case "d_results":
+                            //table = buildTable(response.d.results);
+                            rdata = response.d.results;
                             break;
                         case "data":
-                            table = buildTable(response.data);
+                            //table = buildTable(response.data);
+                            rdata = response.data;
                             break;
                         case "value":
-                            table = buildTable(response.value);
+                            //table = buildTable(response.value);
+                            rdata = response.value;
                             break;
+                        default:
+                            //table = buildTable(response);
+                            rdata = response;
                       }
+                      const table = buildTable(rdata);
                       document.getElementById('results').innerHTML = table;
                     });
-
-
- //                 $.ajax({
- //                          type: "POST",
- //                          contentType: "application/json",
- //                          url: "/people/save",
- //                          data: JSON.stringify(data),
- //                          dataType: 'json',
- //                          timeout: 600000,
- //                          success: function (data) {
- //                              $("#btn-update").prop("disabled", false);
- //                              //...
- //                          },
- //                       s   error: function (e) {
- //                              $("#btn-save").prop("disabled", false);
- //                              //...
- //                          }
- //                 });
-
-
               });
 
               $("#btn-save-hdb").click(function(event) {
@@ -139,6 +126,7 @@ Validação API
                 <option value="" select>&nbsp;</option>
                 <option value="data">data</option>
                 <option value="value">value</option>
+                <option value="d_results">d.results</option>
             </select>
         </td>
     </tr>

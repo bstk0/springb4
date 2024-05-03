@@ -161,4 +161,10 @@ public class WebApp {
     public String canonic2() {
          return "canonic2";
     }
+
+    @GetMapping("/pix")
+    public String pix() {
+        return "pix";
+    }
+
 }
