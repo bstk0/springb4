@@ -103,9 +103,11 @@ label[for=”bt_menu”] {
  transition: all 4s;
  }
 
+/* Tentando aumentar o nro de itens ... antes: max-height: 200px;
+*/
 .menu ul li:hover ul {
  height: auto;
- max-height: 200px;
+ max-height: 400px;
  }
 
  }
