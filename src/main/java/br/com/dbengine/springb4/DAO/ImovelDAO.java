@@ -17,7 +17,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     private static CanonicClient canDb = new CanonicClient();
 
-    private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovel/:_id";
+    private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovel/:_id";
 
 
     public List<Imovel> getList() { //throws ParseException {

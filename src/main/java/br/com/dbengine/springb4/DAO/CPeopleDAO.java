@@ -14,7 +14,7 @@ public class CPeopleDAO {
 
     private static CanonicClient cndb = new CanonicClient();
 
-    private final String URL_ADD = "https://can.canonic.dev/rep1-180hdf/api/people";
+    private final String URL_ADD = cndb.CANONIC_REP1_BASE + "people";
 
     public void add(CPeople cpeople) {
 

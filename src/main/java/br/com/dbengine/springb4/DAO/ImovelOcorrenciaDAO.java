@@ -16,11 +16,11 @@ import java.util.List;
 
 @Component
 public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
-    private final String URL_ADD = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia";
-    private final String URL_GET = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
-    private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
-    private final String URL_DEL = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
     private static CanonicClient canDb = new CanonicClient();
+    private final String URL_ADD = canDb.CANONIC_REP1_BASE + "imovelOcorrencia";
+    private final String URL_GET = canDb.CANONIC_REP1_BASE + "imovelOcorrencia/:_id";
+    private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovelOcorrencia/:_id";
+    private final String URL_DEL = canDb.CANONIC_REP1_BASE + "imovelOcorrencia/:_id";
 
 
     public List<ImovelOcorrencia> getList(int imovelId) {

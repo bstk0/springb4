@@ -16,6 +16,8 @@ import java.util.*;
 @Service
 public final class CanonicClient {
 
+    public final String CANONIC_REP1_BASE = "https://app.canonic.dev/app/rep1-180hdf/api/";
+
     public String getList(String cObj) { //throws IOException {
         return this.getList(cObj,0);
     }
@@ -37,7 +39,7 @@ public final class CanonicClient {
         }
         try {
         Request request = new Request.Builder()
-                .url("https://can.canonic.dev/rep1-180hdf/api/" + cObj)
+                .url(CANONIC_REP1_BASE + cObj)
                 .method(METHOD, body)   //null
                 .addHeader("Authorization", Sysout.CANONIC_KEY)
                 .build();
@@ -88,7 +90,7 @@ public final class CanonicClient {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url("https://can.canonic.dev/rep1-180hdf/api/people")
+                .url(CANONIC_REP1_BASE + "people")
                 .method("GET", null)
                 .addHeader("Authorization", Sysout.CANONIC_KEY)
                 .build();

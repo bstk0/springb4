@@ -14,7 +14,7 @@ public class ImovelFinanceiroDAO {
 
     private static CanonicClient canDb = new CanonicClient();
 
-    private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovelFinanc/:_id";
+    private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovelFinanc/:_id";
 
     public ImovelFinanceiro getItem(Integer id) {
 
