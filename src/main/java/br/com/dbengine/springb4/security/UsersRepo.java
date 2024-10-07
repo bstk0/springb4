@@ -12,22 +12,27 @@ import java.util.List;
 @Repository
 public class UsersRepo {
 
-    private List<User> usersList = new ArrayList<>();
-
-    private void setInitialUsersList() {
-        System.out.println(" >> Iniciando lista de usuarios ...");
-        usersList.add(new User("rodrigo", "2021", getAuthorities(new ArrayList<>( Arrays.asList( new String[]{"ROLE_ADMIN", "ROLE_USER"})))));
-        usersList.add(new User("camila", "cdo123", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
-        usersList.add(new User("rafael", "rhob123", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
-        usersList.add(new User("rafaela", "rmpb123", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
-        usersList.add(new User("admin", "2021", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_ADMIN"})))));
-    }
+    private static List<User> usersList = new ArrayList<>();
 
     public UsersRepo() {
         if (this.usersList.isEmpty()) {
-            this.setInitialUsersList();
+            Sysout.s(" %%%%%%%%%%%%%%%%%%%%%%% UsersRepo %%%%%%%%%%%%%%%%%%%%%%%%%%%%% ");
         }
     }
+
+
+    public void setInicialUserList(String usr, String pwd, String[] roles) {
+        Sysout.s(" >> Iniciando lista de usuarios by parameters ... 2");
+        //Sysout.s( "PWD:" + pwd);
+        //TODO: Ajustar roles no security prop
+        usersList.add(new User(usr, pwd, getAuthorities(new ArrayList<String>( Arrays.asList( roles )))));
+    }
+
+//    public UsersRepo() {
+//        if (this.usersList.isEmpty()) {
+//            this.setInitialUsersList();
+//        }
+//    }
 
     public List<User> getUsers() {
         return usersList;
@@ -35,6 +40,7 @@ public class UsersRepo {
 
     public User getUserByName(String name) {
         try {
+            Sysout.s(String.valueOf(usersList.size()));
             return usersList.stream().filter(user -> user.getUsername().equals(name))
                     .findFirst().orElseThrow(() -> new RuntimeException("Username Not Found!"));
         } catch (Exception e) {

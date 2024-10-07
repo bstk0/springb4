@@ -1,35 +1,16 @@
 package br.com.dbengine.springb4.DAO;
 
-import br.com.dbengine.springb4.dbUtil.HarperDBClient;
-import br.com.dbengine.springb4.entity.Imobiliaria;
-import br.com.dbengine.springb4.entity.Imovel;
-import br.com.dbengine.springb4.interfaces.DAOInterface;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.springframework.stereotype.Component;
+import br.com.dbengine.springb4.entity.*;
+import br.com.dbengine.springb4.interfaces.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-@Component
 public class ImobiliariaDAO implements DAOInterface<Imobiliaria> {
 
-    private static HarperDBClient harperDb = new HarperDBClient();
+
     @Override
     public List<Imobiliaria> getList() {
-        JSONParser parser = new JSONParser();
-        Object obj = null;
-        String resultGetAll;
-        try {
-            resultGetAll = harperDb.getList("select * FROM rep1.imobiliaria");
-            obj = parser.parse(resultGetAll);
-            JSONArray results = (JSONArray) (obj);
-            return (ArrayList<Imobiliaria>) results;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<Imobiliaria>();
+        return List.of();
     }
 
     @Override
@@ -49,11 +30,11 @@ public class ImobiliariaDAO implements DAOInterface<Imobiliaria> {
 
     @Override
     public String getCount() {
-        return null;
+        return "";
     }
 
     @Override
     public String delete(String id) {
-        return null;
+        return "";
     }
 }
