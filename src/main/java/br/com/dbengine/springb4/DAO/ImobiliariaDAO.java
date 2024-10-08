@@ -17,27 +17,27 @@ public class ImobiliariaDAO implements DAOInterface<Imobiliaria> {
 
     private static List<Imobiliaria> imobList;
 
-    public void initImobiliariaDAO() {
-        Sysout.s(" initImobiliariaDAO ...");
-        //canDb  = new CanonicClient();
-        Object obj = null;
-        String resultGetAll;
-        resultGetAll = canDb.getList("imobiliarias");
-        Sysout.s(" >>> " + resultGetAll);
-        JSONArray results = canDb.CanonicJSONList(resultGetAll);
-        Sysout.s(" >>> " +results.toJSONString());
-        //List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
-        imobList = UtilsJSON.getListFromJSON(results,Imobiliaria.class); //resultGetAll);
-        Sysout.s(imobList.toString());
-    }
+//    public void initImobiliariaDAO() {
+//        Sysout.s(" initImobiliariaDAO ...");
+//        //canDb  = new CanonicClient();
+//        Object obj = null;
+//        String resultGetAll;
+//        resultGetAll = canDb.getList("imobiliarias");
+//        Sysout.s(" >>> " + resultGetAll);
+//        JSONArray results = canDb.CanonicJSONList(resultGetAll);
+//        Sysout.s(" >>> " +results.toJSONString());
+//        //List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
+//        imobList = UtilsJSON.getListFromJSON(results,Imobiliaria.class); //resultGetAll);
+//        Sysout.s(imobList.toString());
+//    }
 
     @Override
     public List<Imobiliaria> getList() {
         Sysout.s("Imob.getList ...");
-        if(imobList == null) {
-            Sysout.s("Imob.getList ... is empty.");
-            this.initImobiliariaDAO();
-        }
+//        if(imobList == null) {
+//            Sysout.s("Imob.getList ... is empty.");
+//            this.initImobiliariaDAO();
+//        }
         return imobList;
     }
 
@@ -64,5 +64,9 @@ public class ImobiliariaDAO implements DAOInterface<Imobiliaria> {
     @Override
     public String delete(String id) {
         return "";
+    }
+
+    public static void setImobList(List<Imobiliaria> pImobLit) {
+        imobList = pImobLit;
     }
 }

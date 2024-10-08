@@ -5,6 +5,7 @@ import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
 //import org.json.simple.*;
+import org.jetbrains.annotations.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 import org.springframework.beans.factory.annotation.*;
@@ -25,21 +26,28 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     public List<Imovel> getList() { //throws ParseException {
 
-        if ( ImovelListSingleton.getInstance() != null) {
-            Sysout.s(" >> Usando singleton <<");
-            return ImovelListSingleton.getInstance();
-        }
-        Object obj = null;
-        String resultGetAll;
-        resultGetAll = canDb.getList("imovel");
-        JSONArray results = canDb.CanonicJSONList(resultGetAll);
-        //List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
-        List<Imovel> imovelList = UtilsJSON.getListFromJSON(results,Imovel.class); //resultGetAll);
-        // Singleton
-        //ImovelListSingleton.setInstaceJSON((JSONArray) results);
-        ImovelListSingleton.setInstance(imovelList);
-        return imovelList;      // (ArrayList<Imovel>) results;
+//        if ( ImovelListSingleton.getInstance() == null) {
+//            Sysout.s(" >> singleton nao inicializado <<");
+//            this.initializeImovelList();
+//        }
+        //List<Imovel> imovelList = initializeImovelList();
+        //return imovelList;      // (ArrayList<Imovel>) results;
+        return ImovelListSingleton.getInstance();
+
     }
+
+//    //private @NotNull List<Imovel> initializeImovelList() {
+//    public void initializeImovelList() {
+//        Object obj = null;
+//        String resultGetAll;
+//        resultGetAll = canDb.getList("imovel");
+//        JSONArray results = canDb.CanonicJSONList(resultGetAll);
+//        //List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
+//        List<Imovel> imovelList = UtilsJSON.getListFromJSON(results,Imovel.class); //resultGetAll);
+//        // Singleton
+//        //ImovelListSingleton.setInstaceJSON((JSONArray) results);
+//        ImovelListSingleton.setInstance(imovelList);
+//    }
 
     @Override
     public void add(Imovel obj) {
