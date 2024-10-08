@@ -7,6 +7,7 @@ import br.com.dbengine.springb4.interfaces.DAOInterface;
 //import org.json.simple.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Component;
 
 
@@ -15,9 +16,11 @@ import java.util.*;
 @Component
 public class ImovelDAO implements DAOInterface<Imovel> {
 
-    private static CanonicClient canDb = new CanonicClient();
+    @Autowired
+    private CanonicClient canDb;
+    //private static CanonicClient canDb = new CanonicClient();
 
-    private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovel/:_id";
+    //private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovel/:_id";
 
 
     public List<Imovel> getList() { //throws ParseException {
@@ -44,6 +47,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     @Override
     public void update(Imovel imovel) {
+        String URL_UPD = canDb.CANONIC_REP1_BASE + "imovel/:_id";
         //Sysout.s("ImovelDAO.update...");
         JSONObject obj = new JSONObject();
         JSONParser parser = new JSONParser();

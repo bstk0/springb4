@@ -11,11 +11,19 @@ public class Imobiliaria {
     private Integer imobid;
     private String nome;
     private String contato;
+    private String createdAt;
 
-    public Imobiliaria(String id, Integer imobid, String nome, String contato) {
+    public Imobiliaria() {
+    }
+
+    public Imobiliaria(String id, Integer imobid, String nome, String contato, String createdAt) {
         this.id = id;
         this.imobid = imobid;
         this.nome = nome;
         this.contato = contato;
+        this.createdAt = createdAt;
     }
 }
+
+
+

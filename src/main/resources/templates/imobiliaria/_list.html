@@ -28,16 +28,18 @@
 </style>
 </head>
 <body>
-<h1>Imobiliaria - from CANONIC</h1>
+<h1>Imobiliaria - from HarperDB</h1>
 <a href="/">Voltar</a>&nbsp;||&nbsp;<!-- <a href="/cultura/form">ADD</a> -->
 <div class="bs-example">
   <table id="imobiliariaList" class="table table-hover">
     <thead class="thead-light">
       <tr>
-        <th>Internal ID</th>
-        <th>Imob ID</th>
+        <th>Código</th>
         <th>Nome</th>
-        <th>Contato</th>
+        <th>Referencia</th>
+        <th>Tel Principal</th>
+        <th>Contato 1</th>
+        <th>Tel Contato 1</th>
         <th>UPD</th>
         <th>DEL</th>
       </tr>
@@ -45,9 +47,11 @@
     <tbody>
       <tr th:each="data : ${imobiliariaList}">
         <td th:text="${data.id}"></td>
-        <td th:text="${data.imobid}"></td>
         <td th:text="${data.nome}"></td>
-        <td th:text="${data.contato}"></td>
+        <td th:text="${data.referencia}"></td>
+        <td th:text="${data.telPrincipal}"></td>
+        <td th:text="${data.contato1}"></td>
+        <td th:text="${data.tel1}"></td>
 <!--
         <td>
           <a th:href="@{/imovelOcorrenciaList(imovelId=${data.id})}" class="btn btn-success">Ocorr.</a>
