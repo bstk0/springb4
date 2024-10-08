@@ -29,7 +29,8 @@ public class WebApp {
     }
     @GetMapping({"", "/"})
     public String home(Model m) {
-        new InitializeStaticData();
+        new InitializeStaticData().AllData();
+
         m.addAttribute("msg", "Hello World from Ctrl A");
         return "homePage";
     }

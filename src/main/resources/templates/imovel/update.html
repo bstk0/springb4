@@ -87,6 +87,16 @@
         </div>
     </div>
 
+        <div class="form-group row">
+            <label for="imobid" class="col-sm-3 col-form-label">Imobiliaria *</label>
+            <div class="col-sm-9">
+                <select th:field="*{imobid}" class="custom-select">
+                    <option th:each="imobiliaria : ${imobiliarias}" th:value="${imobiliaria.imobid}"
+                            th:text="${imobiliaria.nome}"></option>
+                </select>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-sm-9 offset-sm-3">
                 <button type="submit" class="btn btn-success save-btn">Save</button>

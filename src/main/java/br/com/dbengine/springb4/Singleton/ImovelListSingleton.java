@@ -20,6 +20,10 @@ public class ImovelListSingleton {
         ImovelListSingleton.instance = instance;
     }
 
+    public static void refresh() {
+        new InitializeStaticData().initializeImovelList();
+    }
+
     /*
     Transforma JSON em objeto para evitar erros de CAST
     (java.lang.ClassCastException)

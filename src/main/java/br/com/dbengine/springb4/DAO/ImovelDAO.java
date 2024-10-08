@@ -69,7 +69,8 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         String opResult = canDb.update(URL_UPD, obj.toJSONString());
         //Sysout.s("UPDATE RESULT >> " + opResult);
 
-        ImovelListSingleton.setInstance(null);
+        //ImovelListSingleton.setInstance(null);
+        ImovelListSingleton.refresh();
     }
 
     //@Override
@@ -109,6 +110,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         jo.put("imobiliaria",imovel.getImobiliaria());
         jo.put("tipo",imovel.getTipo());
         jo.put("observacoes",imovel.getObservacoes());
+        jo.put("imobid", imovel.getImobid());
         return jo;
     }
 

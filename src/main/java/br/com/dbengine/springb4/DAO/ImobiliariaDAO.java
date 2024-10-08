@@ -1,5 +1,6 @@
 package br.com.dbengine.springb4.DAO;
 
+import br.com.dbengine.springb4.Singleton.*;
 import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.*;
 import br.com.dbengine.springb4.interfaces.*;
@@ -15,7 +16,7 @@ public class ImobiliariaDAO implements DAOInterface<Imobiliaria> {
     @Autowired
     private CanonicClient canDb; // = new CanonicClient();
 
-    private static List<Imobiliaria> imobList;
+//    private static List<Imobiliaria> imobList;
 
 //    public void initImobiliariaDAO() {
 //        Sysout.s(" initImobiliariaDAO ...");
@@ -38,7 +39,7 @@ public class ImobiliariaDAO implements DAOInterface<Imobiliaria> {
 //            Sysout.s("Imob.getList ... is empty.");
 //            this.initImobiliariaDAO();
 //        }
-        return imobList;
+        return ImobListSingleton.getInstance();
     }
 
     @Override
@@ -58,7 +59,7 @@ public class ImobiliariaDAO implements DAOInterface<Imobiliaria> {
 
     @Override
     public String getCount() {
-        return String.valueOf(imobList.size());
+        return String.valueOf(ImobListSingleton.getInstance().size());
     }
 
     @Override
@@ -66,7 +67,7 @@ public class ImobiliariaDAO implements DAOInterface<Imobiliaria> {
         return "";
     }
 
-    public static void setImobList(List<Imobiliaria> pImobLit) {
-        imobList = pImobLit;
-    }
+//    public static void setImobList(List<Imobiliaria> pImobLit) {
+//        imobList = pImobLit;
+//    }
 }

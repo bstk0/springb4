@@ -9,9 +9,10 @@ import java.util.*;
 
 public class InitializeStaticData {
 
-
-
     public InitializeStaticData() {
+    }
+
+    public void AllData() {
         //new ImovelDAO().getList();
         Sysout.s("Initializing Static Data ...");
         initializeImobiliariaList();
@@ -20,7 +21,7 @@ public class InitializeStaticData {
         //new ImobiliariaDAO().initImobiliariaDAO();
     }
 
-    private void initializeImovelList() {
+    public void initializeImovelList() {
         CanonicClient canDb = new CanonicClient();
         Object obj = null;
         String resultGetAll;
@@ -33,7 +34,7 @@ public class InitializeStaticData {
         ImovelListSingleton.setInstance(imovelList);
     }
 
-    private void initializeImobiliariaList() {
+    public void initializeImobiliariaList() {
         //Sysout.s(" initImobiliariaDAO ...");
         CanonicClient canDb = new CanonicClient();
         Object obj = null;
@@ -42,7 +43,8 @@ public class InitializeStaticData {
         //Sysout.s(" >>> " + resultGetAll);
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
         //Sysout.s(" >>> " +results.toJSONString());
-        ImobiliariaDAO.setImobList( UtilsJSON.getListFromJSON(results,Imobiliaria.class) );
+        //ImobiliariaDAO.setImobList( UtilsJSON.getListFromJSON(results,Imobiliaria.class) );
+        ImobListSingleton.setInstance( UtilsJSON.getListFromJSON(results,Imobiliaria.class) );
     }
 
 }
