@@ -37,6 +37,11 @@ public class WebApp {
         return "versions";
     }
 
+    @GetMapping("/validaApi")
+    public String validaApi() {
+        return "validaApi";
+    }
+
     @GetMapping("/admin")
     public String admin(Model m, Authentication authentication) {
         String localHostAddress = null;
@@ -150,6 +155,16 @@ public class WebApp {
         //Sysout.s(canonicPeopleList);
         m.addAttribute("canonicPeopleList", canonicPeopleList);
         return "canonic1";
+    }
+
+    @GetMapping("/canonic2")
+    public String canonic2() {
+         return "canonic2";
+    }
+
+    @GetMapping("/pix")
+    public String pix() {
+        return "pix";
     }
 
 }

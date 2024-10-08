@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="container" style="margin-top: 30px;">
-    <h5>Adicionando Imovel Ocorrencia</h5>
+    <h5>Atualizando Imovel Ocorrencia</h5>
 
     <!-- <form action="\culturaAdd"> -->
     <b><p th:text=${imovelIdDescr}></p></b>
@@ -87,11 +87,14 @@
         <div class="row">
             <div class="col-sm-9 offset-sm-3">
                 <button type="submit" class="btn btn-success save-btn">Save</button>
-                <a th:href="@{/imovelOcorrenciaList(imovelId=${imovelIdAttr})}" class="btn btn-light"
+<!--                <a th:href="@{/imovelOcorrenciaList(imovelId=${imovelIdAttr})}" class="btn btn-light"-->
+<!--                   role="button">Voltar</a>                <a th:href="@{/imovelOcorrenciaList(imovelId=${imovelIdAttr})}" class="btn btn-light"-->
+                <a th:href="@{${previousUrl}}" class="btn btn-light"
                    role="button">Voltar</a>
             </div>
         </div>
-        <a th:href="@{/imovelOcorrenciaList(imovelId=${imovelIdAttr})}">VOLTAR</a>
+<!--        <a th:href="@{/imovelOcorrenciaList(imovelId=${imovelIdAttr})}">VOLTAR</a>-->
+        <a th:href="@{${previousUrl}}">VOLTAR</a>
     </form>
 </div>
 </body>

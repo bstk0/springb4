@@ -1,4 +1,5 @@
 var urlcors = "";
+let URI = "http://bstk.pythonanywhere.com/paraio"; //https://bisterco.pythonanywhere.com
 
 function showSaldo(data) {
 	$("#saldo").html('');
@@ -7,29 +8,46 @@ function showSaldo(data) {
 }
 
 function getSaldo() {
-	console.log(">> getSaldo ...");
-	//var url = urlcors + "https://paraio.com/v1/saldo/1143180213983645696";
-	var url = urlcors + "https://bisterco.pythonanywhere.com/paraio/saldo";
+	console.log(">> getSaldo 2 ...");
+    var settings = {
+      "url": "https://bstk.pythonanywhere.com/paraio/saldo",
+      "method": "GET",
+      "timeout": 0,
+    };
 
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+    });
+
+}
+
+function _getSaldo() {
+	//console.log(">> getSaldo ...");
+	//var url = urlcors + "https://paraio.com/v1/saldo/1143180213983645696";
+	var url = urlcors + URI + "/saldo";
+    console.log(">> getSaldo ..." + url);
 			$.ajax({
-					type : 'GET',
-					dataType : 'json',
+					method : 'GET',
+					//dataType : 'json',
 					url : url,
-					crossDomain : true,
-					headers: {
-						"Authorization": "Anonymous app:dbapp"
-						},
-					timeout: 0,
+					//crossDomain : true,
+					//headers: {
+					//	"Authorization": "Anonymous app:dbapp"
+					//	},
+					tismeout: 0,
 					//async: false,
 					//jsonpCallback: 'cBack',
-					contentType : "application/json",
+					//contentType : "application/json",
 					success : function(data) {
 						console.log("data:" + data.valor);
 						showSaldo(data);
 					},
 					error : function(e) {
 						console.log(e.message);
-					}
+					},
+					done : function (response) {
+                      console.log(response)
+                    }
 				});
 }
 
@@ -67,7 +85,7 @@ function getExtrato(dias) {
                //https://paraio.com/v1/movims?sort=properties.data:desc&limit=1
 	//var url = "https://paraio.com/v1/movims?sort=properties.data:desc&limit=10";
 	//var url = urlcors + "https://paraio.com/v1/movims?sort=timestamp&limit="+dias;
-	var url = urlcors + "https://bisterco.pythonanywhere.com/paraio/movim?dias="+dias;
+	var url = urlcors + URI + "/movim?dias="+dias;
 
 	$.ajax({
 			type : 'GET',
@@ -121,7 +139,7 @@ var SaldoJ = { "valor": novoSaldo, "data" : data};
 
 	//inclui movimentacao
 	//let url = urlcors + "https://paraio.com/v1/movims/";
-	let url = urlcors + "//bisterco.pythonanywhere.com/paraio/movim";
+	let url = urlcors + URI + "/movim";
     $.ajax({
 	        url : url, // + periodoId + "/links/" + number,
 	        type : 'POST',
@@ -140,7 +158,7 @@ var SaldoJ = { "valor": novoSaldo, "data" : data};
 
     //atualiza saldo
 	// url = urlcors + "https://paraio.com/v1/saldo/1143180213983645696"; // + periodoId + "/links/" + number
-	url = urlcors + "//bisterco.pythonanywhere.com/paraio/saldo"; // + periodoId + "/links/" + number
+	url = urlcors + URI + "/saldo"; // + periodoId + "/links/" + number
     $.ajax({
         url : url,
         type : 'PUT',
@@ -162,12 +180,12 @@ var SaldoJ = { "valor": novoSaldo, "data" : data};
 // check CORS
 //$(".cors").change(function() {
 $(document).on("change","#cors",function() {
-	if (this.checked) {
-		urlcors = "https://cors-anywhere.herokuapp.com/";
-		onInit();
-	} else {
+	//if (this.checked) {
+	//	urlcors = "https://cors-anywhere.herokuapp.com/";
+	//	onInit();
+	//} else {
 		urlcors = "";
-	}
+	//}
 });
 
 

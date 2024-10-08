@@ -2,7 +2,7 @@ package br.com.dbengine.springb4.DAO;
 
 import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.*;
-import br.com.dbengine.springb4.form.ImovelOcorrForm;
+import br.com.dbengine.springb4.form.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
 import org.jetbrains.annotations.NotNull;
@@ -16,21 +16,29 @@ import java.util.List;
 
 @Component
 public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
-    private final String URL_ADD = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia";
-    private final String URL_GET = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
-    private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
-    private final String URL_DEL = "https://can.canonic.dev/rep1-180hdf/api/imovelOcorrencia/:_id";
     private static CanonicClient canDb = new CanonicClient();
+    private final String URL_ADD = canDb.CANONIC_REP1_BASE + "imovelOcorrencia";
+    private final String URL_GET = canDb.CANONIC_REP1_BASE + "imovelOcorrencia/:_id";
+    private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovelOcorrencia/:_id";
+    private final String URL_DEL = canDb.CANONIC_REP1_BASE + "imovelOcorrencia/:_id";
 
 
     public List<ImovelOcorrencia> getList(int imovelId) {
         String resultGetAll = canDb.getList("getImovelOcorrByImovelId",imovelId);
         //Sysout.s(resultGetAll);
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
-        List<ImovelOcorrencia> imovelOcorrList = this.getImovelOcorrList(results); //resultGetAll);
+        //List<ImovelOcorrencia> imovelOcorrList = this.getImovelOcorrList(results); //resultGetAll);
+        List<ImovelOcorrencia> imovelOcorrList = UtilsJSON.getListFromJSON(results, ImovelOcorrencia.class); //resultGetAll);
         return imovelOcorrList;
     }
 
+    public List<ImovelOcorrEmAberto> getListEmAberto() {
+        String resultGetAll = canDb.getList("getImovelOcorrenciaEmAndamento");
+        //Sysout.s(resultGetAll);
+        JSONArray results = canDb.CanonicJSONList(resultGetAll);
+        List<ImovelOcorrEmAberto> imovelOcorrList = this.getImovelOcorrEmAbertoList(results); //resultGetAll);
+        return imovelOcorrList;
+    }
     public List<ImovelOcorrForm> getListForm(int imovelId) {
         String resultGetAll = canDb.getList("getImovelOcorrByImovelId",imovelId);
         //Sysout.s(resultGetAll);
@@ -103,36 +111,46 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
     private static ImovelOcorrForm getImovelOcorrForm(JSONObject iocc) {
         //String formattedDate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__createdtime__"));
         //String dataUpdate = JSONValidations.parseAttrToDateTimeBR(iocc.get("__updatedtime__"));
-        String createdAt = JSONValidations.cvtUTCDateToBr(iocc.get("createdAt"));
-        String updatedAt = JSONValidations.cvtUTCDateToBr(iocc.get("updatedAt"));
+        String createdAt = UtilsJSON.cvtUTCDateToBr(iocc.get("createdAt"));
+        String updatedAt = UtilsJSON.cvtUTCDateToBr(iocc.get("updatedAt"));
 
         //Sysout.s(" DAO - getImovelOcorrForm : " + iocc.toJSONString());
 
-        String ioId = JSONValidations.validaAtributo(iocc.get("id"));
+        String ioId = UtilsJSON.validaAtributo(iocc.get("id"));
         if (ioId.equals("")) {
-            ioId = JSONValidations.validaAtributo(iocc.get("_id"));
+            ioId = UtilsJSON.validaAtributo(iocc.get("_id"));
         }
 
         ImovelOcorrForm ioccFom = new ImovelOcorrForm(
                 ioId,
-                JSONValidations.parseAttrToInteger(iocc.get("imovelId")),
-                JSONValidations.validaAtributo(iocc.get("descricao")),
-                JSONValidations.validaAtributo(iocc.get("nr_ref")),
-                JSONValidations.validaAtributo(iocc.get("statusFinal")),
+                UtilsJSON.parseAttrToInteger(iocc.get("imovelId")),
+                UtilsJSON.validaAtributo(iocc.get("descricao")),
+                UtilsJSON.validaAtributo(iocc.get("nr_ref")),
+                UtilsJSON.validaAtributo(iocc.get("statusFinal")),
                 createdAt,   //JSONValidations.validaAtributo(iocc.get("createdAt")), //formattedDate,
                 updatedAt);  //JSONValidations.validaAtributo(iocc.get("updatedAt"))); //dataUpdate);
         return ioccFom;
     }
 
-    private List<ImovelOcorrencia> getImovelOcorrList(JSONArray results) {
-        List<ImovelOcorrencia> retorno = new ArrayList<ImovelOcorrencia>();
+
+    private List<ImovelOcorrEmAberto> getImovelOcorrEmAbertoList(JSONArray results) {
+        List<ImovelOcorrEmAberto> retorno = new ArrayList<ImovelOcorrEmAberto>();
         ObjectMapper objectMapper=new ObjectMapper();
         results.forEach(item -> {
             JSONObject obj = (JSONObject) item;
-            ImovelOcorrencia imov = null;
+            ImovelOcorrEmAberto imov = null;
             try {
-                imov = objectMapper.readValue(obj.toString(), ImovelOcorrencia.class);
-                Sysout.s(">>>" + imov.getId());
+                imov = objectMapper.readValue(obj.toString(), ImovelOcorrEmAberto.class);
+                //Sysout.s(">>>" + imov.getId());
+                // Descriçáo do Imovel
+                if (imov != null) {
+                    String imovelDescr = new ImovelDAO().getApelido(imov.getImovelId());
+                    imov.setImovelDescricao(imovelDescr);
+                    imov.setCreatedAt(UtilsJSON.cvtUTCDateToBr(imov.getCreatedAt()));
+                    imov.setUpdatedAt(UtilsJSON.cvtUTCDateToBr(imov.getUpdatedAt()));
+                    //String createdAt = JSONValidations.cvtUTCDateToBr(iocc.get("createdAt"));
+                    //String updatedAt = JSONValidations.cvtUTCDateToBr(iocc.get("updatedAt"));
+                }
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 //throw new RuntimeException(e);

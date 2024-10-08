@@ -9,7 +9,7 @@ public class HarperDBOperation {
     private String schema;
 
     private String table;
-    private ArrayList<ImovelOcorrencia> records;
+    //private ArrayList<ImovelOcorrencia> records;
 
     public HarperDBOperation() {
     }
@@ -38,11 +38,4 @@ public class HarperDBOperation {
         this.table = table;
     }
 
-    public ArrayList<ImovelOcorrencia> getRecords() {
-        return records;
-    }
-
-    public void setRecords(ArrayList<ImovelOcorrencia> records) {
-        this.records = records;
-    }
 }

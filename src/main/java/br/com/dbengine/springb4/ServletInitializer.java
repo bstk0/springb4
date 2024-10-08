@@ -1,6 +1,5 @@
 package br.com.dbengine.springb4;
 
-import br.com.dbengine.springb4.Springb4Application;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

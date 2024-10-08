@@ -52,6 +52,10 @@ public final class RestClient {
         Sysout.s(" >> setAUTH_KEY : " + this.AUTH_KEY.toString());
     }
 
+    public void setCONTENT_TYPE(String CONTENT_TYPE) {
+        this.CONTENT_TYPE = CONTENT_TYPE;
+    }
+
     /**
      * Create connection to the server
      * @param requestMethod Method to the request (PUT,GET,DELETE,POST)
@@ -61,13 +65,14 @@ public final class RestClient {
      */
     private  HttpURLConnection createConnection(final String requestMethod, final String url) throws IOException {
         Sysout.s(" ** HttpURLConnection ... ");
+        Sysout.s(" >> url param : " + url);
         HttpURLConnection connection = null;
 //        if (AUTH_KEY.isEmpty()) {
 //            Sysout.s(" >> ERRO DE CONEXAO, AUSENCIA DE KEY <<");
 //            return connection;
 //        }
         Sysout.s(" >> BASE_URI: " + this.BASE_URI);
-        URL finalUrl = new URL(BASE_URI);
+        URL finalUrl = new URL(BASE_URI + url);
         Sysout.s(" >> finalURL: " + finalUrl);
         Sysout.s(" >> Sysout.RESTDB_KEY: " + AUTH_KEY.get(0) + " / " + AUTH_KEY.get(1) );
         Sysout.s(" >> CONTENT_TYPE: " + CONTENT_TYPE);
@@ -111,7 +116,9 @@ public final class RestClient {
      * @param parameters parameters to send to the POST request. otherwise null
      * @return
      */
-    private  String executeHTTPRequest(final String requestMethod, final String url, final String parameters)  {
+    private  String executeHTTPRequest(final String requestMethod,
+                                       final String url,
+                                       final String parameters)  {
         Sysout.s(" ** executeHTTPRequest ...");
         HttpURLConnection connection = null;
         StringBuilder response = new StringBuilder(); // or StringBuffer if not Java 5+
@@ -149,6 +156,7 @@ public final class RestClient {
      * @return result from the server
      */
     public  String post(final String collection, final String objectToAdd) {
+        this.setCONTENT_TYPE("application/json");
         return executeHTTPRequest(POST, collection, objectToAdd);
     }
 
@@ -168,6 +176,7 @@ public final class RestClient {
      * @return ID of the object updated
      */
     public  String put(final String collection, final String query) {
+        //this.setCONTENT_TYPE("application/json");
         return executeHTTPRequest(PUT, collection, query);
     }
 

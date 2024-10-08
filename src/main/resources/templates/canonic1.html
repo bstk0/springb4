@@ -7,7 +7,9 @@
     <script>
         function getData() {
             const strJson = document.getElementById("canonicPeopleList").value;
+            console.log(strJson);
             const myjson = JSON.parse(strJson);
+            console.log(myjson.data);
             //console.log(myjson);
             //console.log(myjson.data);
             const result = myjson.data;

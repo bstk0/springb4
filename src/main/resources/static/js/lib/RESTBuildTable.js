@@ -39,3 +39,5 @@ function buildTable(data) {
     </table>
   `;
 }
+
+// CUSTOM - CANONIC

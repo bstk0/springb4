@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>People1 - ADD form</title>
+    <title>Controle Glicemia - ADD form</title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet"
@@ -24,34 +24,58 @@
 </head>
 <body>
 <div class="container" style="margin-top: 30px;">
-    <h5>Adicionando HPeople</h5>
+    <h5>Adicionando Controle Glicemico</h5>
 
     <!-- <form action="\culturaAdd"> -->
-    <form action="#" th:action="@{/hpeopleAdd}" th:object="${hpeople}" method="post">
+    <form action="#" th:action="@{/controleglicAdd}" th:object="${hglic}" method="post">
 
         <!--
         <input type="hidden" class="form-control" id="cultura.id"
                name="cultura._id" value="">
         -->
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="id">Código</label>
+            <label class="col-sm-3 col-form-label" for="id">Data</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="id" th:field="*{id}">
+                <input type="text" class="form-control" id="id" th:field="*{data}">
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="nome">Nome</label>
+            <label class="col-sm-3 col-form-label" for="nome">Valor</label>
             <div class="col-sm-9">
                 <input type="text" class="form-control" id="nome"
-                        th:field="*{nome}">
+                       th:field="*{valor}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="nome">Aparelho</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="nome"
+                       th:field="*{aparelho}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="nome">Estado</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="nome"
+                       th:field="*{estado}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="nome">comentario</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="nome"
+                       th:field="*{comentario}">
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-9 offset-sm-3">
                 <button type="submit" class="btn btn-success save-btn">Save</button>
-                <a href="/hpeopleList" class="btn btn-light"
+                <a href="/controleGlicemiaList" class="btn btn-light"
                    role="button">Voltar</a>
             </div>
         </div>

@@ -9,14 +9,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-
 @Component
 public class ImovelFinanceiroDAO {
 
     private static CanonicClient canDb = new CanonicClient();
 
-    private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovelFinanc/:_id";
+    private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovelFinanc/:_id";
 
     public ImovelFinanceiro getItem(Integer id) {
 
@@ -71,11 +69,11 @@ public class ImovelFinanceiroDAO {
 
         if(imovelFinanceiro.getDtInicioContr() != null && !("".equals(imovelFinanceiro.getDtFimContr()))) {
             //jo.put("dtInicioContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtInicioContrato()));
-            jo.put("dtInicioContr", JSONValidations.cvtBRDateToUTC(imovelFinanceiro.getDtInicioContr()));
+            jo.put("dtInicioContr", UtilsJSON.cvtBRDateToUTC(imovelFinanceiro.getDtInicioContr()));
         }
         if(imovelFinanceiro.getDtFimContr() != null && !("".equals(imovelFinanceiro.getDtFimContr()))) {
             //jo.put("dtFimContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtFimContrato()));
-            jo.put("dtFimContr", JSONValidations.cvtBRDateToUTC(imovelFinanceiro.getDtFimContr()));
+            jo.put("dtFimContr", UtilsJSON.cvtBRDateToUTC(imovelFinanceiro.getDtFimContr()));
         }
 
         jo.put("sindico", imovelFinanceiro.getSindico());

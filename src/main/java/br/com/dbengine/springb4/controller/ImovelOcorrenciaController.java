@@ -4,7 +4,7 @@ import br.com.dbengine.springb4.DAO.ImovelDAO;
 import br.com.dbengine.springb4.DAO.ImovelOcorrenciaDAO;
 import br.com.dbengine.springb4.dbUtil.Sysout;
 import br.com.dbengine.springb4.entity.*;
-import br.com.dbengine.springb4.form.ImovelOcorrForm;
+import br.com.dbengine.springb4.form.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.*;
 import java.util.List;
 
 @Controller
@@ -21,6 +22,18 @@ public class ImovelOcorrenciaController {
 
     @Autowired
     private ImovelOcorrenciaDAO dao; // = new ImovelOcorrenciaDAO();
+
+   
+    private String backURL;
+
+    public String getBackURL() {
+        return backURL;
+    }
+
+    public void setBackURL(String backURL) {
+        this.backURL = backURL;
+    }
+
 
     @GetMapping("/imovelOcorrenciaList")
     public String imovelOcorrenciaList(Model model, @RequestParam int imovelId) {
@@ -32,6 +45,20 @@ public class ImovelOcorrenciaController {
         model.addAttribute("imovelIdDescr",imovelDescr);
         model.addAttribute("imovelOccList",iOccListForm);
         return "imovelOcorrencia/list";
+    }
+
+    //imovelOccorEmAberto
+    @GetMapping("/imovelOcorrEmAberto")
+    public String imovelOcorrEmAberto(Model model) {
+
+        List<ImovelOcorrEmAberto> iOccListForm = dao.getListEmAberto();
+        // Descriçáo do Imovel
+        //String imovelDescr = new ImovelDAO().getTitulo(imovelId);
+
+        //model.addAttribute("imovelIdAttr",imovelId);
+        //model.addAttribute("imovelIdDescr",imovelDescr);
+        model.addAttribute("imovelOccEmAbertoList",iOccListForm);
+        return "imovelOcorrencia/listEmAberto";
     }
 
     @GetMapping("/imovelOcorrenciaAdd")
@@ -60,7 +87,15 @@ public class ImovelOcorrenciaController {
 
     @GetMapping("/imovelOccUpdForm")
     public String imovelOccUpdForm(@RequestParam String imovelOccId,
-                                   Model model) {
+                                   Model model,
+                                   HttpServletRequest request) {
+
+        String referer = request.getHeader("Referer"); //Get previous URL before call '/login'
+        Sysout.s(" REFERER : >> " + referer);
+
+        //15.02
+        setBackURL(referer);
+
         //Sysout.s("imovelOccUpdForm...");
         ImovelOcorrForm imovelOccUpd = new ImovelOcorrForm();
         imovelOccUpd = dao.getItemForm(imovelOccId);
@@ -74,6 +109,7 @@ public class ImovelOcorrenciaController {
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelOcorrencia", imovelOccUpd);
         model.addAttribute("imovelIdDescr",imovelDescr);
+        model.addAttribute("previousUrl", referer);
         return "imovelOcorrencia/update";
     }
 
@@ -82,8 +118,19 @@ public class ImovelOcorrenciaController {
                                   Authentication authentication) {
         //Sysout.s("UPDATE imovelOcorrencia..." + imovelOcorrencia.getId());
         //imovelOcorrencia.setUpdatedBy(authentication.getName());
+
+        // 15.02
+        Sysout.s(" ############## ");
+        Sysout.s(" ## " + getBackURL());
+        Sysout.s(" ############## ");
+
         dao.update(imovelOcorrencia);
-        String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovelId();
+        String redirect;
+        if (checkBackURL("imovelOcorrEmAberto")) {
+            redirect ="redirect:/imovelOcorrEmAberto";
+        } else {
+            redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelOcorrencia.getImovelId();
+        }
         return redirect;
     }
 
@@ -91,7 +138,17 @@ public class ImovelOcorrenciaController {
     public String imovelOccDelete(@RequestParam String imovelOccId,
                                   @RequestParam String imovelId) {
         dao.delete(imovelOccId);
-        String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelId;
+        //String redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelId;
+        String redirect;
+        if (checkBackURL("imovelOcorrEmAberto")) {
+            redirect ="redirect:/imovelOcorrEmAberto";
+        } else {
+            redirect = "redirect:/imovelOcorrenciaList?imovelId=" + imovelId;
+        }
         return redirect;
+    }
+
+    public boolean checkBackURL(String texto) {
+        return ((getBackURL().indexOf(texto) > 0) ? true : false);
     }
 }

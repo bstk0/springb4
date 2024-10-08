@@ -5,14 +5,11 @@ import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
 //import org.json.simple.*;
-import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.databind.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 import org.springframework.stereotype.Component;
 
 
-import java.io.*;
 import java.util.*;
 
 @Component
@@ -20,7 +17,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     private static CanonicClient canDb = new CanonicClient();
 
-    private final String URL_UPD = "https://can.canonic.dev/rep1-180hdf/api/imovel/:_id";
+    private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovel/:_id";
 
 
     public List<Imovel> getList() { //throws ParseException {
@@ -33,7 +30,8 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         String resultGetAll;
         resultGetAll = canDb.getList("imovel");
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
-        List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
+        //List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
+        List<Imovel> imovelList = UtilsJSON.getListFromJSON(results,Imovel.class); //resultGetAll);
         // Singleton
         //ImovelListSingleton.setInstaceJSON((JSONArray) results);
         ImovelListSingleton.setInstance(imovelList);
@@ -103,23 +101,6 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         return jo;
     }
 
-    private List<Imovel> getImovelList(JSONArray results) {
-        List<Imovel> retorno = new ArrayList<Imovel>();
-        ObjectMapper objectMapper=new ObjectMapper();
-        results.forEach(item -> {
-            JSONObject obj = (JSONObject) item;
-            Imovel imov = null;
-            try {
-                imov = objectMapper.readValue(obj.toString(), Imovel.class);
-                //Sysout.s(">>>" + imov.getId());
-            } catch (JsonProcessingException e) {
-                Sysout.s(e.getMessage());
-                //throw new RuntimeException(e);
-            }
-            retorno.add(imov);
-        });
-        return retorno;
-    }
 
     public String getTitulo(int imovelId) {
         Imovel desc = this.getItem(imovelId);
@@ -130,6 +111,20 @@ public class ImovelDAO implements DAOInterface<Imovel> {
             imovelDescr = desc.getApelido() + " - " + desc.getDescricao();
             if (imovelDescr.equals("null - null")) {
                 imovelDescr = "SINGLETON NAO CARREGADO - IMOVEL NAO LOCALIZADO";
+            }
+        }
+        return imovelDescr;
+    }
+    public String getApelido(int imovelId) {
+        Imovel desc = this.getItem(imovelId);
+        String imovelDescr;
+        if (desc == null) {
+            imovelDescr = "SINGLETON NAO CARREGADO";
+        } else {
+            imovelDescr = desc.getApelido(); // + " - " + desc.getDescricao();
+            Sysout.s(" ^^^ " + imovelDescr);
+            if ((imovelDescr == null) || (imovelDescr.equals("null"))) {
+                imovelDescr = "SINGLETON NAO CARREGADO";
             }
         }
         return imovelDescr;

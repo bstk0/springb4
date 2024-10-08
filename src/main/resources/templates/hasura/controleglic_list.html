@@ -12,7 +12,7 @@ pageEncoding="UTF-8" errorPage=""%>
   <meta charset="utf-8">
   <meta name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Cultura - list</title>
+  <title>Controle Glicemia</title>
   <link rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet"
@@ -35,45 +35,37 @@ pageEncoding="UTF-8" errorPage=""%>
 </style>
 </head>
 <body>
-<h1>People - from HASURA.NEON</h1>
-<a href="/">Voltar</a>&nbsp;||&nbsp;<a href="/hpeople/addform">ADD</a>
+<h1>Controle Glicemia - from HASURA.NEON</h1>
+<a href="/">Voltar</a>&nbsp;||&nbsp;<a href="/controleglic/addform">ADD</a>
 <div class="bs-example">
-  <table id="hpeoplelist" class="table table-hover">
+  <table id="hgliceList" class="table table-hover">
     <thead class="thead-light">
     <tr>
       <th>Código</th>
-      <th>Nome</th>
+      <th>Data</th>
+      <th>Valor</th>
+      <th>Aparelho</th>
+      <th>estado</th>
+      <th>coment</th>
       <th>UPDATE</th>
       <th>DELETE</th>
     </tr>
     </thead>
     <tbody>
-<!--
-    <c:forEach items="${culturaList}" var="cultura" varStatus="theCount">
-      <tr>
-        <td><a
-                href="${linkTo[CulturaController].edit}?id=${cultura._id}">${cultura.CulturaCodigo}</a></td>
-        <td>${cultura.CulturaDescricao}</td>
-        <td>
-//<button class="btn btn-default" data-id="${cultura._id}" data-toggle="modal" data-target="#confirm-delete">
-//  Delete
-//</button>
- <a href="#" data-id="${cultura._id}" data-toggle="modal"
-                       data-target="#confirm-delete" class="confirm-delete"> <span
-                class="fas fa-trash"></span>
-        </a>
-      </tr>
-    </c:forEach>
--->
-    <tr th:each="data : ${hpeopleList}">
+
+    <tr th:each="data : ${hgliceList}">
       <!-- <td th:text="${data.CulturaCodigo}"></td> -->
       <td th:text="${data.id}"></td>
-      <td th:text="${data.nome}"></td>
+      <td th:text="${data.data}"></td>
+      <td th:text="${data.valor}"></td>
+      <td th:text="${data.aparelho}"></td>
+      <td th:text="${data.estado}"></td>
+      <td th:text="${data.comentario}"></td>
       <td>
         <a th:href="@{/hpeopleUpdForm(hpeopleId=${data.id})}" class="btn btn-info">Update</a>
       </td>
       <td><a href="#"   th:attr="data-id=${data.id}"
-                  th:data-descr="${data.nome}"
+                  th:data-descr="${data.data}"
                   data-toggle="modal"
                   data-target="#confirm-delete" class="confirm-delete">
             <span class="fas fa-trash"></span>
@@ -115,7 +107,7 @@ pageEncoding="UTF-8" errorPage=""%>
   <a href="/">Voltar</a>
   <script>
 			$(document).ready(function() {
-				$('#hpeoplelist').DataTable({
+				$('#hgliceList').DataTable({
 					"order" : [ [ 0, "asc" ] ],
 					"pageLength": 25
 				});
@@ -139,8 +131,6 @@ pageEncoding="UTF-8" errorPage=""%>
 			$('#btnConfirmDelete').click(function() {
 				// handle deletion here
 				var delId = $('#confirm-delete').data('id');
-				//var urlAction = "${linkTo[CulturaController].delete}";
-				//th:href="@{/culturaDelete(culturaId=${data._id})}"
 				var urlAction = "/hpeopleDelete";
 				urlAction += "?hpeopleId="+delId
 				//alert("confirm:" + id);
