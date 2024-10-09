@@ -74,16 +74,7 @@
     <div class="form-group row">
         <label for="imobiliaria" class="col-sm-3 col-form-label">Imobiliaria</label>
         <div class="col-sm-9">
-            <select th:field="*{imobiliaria}" class="custom-select">
-                <option value="" selected="selected"></option>
-                <option value="DIRETO">DIRETO</option>
-                <option value="TOCA">TOCA</option>
-                <option value="LUGAR">LUGAR</option>
-                <option value="MARADA">MORADA</option>
-                <option value="UNISOL">UNISOL</option>
-                <option value="MARTA - SP">MARTA - SP</option>
-                <option value="MARIA ISABEL - AMAZONAS">MARIA ISABEL - AMAZONAS</option>
-            </select>
+            <span th:text="*{imobiliaria}"></span>
         </div>
     </div>
 

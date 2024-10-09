@@ -18,6 +18,19 @@ public class ImobListSingleton {
         ImobListSingleton.instance = instance;
     }
 
+    public static Imobiliaria getItem(int id) {
+        //List<Imobiliaria> imobList = ImobListSingleton.getInstance();
+        if(!instance.isEmpty()) {
+            for (Imobiliaria imob : instance) {
+                    //Sysout.s("imovel.getImovelId() : " + imovel.getImovelId());
+                    if (imob.getImobid() == id) {
+                        return imob;
+                    }
+            }
+        }
+        return new Imobiliaria(); //DAOInterface.super.getItem(id);
+    }
+
     /*
     Transforma JSON em objeto para evitar erros de CAST
     (java.lang.ClassCastException)

@@ -1,6 +1,6 @@
 package br.com.dbengine.springb4.DAO;
 
-import br.com.dbengine.springb4.Singleton.ImovelListSingleton;
+import br.com.dbengine.springb4.Singleton.*;
 import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
@@ -65,7 +65,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         obj.put("_id", imovel.getId());
         obj.put("input", innerObj);
 
-        //Sysout.s("UPDATE JSON >> " + obj.toJSONString());
+        Sysout.s("UPDATE JSON >> " + obj.toJSONString());
         String opResult = canDb.update(URL_UPD, obj.toJSONString());
         //Sysout.s("UPDATE RESULT >> " + opResult);
 
@@ -107,7 +107,8 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         jo.put("descricao", imovel.getDescricao());
         jo.put("status", imovel.getStatus());
         jo.put("bairro",imovel.getBairro());
-        jo.put("imobiliaria",imovel.getImobiliaria());
+        //jo.put("imobiliaria",imovel.getImobiliaria());
+        jo.put("imobiliaria", ImobListSingleton.getItem(imovel.getImobid()).getNome());
         jo.put("tipo",imovel.getTipo());
         jo.put("observacoes",imovel.getObservacoes());
         jo.put("imobid", imovel.getImobid());

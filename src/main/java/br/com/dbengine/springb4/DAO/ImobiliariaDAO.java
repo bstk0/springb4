@@ -54,7 +54,7 @@ public class ImobiliariaDAO implements DAOInterface<Imobiliaria> {
 
     @Override
     public Imobiliaria getItem(String id) {
-        return DAOInterface.super.getItem(id);
+        return ImobListSingleton.getItem( Integer.parseInt(id)); //DAOInterface.super.getItem(id);
     }
 
     @Override
