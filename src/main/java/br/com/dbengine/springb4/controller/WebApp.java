@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import br.com.dbengine.springb4.Singleton.*;
 import br.com.dbengine.springb4.dbUtil.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class WebApp {
     }
     @GetMapping({"", "/"})
     public String home(Model m) {
+        new InitializeStaticData().AllData();
+
         m.addAttribute("msg", "Hello World from Ctrl A");
         return "homePage";
     }

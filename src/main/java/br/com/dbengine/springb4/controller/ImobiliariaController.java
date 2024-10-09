@@ -1,26 +1,31 @@
 package br.com.dbengine.springb4.controller;
 
-import br.com.dbengine.springb4.DAO._ImobiliariaDAO;
+import br.com.dbengine.springb4.DAO.*;
+import br.com.dbengine.springb4.entity.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.*;
+
 @Controller
 public class ImobiliariaController {
 
-    private _ImobiliariaDAO dao = new _ImobiliariaDAO();
+    @Autowired
+    private ImobiliariaDAO dao; // = new ImobiliariaDAO();
 
-/*    @GetMapping("/imobiliariaList")
+    @GetMapping("/imobiliariaList")
     public String imovelList(Model model) {
         List<Imobiliaria> imobiliarialList = new ArrayList<Imobiliaria>();
         imobiliarialList = dao.getList();
         //Sysout.s("imobiliarialList size: " + imobiliarialList.size());
         model.addAttribute("imobiliariaList",imobiliarialList);
         return "imobiliaria/list";
-    }*/
-
-    @GetMapping("/imobiliariaList")
-    public String imovelList(Model model) {
-        return "ops";
     }
+
+    //@GetMapping("/imobiliariaList")
+    //public String imovelList(Model model) {
+    //    return "ops";
+    //}
 }

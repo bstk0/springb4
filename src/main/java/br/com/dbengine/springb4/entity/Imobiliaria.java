@@ -8,14 +8,22 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Imobiliaria {
     private String id;
-    private Integer imobid;
+    private int imobid;
     private String nome;
     private String contato;
+    private String createdAt;
 
-    public Imobiliaria(String id, Integer imobid, String nome, String contato) {
+    public Imobiliaria() {
+    }
+
+    public Imobiliaria(String id, int imobid, String nome, String contato, String createdAt) {
         this.id = id;
         this.imobid = imobid;
         this.nome = nome;
         this.contato = contato;
+        this.createdAt = createdAt;
     }
 }
+
+
+

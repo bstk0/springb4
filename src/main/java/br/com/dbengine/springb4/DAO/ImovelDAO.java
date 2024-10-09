@@ -1,12 +1,14 @@
 package br.com.dbengine.springb4.DAO;
 
-import br.com.dbengine.springb4.Singleton.ImovelListSingleton;
+import br.com.dbengine.springb4.Singleton.*;
 import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.Imovel;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
 //import org.json.simple.*;
+import org.jetbrains.annotations.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Component;
 
 
@@ -15,29 +17,38 @@ import java.util.*;
 @Component
 public class ImovelDAO implements DAOInterface<Imovel> {
 
-    private static CanonicClient canDb = new CanonicClient();
+    @Autowired
+    private CanonicClient canDb;
+    //private static CanonicClient canDb = new CanonicClient();
 
-    private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovel/:_id";
+    //private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovel/:_id";
 
 
     public List<Imovel> getList() { //throws ParseException {
 
-        if ( ImovelListSingleton.getInstance() != null) {
-            Sysout.s(" >> Usando singleton <<");
-            return ImovelListSingleton.getInstance();
-        }
-        Object obj = null;
-        String resultGetAll;
-        resultGetAll = canDb.getList("imovel");
-        JSONArray results = canDb.CanonicJSONList(resultGetAll);
-        //List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
-        List<Imovel> imovelList = UtilsJSON.getListFromJSON(results,Imovel.class); //resultGetAll);
-        // Singleton
-        //ImovelListSingleton.setInstaceJSON((JSONArray) results);
-        ImovelListSingleton.setInstance(imovelList);
-        return imovelList;      // (ArrayList<Imovel>) results;
+
+//        if ( ImovelListSingleton.getInstance() == null) {
+//            Sysout.s(" >> singleton nao inicializado <<");
+//            this.initializeImovelList();
+//        }
+        //List<Imovel> imovelList = initializeImovelList();
+        //return imovelList;      // (ArrayList<Imovel>) results;
+        return ImovelListSingleton.getInstance();
 
     }
+
+//    //private @NotNull List<Imovel> initializeImovelList() {
+//    public void initializeImovelList() {
+//        Object obj = null;
+//        String resultGetAll;
+//        resultGetAll = canDb.getList("imovel");
+//        JSONArray results = canDb.CanonicJSONList(resultGetAll);
+//        //List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
+//        List<Imovel> imovelList = UtilsJSON.getListFromJSON(results,Imovel.class); //resultGetAll);
+//        // Singleton
+//        //ImovelListSingleton.setInstaceJSON((JSONArray) results);
+//        ImovelListSingleton.setInstance(imovelList);
+//    }
 
     @Override
     public void add(Imovel obj) {
@@ -45,6 +56,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     @Override
     public void update(Imovel imovel) {
+        String URL_UPD = canDb.CANONIC_REP1_BASE + "imovel/:_id";
         //Sysout.s("ImovelDAO.update...");
         JSONObject obj = new JSONObject();
         JSONParser parser = new JSONParser();
@@ -54,11 +66,12 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         obj.put("_id", imovel.getId());
         obj.put("input", innerObj);
 
-        //Sysout.s("UPDATE JSON >> " + obj.toJSONString());
+        Sysout.s("UPDATE JSON >> " + obj.toJSONString());
         String opResult = canDb.update(URL_UPD, obj.toJSONString());
         //Sysout.s("UPDATE RESULT >> " + opResult);
 
-        ImovelListSingleton.setInstance(null);
+        //ImovelListSingleton.setInstance(null);
+        ImovelListSingleton.refresh();
     }
 
     //@Override
@@ -95,9 +108,11 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         jo.put("descricao", imovel.getDescricao());
         jo.put("status", imovel.getStatus());
         jo.put("bairro",imovel.getBairro());
-        jo.put("imobiliaria",imovel.getImobiliaria());
+        //jo.put("imobiliaria",imovel.getImobiliaria());
+        jo.put("imobiliaria", ImobListSingleton.getItem(imovel.getImobid()).getNome());
         jo.put("tipo",imovel.getTipo());
         jo.put("observacoes",imovel.getObservacoes());
+        jo.put("imobid", imovel.getImobid());
         return jo;
     }
 

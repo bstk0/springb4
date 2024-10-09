@@ -1,7 +1,6 @@
 package br.com.dbengine.springb4.controller;
 
-import br.com.dbengine.springb4.DAO.CulturaDAO;
-import br.com.dbengine.springb4.DAO.ImovelDAO;
+import br.com.dbengine.springb4.DAO.*;
 import br.com.dbengine.springb4.Singleton.*;
 import br.com.dbengine.springb4.dbUtil.Sysout;
 import br.com.dbengine.springb4.entity.Cultura;
@@ -83,11 +82,12 @@ public class ImovelController {
 
     @GetMapping("/imovelUpdForm")
     public String imovelUpdForm(@RequestParam int imovelId,Model model) {
-        //Sysout.s("imovelUpdForm...");
+        Sysout.s("imovelUpdForm...");
         Imovel imovelUpd = new Imovel();
         imovelUpd = dao.getItem(imovelId);
         //Sysout.s(" >> imovelUpdForm... " + imovelUpd.getApelido());
         model.addAttribute("imovel", imovelUpd);
+        model.addAttribute("imobiliarias", new ImobiliariaDAO().getList());
         return "imovel/update";
     }
 
