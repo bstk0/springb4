@@ -1,5 +1,6 @@
 package br.com.dbengine.springb4.DAO;
 
+import br.com.dbengine.springb4.Singleton.*;
 import br.com.dbengine.springb4.dbUtil.HarperDBClient;
 import br.com.dbengine.springb4.entity.Imobiliaria;
 import br.com.dbengine.springb4.interfaces.DAOInterface;
@@ -43,7 +44,7 @@ public class _ImobiliariaDAO implements DAOInterface<Imobiliaria> {
 
     @Override
     public Imobiliaria getItem(String id) {
-        return DAOInterface.super.getItem(id);
+        return ImobListSingleton.getItem(Integer.parseInt(id));
     }
 
     @Override

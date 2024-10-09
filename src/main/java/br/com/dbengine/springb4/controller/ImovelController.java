@@ -100,7 +100,9 @@ public class ImovelController {
 
     @GetMapping("/reloadImovelList")
     public String imovelUpdate() {
-        ImovelListSingleton.setInstance(null);
+        //ImovelListSingleton.setInstance(null);
+        ImovelListSingleton.refresh();
         return "redirect:/imovelList";
     }
+
 }
