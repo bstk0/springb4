@@ -26,6 +26,7 @@ public class ImovelController {
    @Autowired
     private ImovelDAO dao; // = new ImovelDAO();
 
+
     @GetMapping("/imovel")
     public String imovel() {
         return "imovel";
@@ -42,13 +43,12 @@ public class ImovelController {
     @GetMapping("/imovelUpdate")
     public String imovelUpdate(@RequestParam(name="imovelForm") String imovelJSON,
                                Model mav) {
-        //Sysout.s("ImovelController.imovelUpdate ..." + imovelJSON);
+
         String imovel, apelido;
         ObjectMapper oMapper = new ObjectMapper();
         ImovelForm imovelForm = null;
         try {
             imovelForm = oMapper.readValue(imovelJSON, ImovelForm.class);
-
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -67,10 +67,10 @@ public class ImovelController {
         mav.addAttribute("imovel", imovelForm.getImovel());
         mav.addAttribute("apelido", imovelForm.getApelido());
         Sysout.s("Redirecting from Controller ... ");
+
         return "imovelUpdate";
     }
 
-    // v2 - 31.08
     @GetMapping("/imovelList")
     public String imovelList(Model model) {
         List<Imovel> imovelList = new ArrayList<Imovel>();

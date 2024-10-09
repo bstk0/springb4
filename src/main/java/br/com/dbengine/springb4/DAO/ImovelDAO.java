@@ -21,6 +21,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
     private CanonicClient canDb;
 
     public List<Imovel> getList() { //throws ParseException {
+
         return ImovelListSingleton.getInstance();
     }
 

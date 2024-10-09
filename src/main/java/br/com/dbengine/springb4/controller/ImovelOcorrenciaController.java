@@ -23,6 +23,7 @@ public class ImovelOcorrenciaController {
     @Autowired
     private ImovelOcorrenciaDAO dao; // = new ImovelOcorrenciaDAO();
 
+   
     private String backURL;
 
     public String getBackURL() {
@@ -32,6 +33,7 @@ public class ImovelOcorrenciaController {
     public void setBackURL(String backURL) {
         this.backURL = backURL;
     }
+
 
     @GetMapping("/imovelOcorrenciaList")
     public String imovelOcorrenciaList(Model model, @RequestParam int imovelId) {
