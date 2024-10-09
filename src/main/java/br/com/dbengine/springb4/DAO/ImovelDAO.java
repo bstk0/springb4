@@ -26,6 +26,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     public List<Imovel> getList() { //throws ParseException {
 
+
 //        if ( ImovelListSingleton.getInstance() == null) {
 //            Sysout.s(" >> singleton nao inicializado <<");
 //            this.initializeImovelList();
