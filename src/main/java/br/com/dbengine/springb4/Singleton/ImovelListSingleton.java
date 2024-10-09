@@ -1,7 +1,8 @@
 package br.com.dbengine.springb4.Singleton;
 
 import br.com.dbengine.springb4.dbUtil.UtilsJSON;
-import br.com.dbengine.springb4.entity.Imovel;
+import br.com.dbengine.springb4.entity.*;
+import br.com.dbengine.springb4.interfaces.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -24,31 +25,20 @@ public class ImovelListSingleton {
         new InitializeStaticData().initializeImovelList();
     }
 
-    /*
-    Transforma JSON em objeto para evitar erros de CAST
-    (java.lang.ClassCastException)
-     */
-    public static void setInstaceJSON(JSONArray array) {
-        //Sysout.s(">> setInstaceJSON ..." + array.size());
-        List<Imovel> imovelList = new ArrayList<Imovel>();
-        JSONObject iocc = null;
-        Imovel imovel = null;
-        for (int i = 0; i < array.size() ; i++) {
-            iocc = (JSONObject) array.get(i);
-            imovel = new Imovel();
-            imovel.setId(UtilsJSON.validaAtributo(iocc.get("id")));
-            imovel.setImovelId( UtilsJSON.parseAttrToInteger(iocc.get("imovelId")));
-            imovel.setDescricao(UtilsJSON.validaAtributo(iocc.get("descricao")));
-            imovel.setApelido(UtilsJSON.validaAtributo(iocc.get("apelido")));
-            imovel.setBairro(UtilsJSON.validaAtributo(iocc.get("bairro")));
-            imovel.setTipo(UtilsJSON.validaAtributo(iocc.get("tipo")));
-            imovel.setStatus(UtilsJSON.validaAtributo(iocc.get("status")));
-            imovel.setImobiliaria(UtilsJSON.validaAtributo(iocc.get("imobiliaria")));
-            imovel.setObservacoes(UtilsJSON.validaAtributo(iocc.get("observacoes")));
-
-            imovelList.add(imovel);
+    public static Imovel getItem(int id) {
+        if(!instance.isEmpty()) {
+            for (Imovel imovel : instance) {
+                //Sysout.s("imovel.getImovelId() : " + imovel.getImovelId());
+                if (imovel.getImovelId() == id) {
+                    return imovel;
+                }
+            }
         }
-
-        setInstance(imovelList);
+        return new Imovel(); //DAOInterface.super.getItem(id);
     }
+
+    public static int getCount() {
+        return instance.size();
+    }
+
 }

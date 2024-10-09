@@ -1,6 +1,7 @@
 package br.com.dbengine.springb4.controller;
 
 import br.com.dbengine.springb4.DAO.*;
+import br.com.dbengine.springb4.Singleton.*;
 import br.com.dbengine.springb4.entity.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -24,8 +25,11 @@ public class ImobiliariaController {
         return "imobiliaria/list";
     }
 
-    //@GetMapping("/imobiliariaList")
-    //public String imovelList(Model model) {
-    //    return "ops";
-    //}
+    @GetMapping("/reloadImobList")
+    public String imobReload() {
+        //ImovelListSingleton.setInstance(null);
+        ImobListSingleton.refresh();
+        return "redirect:/imobiliariaList";
+    }
+
 }

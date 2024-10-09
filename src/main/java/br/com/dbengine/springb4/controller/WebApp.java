@@ -53,6 +53,8 @@ public class WebApp {
         String remoteHostName = null;
         String erro1 = null;
         String erro2 = null;
+        int ImovelSize = 0;
+        int ImobSize = 0;
 
         try {
             //Sysout.s("LOCAL CONFIG::" +    // Local address
@@ -79,6 +81,8 @@ public class WebApp {
         m.addAttribute("remoteHostName", remoteHostName);
         m.addAttribute("erro1", erro1);
         m.addAttribute("erro2", erro2);
+        m.addAttribute("imovelSize", ImovelListSingleton.getCount());
+        m.addAttribute("imobSize", ImobListSingleton.getCount());
 
         return "admin";
 

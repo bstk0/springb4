@@ -19,35 +19,10 @@ public class ImovelDAO implements DAOInterface<Imovel> {
 
     @Autowired
     private CanonicClient canDb;
-    //private static CanonicClient canDb = new CanonicClient();
-
-    //private final String URL_UPD = canDb.CANONIC_REP1_BASE + "imovel/:_id";
-
 
     public List<Imovel> getList() { //throws ParseException {
-
-//        if ( ImovelListSingleton.getInstance() == null) {
-//            Sysout.s(" >> singleton nao inicializado <<");
-//            this.initializeImovelList();
-//        }
-        //List<Imovel> imovelList = initializeImovelList();
-        //return imovelList;      // (ArrayList<Imovel>) results;
         return ImovelListSingleton.getInstance();
-
     }
-
-//    //private @NotNull List<Imovel> initializeImovelList() {
-//    public void initializeImovelList() {
-//        Object obj = null;
-//        String resultGetAll;
-//        resultGetAll = canDb.getList("imovel");
-//        JSONArray results = canDb.CanonicJSONList(resultGetAll);
-//        //List<Imovel> imovelList = this.getImovelList(results); //resultGetAll);
-//        List<Imovel> imovelList = UtilsJSON.getListFromJSON(results,Imovel.class); //resultGetAll);
-//        // Singleton
-//        //ImovelListSingleton.setInstaceJSON((JSONArray) results);
-//        ImovelListSingleton.setInstance(imovelList);
-//    }
 
     @Override
     public void add(Imovel obj) {
@@ -73,20 +48,13 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         ImovelListSingleton.refresh();
     }
 
-    //@Override
+    @Override
+    public Imovel getItem(String id) {
+        return ImovelListSingleton.getItem(Integer.parseInt(id));
+    }
+
     public Imovel getItem(int id) {
-        //Sysout.s("getItem.param " + id);
-        List<Imovel> imovelList = ImovelListSingleton.getInstance();
-        if (imovelList == null) return new Imovel();
-        if(!imovelList.isEmpty()) {
-            for (Imovel imovel : imovelList) {
-                //Sysout.s("imovel.getImovelId() : " + imovel.getImovelId());
-                if (imovel.getImovelId() == id) {
-                    return imovel;
-                }
-            }
-        }
-        return new Imovel(); //DAOInterface.super.getItem(id);
+        return ImovelListSingleton.getItem(id);
     }
 
     @Override

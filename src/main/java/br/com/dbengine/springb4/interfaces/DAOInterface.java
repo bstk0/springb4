@@ -11,9 +11,12 @@ public interface DAOInterface<E> {
 
     public void update(E obj);
 
-    public default E getItem(String id) {
-        return null;
-    }
+    // public default E getItem(String id);
+    public E getItem(String id);
+
+//    public default E getItem(String id) {
+//        return null;
+//    }
 
     public String getCount();
 
