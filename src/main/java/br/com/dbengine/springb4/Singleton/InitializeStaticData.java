@@ -24,7 +24,7 @@ public class InitializeStaticData {
         }
     }
 
-    public void initializeImovelList() {
+/*    public void initializeImovelList() {
         Sysout.s("Initializing Static Data ...Imovel List");
         CanonicClient canDb = new CanonicClient();
         Object obj = null;
@@ -46,6 +46,6 @@ public class InitializeStaticData {
         JSONArray results = canDb.CanonicJSONList(resultGetAll);
 
         ImobListSingleton.setInstance( UtilsJSON.getListFromJSON(results,Imobiliaria.class) );
-    }
+    }*/
 
 }

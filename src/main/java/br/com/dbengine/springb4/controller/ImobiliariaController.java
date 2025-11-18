@@ -25,11 +25,13 @@ public class ImobiliariaController {
         return "imobiliaria/list";
     }
 
+/*
     @GetMapping("/reloadImobList")
     public String imobReload() {
         //ImovelListSingleton.setInstance(null);
         ImobListSingleton.refresh();
         return "redirect:/imobiliariaList";
     }
+*/
 
 }

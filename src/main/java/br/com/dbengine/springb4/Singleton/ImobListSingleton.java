@@ -18,9 +18,9 @@ public class ImobListSingleton {
         ImobListSingleton.instance = instance;
     }
 
-    public static void refresh() {
+/*    public static void refresh() {
         new InitializeStaticData().initializeImobiliariaList();
-    }
+    }*/
 
     public static Imobiliaria getItem(int id) {
         if(!instance.isEmpty()) {

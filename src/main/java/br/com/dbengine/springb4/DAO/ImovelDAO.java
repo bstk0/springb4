@@ -44,8 +44,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         String opResult = canDb.update(URL_UPD, obj.toJSONString());
         //Sysout.s("UPDATE RESULT >> " + opResult);
 
-        //ImovelListSingleton.setInstance(null);
-        ImovelListSingleton.refresh();
+        //ImovelListSingleton.refresh();
     }
 
     @Override

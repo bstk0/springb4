@@ -21,9 +21,9 @@ public class ImovelListSingleton {
         ImovelListSingleton.instance = instance;
     }
 
-    public static void refresh() {
+/*    public static void refresh() {
         new InitializeStaticData().initializeImovelList();
-    }
+    }*/
 
     public static Imovel getItem(int id) {
         if(!instance.isEmpty()) {

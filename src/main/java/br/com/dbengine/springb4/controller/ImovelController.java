@@ -3,8 +3,7 @@ package br.com.dbengine.springb4.controller;
 import br.com.dbengine.springb4.DAO.*;
 import br.com.dbengine.springb4.Singleton.*;
 import br.com.dbengine.springb4.dbUtil.Sysout;
-import br.com.dbengine.springb4.entity.Cultura;
-import br.com.dbengine.springb4.entity.Imovel;
+import br.com.dbengine.springb4.entity.*;
 import br.com.dbengine.springb4.form.ImovelForm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -24,20 +23,22 @@ import java.util.List;
 public class ImovelController {
 
    @Autowired
-    private ImovelDAO dao; // = new ImovelDAO();
+   private HImovelDAO dao; // = new ImovelDAO();
+    //private ImovelDAO dao; // = new ImovelDAO();
+
 
     @GetMapping("/imovel")
     public String imovel() {
         return "imovel";
     }
 
-    @RequestMapping(value="/imovel/refresh")
+/*    @RequestMapping(value="/imovel/refresh")
     public String imovelRefresh(RedirectAttributes redirectAttributes)
     {
         redirectAttributes.addAttribute("refresh", "true");
         //redirectAttributes.addFlashAttribute("fa", faValue);
         return "redirect:/imovel";
-    }
+    }*/
 
     @GetMapping("/imovelUpdate")
     public String imovelUpdate(@RequestParam(name="imovelForm") String imovelJSON,
@@ -73,9 +74,20 @@ public class ImovelController {
     // v2 - 31.08
     @GetMapping("/imovelList")
     public String imovelList(Model model) {
+        Sysout.s(" imovelList1 ... ");
         List<Imovel> imovelList = new ArrayList<Imovel>();
         imovelList = dao.getList();
-        //Sysout.s(">> " + imovelList.size());
+        Sysout.s(">> " + imovelList.size());
+        model.addAttribute("imovelList",imovelList);
+        return "imovel/list";
+    }
+
+    @GetMapping("/imovelList1")
+    public String imovelList1(Model model) {
+        Sysout.s(" imovelList1 ... ");
+        List<Imovel> imovelList = new ArrayList<Imovel>();
+        imovelList = dao.getList();
+        Sysout.s(">> " + imovelList.size());
         model.addAttribute("imovelList",imovelList);
         return "imovel/list";
     }
@@ -84,7 +96,7 @@ public class ImovelController {
     public String imovelUpdForm(@RequestParam int imovelId,Model model) {
         Sysout.s("imovelUpdForm...");
         Imovel imovelUpd = new Imovel();
-        imovelUpd = dao.getItem(imovelId);
+        imovelUpd = dao.getItem(String.valueOf(imovelId));
         //Sysout.s(" >> imovelUpdForm... " + imovelUpd.getApelido());
         model.addAttribute("imovel", imovelUpd);
         model.addAttribute("imobiliarias", new ImobiliariaDAO().getList());
@@ -98,11 +110,11 @@ public class ImovelController {
         return "redirect:/imovelList";
     }
 
-    @GetMapping("/reloadImovelList")
+/*    @GetMapping("/reloadImovelList")
     public String imovelUpdate() {
         //ImovelListSingleton.setInstance(null);
         ImovelListSingleton.refresh();
         return "redirect:/imovelList";
-    }
+    }*/
 
 }
