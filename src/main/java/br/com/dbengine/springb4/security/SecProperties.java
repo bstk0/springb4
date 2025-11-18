@@ -30,6 +30,9 @@ public class SecProperties {
     @Value("${hasura-key}")
     private String hasuraKey;
 
+    @Value("${hasura-key2}")
+    private String hasuraKey2;
+
     @Value("${admin-user}")
     private String adminUser;
 
@@ -78,6 +81,7 @@ public class SecProperties {
         Sysout.HARPER_KEY = harperKey;
         Sysout.RESTDB_KEY = restdbKey;
         Sysout.HASURA_KEY = hasuraKey;
+        Sysout.HASURA_KEY2 = hasuraKey2;
 
         UsersRepo usrRepo = new UsersRepo();
         usrRepo.setInicialUserList(adminUser,adminPass, adminRoles);
