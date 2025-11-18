@@ -18,8 +18,8 @@ public class InitializeStaticData {
     public void AllData() {
         if (!isLoaded) {
             Sysout.s("Initializing ALL Static Data ...");
-            initializeImobiliariaList();
-            initializeImovelList();
+            //initializeImobiliariaList();
+            //initializeImovelList();
             isLoaded = true;
         }
     }
