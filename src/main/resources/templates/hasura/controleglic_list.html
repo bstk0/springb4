@@ -62,7 +62,7 @@ pageEncoding="UTF-8" errorPage=""%>
       <td th:text="${data.estado}"></td>
       <td th:text="${data.comentario}"></td>
       <td>
-        <a th:href="@{/hpeopleUpdForm(hpeopleId=${data.id})}" class="btn btn-info">Update</a>
+        <a th:href="@{/hglicUpdForm(hglicId=${data.id})}" class="btn btn-info">Update</a>
       </td>
       <td><a href="#"   th:attr="data-id=${data.id}"
                   th:data-descr="${data.data}"

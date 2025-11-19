@@ -50,6 +50,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
@@ -131,6 +138,7 @@
 					<version>1</version>
 					<projectId>GCLOUD_CONFIG</projectId>
 					<cloudSdkVersion>390.0.0</cloudSdkVersion>
+					<automaticRestart>true</automaticRestart>
 				</configuration>
 			</plugin>
             <plugin>
