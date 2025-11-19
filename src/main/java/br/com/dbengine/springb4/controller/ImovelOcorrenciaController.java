@@ -1,7 +1,6 @@
 package br.com.dbengine.springb4.controller;
 
-import br.com.dbengine.springb4.DAO.ImovelDAO;
-import br.com.dbengine.springb4.DAO.ImovelOcorrenciaDAO;
+import br.com.dbengine.springb4.DAO.*;
 import br.com.dbengine.springb4.dbUtil.Sysout;
 import br.com.dbengine.springb4.entity.*;
 import br.com.dbengine.springb4.form.*;
@@ -21,7 +20,8 @@ import java.util.List;
 public class ImovelOcorrenciaController {
 
     @Autowired
-    private ImovelOcorrenciaDAO dao; // = new ImovelOcorrenciaDAO();
+    private HImovelOcorrDAO dao; // = new ImovelOcorrenciaDAO();
+    //private ImovelOcorrenciaDAO dao; // = new ImovelOcorrenciaDAO();
 
     private String backURL;
 
@@ -37,7 +37,7 @@ public class ImovelOcorrenciaController {
     public String imovelOcorrenciaList(Model model, @RequestParam int imovelId) {
         List<ImovelOcorrForm> iOccListForm = dao.getListForm(imovelId);
         // Descriçáo do Imovel
-        String imovelDescr = new ImovelDAO().getTitulo(imovelId);
+        String imovelDescr = "TESTE "; //new ImovelDAO().getTitulo(imovelId);
 
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);

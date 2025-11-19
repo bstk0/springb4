@@ -8,19 +8,25 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ImovelOcorrencia {
     private String id;
-    private Integer imovelId;
+    private int imovelId;
     private String descricao;
     private String nr_ref;
     private String statusFinal;
 
+    private String dtInicioOcorr;
+    private String dtFimOcorr;
+
     public ImovelOcorrencia() {
     }
 
-    public ImovelOcorrencia(String id, Integer imovelId, String descricao, String nr_ref, String statusFinal) {
+
+    public ImovelOcorrencia(String id, int imovelId, String descricao, String nr_ref, String statusFinal, String dtInicioOcorr, String dtFimOcorr) {
         this.id = id;
         this.imovelId = imovelId;
         this.descricao = descricao;
         this.nr_ref = nr_ref;
         this.statusFinal = statusFinal;
+        this.dtInicioOcorr = dtInicioOcorr;
+        this.dtFimOcorr = dtFimOcorr;
     }
 }
