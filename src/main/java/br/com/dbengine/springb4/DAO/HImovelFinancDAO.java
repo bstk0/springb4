@@ -14,11 +14,11 @@ import java.util.*;
 
 @SuppressWarnings("unchecked")
 @Component
-public class HImovelDAO implements DAOInterface<Imovel>
+public class HImovelFinancDAO implements DAOInterface<ImovelFinanceiro>
 
     {
 
-    private static final String COLLECTION = "imovel";
+    private static final String COLLECTION = "imovelFinanc";
     private int NCOUNT = 0;
     //private static restClient rest = new restClient();
 
@@ -31,7 +31,7 @@ public class HImovelDAO implements DAOInterface<Imovel>
             ));
 
 
-    public List<Imovel> getList() {
+    public List<ImovelFinanceiro> getList() {
         JSONParser parser = new JSONParser();
         Object obj = null;
         String resultGetAll;
@@ -42,21 +42,21 @@ public class HImovelDAO implements DAOInterface<Imovel>
 
             JSONArray results = rest.HasuraJSONList(resultGetAll,COLLECTION);
 
-            Sysout.s( " >> HImovelDAO.getList - results : " + results.size());
+            Sysout.s( " >> HImovelFinancDAO.getList - results : " + results.size());
             this.NCOUNT = results.size();
 
         //List<HPeople> hPeopleList = this.getListFromJSON(results); //resultGetAll);
-        return UtilsJSON.getListFromJSON(results,Imovel.class);
+        return UtilsJSON.getListFromJSON(results,ImovelFinanceiro.class);
     }
 
-    public void add(Imovel imovel) {
-        JSONObject snuttgly = this.convertItoJSON(imovel);
+    public void add(ImovelFinanceiro imovelFinanc) {
+        JSONObject snuttgly = this.convertIFtoJSON(imovelFinanc);
         Sysout.s(" >> DAO.add : " + snuttgly.toJSONString());
         String resultWoobly = rest.post(COLLECTION, snuttgly.toJSONString());
     }
 
 
-    public void update(Imovel imovel) {
+    public void update(ImovelFinanceiro imovel) {
         String hImovelId = imovel.getId();
         JSONObject snuttgly = this.upd_toJSON(imovel);
         Sysout.s("DAO.UPDATE >> snuttgly.toJSONString():" + snuttgly.toJSONString());
@@ -67,19 +67,22 @@ public class HImovelDAO implements DAOInterface<Imovel>
     }
 
 
-    public Imovel getItem(String id) {
-        final String PREFIX = "imovel_by_pk";
+    public ImovelFinanceiro getItem(String id) {
+        final String PREFIX = "imovelFinanc_by_pk";
         ObjectMapper objectMapper=new ObjectMapper();
         JSONParser parser = new JSONParser();
+        //2025.11.19 - teste
+        String test = this.getRequest();
+
         String hpeopleItem = rest.get(COLLECTION + "/" + id);
         Sysout.s("getItem:" + hpeopleItem);
-        Imovel imov = null;
+        ImovelFinanceiro imov = null;
         try {
             JSONObject jobj = (JSONObject) parser.parse(hpeopleItem);
             JSONObject obj = (JSONObject) jobj.get(PREFIX);
 
-            imov = objectMapper.readValue(obj.toString(), Imovel.class);
-            Sysout.s(">>> id + nome : " + imov.getId() + " / " + imov.getApelido());
+            imov = objectMapper.readValue(obj.toString(), ImovelFinanceiro.class);
+            Sysout.s(">>> id + nome : " + imov.getId() + " / " + imov.getImovelId());
         } catch (JsonProcessingException | ParseException e) {
             e.printStackTrace();
             //throw new RuntimeException(e);
@@ -177,36 +180,84 @@ public class HImovelDAO implements DAOInterface<Imovel>
         return NCOUNT;
     }
 
-        private JSONObject convertItoJSON(Imovel imovel) {
+        private JSONObject convertIFtoJSON(ImovelFinanceiro imovelFinanceiro) {
             JSONObject jo = new JSONObject();
-            jo.put("id",imovel.getId());
-            jo.put("imovelId", imovel.getImovelId());
-            jo.put("apelido", imovel.getApelido());
-            jo.put("descricao", imovel.getDescricao());
-            jo.put("status", imovel.getStatus());
-            jo.put("bairro",imovel.getBairro());
-            //jo.put("imobiliaria",imovel.getImobiliaria());
-            jo.put("imobiliaria", ImobListSingleton.getItem(imovel.getImobid()).getNome());
-            jo.put("tipo",imovel.getTipo());
-            jo.put("observacoes",imovel.getObservacoes());
-            jo.put("imobid", imovel.getImobid());
+            jo.put("id", imovelFinanceiro.getId());
+            jo.put("imovel_id", imovelFinanceiro.getImovelId());
+            jo.put("dadosGerais", imovelFinanceiro.getDadosGerais() );
+            jo.put("vl_aluguel", imovelFinanceiro.getVl_aluguel() );
+            jo.put("vl_condom", imovelFinanceiro.getVl_condom() );
+            jo.put("vl_iptu", imovelFinanceiro.getVl_iptu() );
+            jo.put("vl_iptu_desc", imovelFinanceiro.getVl_iptu_desc() );
+            jo.put("cd_luz", imovelFinanceiro.getCd_luz());
+            jo.put("cd_daem", imovelFinanceiro.getCd_daem());
+            jo.put("diaPagtoAluguel", imovelFinanceiro.getDiaPagtoAluguel());
+            jo.put("diaPagtoCond", imovelFinanceiro.getDiaPagtoCond());
+            jo.put("cpfCadastrado", imovelFinanceiro.getCpfCadastrado());
+            jo.put("nr_contrato", imovelFinanceiro.getNr_contrato());
+            jo.put("nr_inscr", imovelFinanceiro.getNr_inscr());
+
+            if(imovelFinanceiro.getDtInicioContr() != null && !("".equals(imovelFinanceiro.getDtFimContr()))) {
+                //jo.put("dtInicioContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtInicioContrato()));
+                jo.put("dtInicioContr", UtilsJSON.cvtBRDateToUTC(imovelFinanceiro.getDtInicioContr()));
+            }
+            if(imovelFinanceiro.getDtFimContr() != null && !("".equals(imovelFinanceiro.getDtFimContr()))) {
+                //jo.put("dtFimContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtFimContrato()));
+                jo.put("dtFimContr", UtilsJSON.cvtBRDateToUTC(imovelFinanceiro.getDtFimContr()));
+            }
+
+//        jo.put("dtInicioContr", imovelFinanceiro.getDtInicioContr());
+//        jo.put("dtFimContr", imovelFinanceiro.getDtFimContr());
+
+            jo.put("sindico", imovelFinanceiro.getSindico());
+            jo.put("administradora", imovelFinanceiro.getAdministradora());
+
             return jo;
         }
 
         // upd_toJSON()
-        private JSONObject upd_toJSON(Imovel imovel) {
+        private JSONObject upd_toJSON(ImovelFinanceiro imovelFinanceiro) {
+
+//            JSONObject result = new JSONObject();
+//            JSONObject snuttgly = new JSONObject();
+//            //snuttgly.put("product_id", getProduct_id());
+//            snuttgly.put("nome", getNome() );
+//            result.put("object", snuttgly);
+//            return result;
+
+            JSONObject result = new JSONObject();
             JSONObject jo = new JSONObject();
-//            jo.put("id",imovel.getId());
-//            jo.put("imovelId", imovel.getImovelId());
-            jo.put("apelido", imovel.getApelido());
-            jo.put("descricao", imovel.getDescricao());
-            jo.put("status", imovel.getStatus());
-            jo.put("bairro",imovel.getBairro());
-            //jo.put("imobiliaria",imovel.getImobiliaria());
-            jo.put("imobiliaria", ImobListSingleton.getItem(imovel.getImobid()).getNome());
-            jo.put("tipo",imovel.getTipo());
-            jo.put("observacoes",imovel.getObservacoes());
-            jo.put("imobid", imovel.getImobid());
-            return jo;
+            //jo.put("id", imovelFinanceiro.getId());
+            //jo.put("imovel_id", imovelFinanceiro.getImovelId());
+            jo.put("dadosGerais", imovelFinanceiro.getDadosGerais() );
+            jo.put("vl_aluguel", imovelFinanceiro.getVl_aluguel() );
+            jo.put("vl_condom", imovelFinanceiro.getVl_condom() );
+            jo.put("vl_iptu", imovelFinanceiro.getVl_iptu() );
+            jo.put("vl_iptu_desc", imovelFinanceiro.getVl_iptu_desc() );
+            jo.put("cd_luz", imovelFinanceiro.getCd_luz());
+            jo.put("cd_daem", imovelFinanceiro.getCd_daem());
+            jo.put("diaPagtoAluguel", imovelFinanceiro.getDiaPagtoAluguel());
+            jo.put("diaPagtoCond", imovelFinanceiro.getDiaPagtoCond());
+            jo.put("cpfCadastrado", imovelFinanceiro.getCpfCadastrado());
+            jo.put("nr_contrato", imovelFinanceiro.getNr_contrato());
+            jo.put("nr_inscr", imovelFinanceiro.getNr_inscr());
+
+            if(imovelFinanceiro.getDtInicioContr() != null && !("".equals(imovelFinanceiro.getDtFimContr()))) {
+                //jo.put("dtInicioContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtInicioContrato()));
+                jo.put("dtInicioContr", UtilsJSON.cvtBRDateToUTC(imovelFinanceiro.getDtInicioContr()));
+            }
+            if(imovelFinanceiro.getDtFimContr() != null && !("".equals(imovelFinanceiro.getDtFimContr()))) {
+                //jo.put("dtFimContrato", Sysout.dateStringtoUnix(imovelFinanceiro.getDtFimContrato()));
+                jo.put("dtFimContr", UtilsJSON.cvtBRDateToUTC(imovelFinanceiro.getDtFimContr()));
+            }
+
+//        jo.put("dtInicioContr", imovelFinanceiro.getDtInicioContr());
+//        jo.put("dtFimContr", imovelFinanceiro.getDtFimContr());
+
+            jo.put("sindico", imovelFinanceiro.getSindico());
+            jo.put("administradora", imovelFinanceiro.getAdministradora());
+
+            result.put("object", jo);
+            return result; //jo;
         }
     }

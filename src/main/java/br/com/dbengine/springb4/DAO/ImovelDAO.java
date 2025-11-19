@@ -96,6 +96,7 @@ public class ImovelDAO implements DAOInterface<Imovel> {
         }
         return imovelDescr;
     }
+
     public String getApelido(int imovelId) {
         Imovel desc = this.getItem(imovelId);
         String imovelDescr;

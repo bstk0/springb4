@@ -1,7 +1,6 @@
 package br.com.dbengine.springb4.controller;
 
-import br.com.dbengine.springb4.DAO.ImovelDAO;
-import br.com.dbengine.springb4.DAO.ImovelFinanceiroDAO;
+import br.com.dbengine.springb4.DAO.*;
 import br.com.dbengine.springb4.dbUtil.*;
 import br.com.dbengine.springb4.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ImovelFinanceiroController {
 
     @Autowired
-    private ImovelFinanceiroDAO dao; // = new ImovelOcorrenciaDAO();
+    private HImovelFinancDAO dao; // = new ImovelOcorrenciaDAO();
+    //private ImovelFinanceiroDAO dao; // = new ImovelOcorrenciaDAO();
 
     @GetMapping("/imovelFinanceiroDetail")
     public String imovelFinanceiroDetail(Model model, @RequestParam int imovelId) {
-        ImovelFinanceiro iFin = dao.getItem(imovelId);
+        ImovelFinanceiro iFin = dao.getItem(String.valueOf(imovelId));
         // Descriçáo do Imovel
-        String imovelDescr = new ImovelDAO().getTitulo(imovelId);
+        String imovelDescr = "TESTE " ; //new ImovelDAO().getTitulo(imovelId);
 
         // Formata Datas
         iFin.setDtInicioContr(UtilsJSON.cvtUTCDateToBr(iFin.getDtInicioContr()));
