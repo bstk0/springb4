@@ -64,7 +64,7 @@ public class ImovelOcorrenciaController {
         ImovelOcorrencia imovOccAdd = new ImovelOcorrencia();
         imovOccAdd.setImovelId(imovelId);
         // Descriçáo do Imovel
-        String imovelDescr = new ImovelDAO().getTitulo(imovelId);
+        String imovelDescr = dao.getImovelDescri(); //new ImovelDAO().getTitulo(imovelId);
 
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelIdDescr",imovelDescr);
@@ -102,7 +102,7 @@ public class ImovelOcorrenciaController {
         String imovelDescr = "";
         int imovelId = imovelOccUpd.getImovelId();
         if (imovelId > 0) {
-            imovelDescr = new ImovelDAO().getTitulo(imovelId);
+            imovelDescr = dao.getImovelDescri(); //new ImovelDAO().getTitulo(imovelId);
         }
         model.addAttribute("imovelIdAttr",imovelId);
         model.addAttribute("imovelOcorrencia", imovelOccUpd);
@@ -147,6 +147,10 @@ public class ImovelOcorrenciaController {
     }
 
     public boolean checkBackURL(String texto) {
-        return ((getBackURL().indexOf(texto) > 0) ? true : false);
+        Boolean bReturn = false;
+        if (null != this.getBackURL()) {
+            bReturn = ((getBackURL().indexOf(texto) > 0) ? true : false);
+        }
+        return bReturn;
     }
 }
