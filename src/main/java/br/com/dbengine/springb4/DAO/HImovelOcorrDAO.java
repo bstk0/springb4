@@ -22,6 +22,7 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia>
     private static final String TABLE = "ImovelOcorr";
     private int NCOUNT = 0;
     //private static restClient rest = new restClient();
+    private String ImovelDescri;
 
 
     private static final RestClient rest = new RestClient(
@@ -243,6 +244,9 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia>
 
             JSONArray results = rest.HasuraJSONList(resultGetAll, TABLE);
 
+            JSONObject imovel_by_pk = rest.HasuraJSONObject(resultGetAll,  "imovel_by_pk");
+            this.setImovelDescri((String) imovel_by_pk.get("apelido"));
+
             Sysout.s( " >> HImovelFinancDAO.getList - results : " + results.size());
             this.NCOUNT = results.size();
 
@@ -292,4 +296,11 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia>
             return ioccFom;
         }
 
+        public String getImovelDescri() {
+            return ImovelDescri;
+        }
+
+        public void setImovelDescri(String imovelDescri) {
+            ImovelDescri = imovelDescri;
+        }
     }

@@ -220,5 +220,29 @@ public final class RestClient {
         }
         return result;
     }
+
+    public JSONObject HasuraJSONObject(String sjson, String tableName) {
+        JSONObject result = new JSONObject();
+        JSONParser parser = new JSONParser();
+        JSONObject jobj = null;
+        try {
+            jobj = (JSONObject) parser.parse(sjson);
+//            JSONObject jobj2 = (JSONObject) jobj.get(tableName);
+//            Iterator<?> iterator = jobj2.keySet().iterator();
+//            while (iterator.hasNext()) {
+//                Object key = iterator.next();
+//                jobj = (JSONObject) jobj2.get(key.toString());
+//                result.add(jobj);
+//            }
+            Sysout.s( " >> HasuraJSONObject - results : " + jobj);
+
+            result = (JSONObject) jobj.get(tableName);
+        } catch (ParseException e) {
+            //return e.getMessage();
+            //throw new RuntimeException(e);
+            Sysout.s( "ERROR:" + e.getMessage());
+        }
+        return result;
+    }
 }
 
