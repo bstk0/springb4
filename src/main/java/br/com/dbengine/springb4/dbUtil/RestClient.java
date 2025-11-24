@@ -210,6 +210,8 @@ public final class RestClient {
 //                jobj = (JSONObject) jobj2.get(key.toString());
 //                result.add(jobj);
 //            }
+            Sysout.s( " >> HasuraJSONList - results : " + jobj);
+
             result = (JSONArray) jobj.get(tableName);
         } catch (ParseException e) {
             //return e.getMessage();
