@@ -121,7 +121,14 @@
 			<version>2.0.4</version> <!-- or later-->
 		</dependency>
 
-    </dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version> <!-- Or the specific version you need -->
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>

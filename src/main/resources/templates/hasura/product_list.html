@@ -43,6 +43,7 @@ pageEncoding="UTF-8" errorPage=""%>
     <tr>
       <th>Código</th>
       <th>Nome</th>
+      <th>DT.CRIAÇÃO</th>
       <th>UPDATE</th>
       <th>DELETE</th>
     </tr>
@@ -66,7 +67,6 @@ pageEncoding="UTF-8" errorPage=""%>
     </c:forEach>
 -->
     <tr th:each="data : ${hproductList}">
-      <!-- <td th:text="${data.CulturaCodigo}"></td> -->
       <td th:text="${data.product_id}"></td>
       <td th:text="${data.nome}"></td>
       <td th:text="${data.dt_criacao}"></td>
@@ -116,7 +116,7 @@ pageEncoding="UTF-8" errorPage=""%>
   <a href="/">Voltar</a>
   <script>
 			$(document).ready(function() {
-				$('#hpeoplelist').DataTable({
+				$('#hproductlist').DataTable({
 					"order" : [ [ 0, "asc" ] ],
 					"pageLength": 25
 				});
