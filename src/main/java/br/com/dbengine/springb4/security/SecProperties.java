@@ -67,6 +67,9 @@ public class SecProperties {
     @Value("${user4Roles}")
     private String[] user4Roles;
 
+    @Value("${supabase-key}")
+    private String supabasekey;
+
     public SecProperties() {
     }
 
@@ -76,12 +79,13 @@ public class SecProperties {
         //Sysout.s("================== >> " + emailKey + " << ================== ");
         //Sysout.s("================== >> " + threadPoolKey + " << ================== ");
         //Sysout.s("================== >> " + restdbKey + " << ================== ");
-        Sysout.s("================== >> " + hasuraKey + " << ================== ");
+        //Sysout.s("================== >> " + hasuraKey + " << ================== ");
         Sysout.CANONIC_KEY = canonicKey;
         Sysout.HARPER_KEY = harperKey;
         Sysout.RESTDB_KEY = restdbKey;
         Sysout.HASURA_KEY = hasuraKey;
         Sysout.HASURA_KEY2 = hasuraKey2;
+        Sysout.SUPABASE_KEY = supabasekey;
 
         UsersRepo usrRepo = new UsersRepo();
         usrRepo.setInicialUserList(adminUser,adminPass, adminRoles);

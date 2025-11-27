@@ -18,6 +18,7 @@ public class Sysout {
     public static String HARPER_KEY;
     public static String HASURA_KEY;
     public static String HASURA_KEY2;
+    public static String SUPABASE_KEY;
     public static String RESTDB_KEY;
     //public static String ADM_USER;
     //public static String ADM_PASS;

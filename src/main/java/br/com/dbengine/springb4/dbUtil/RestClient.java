@@ -20,6 +20,7 @@ public final class RestClient {
 
     //HTTP protocol
     private final String POST = "POST";
+    private final String PATCH = "PATCH";
     private final String DELETE = "DELETE";
     private final String GET = "GET";
     private final String PUT = "PUT";
@@ -120,13 +121,16 @@ public final class RestClient {
                                        final String url,
                                        final String parameters)  {
         Sysout.s(" ** executeHTTPRequest ...");
+        Sysout.s(" ** HTTPRequest : " + requestMethod);
+        Sysout.s(" ** HTTPURL     : " + url);
+        Sysout.s(" ** PARAM       : " + parameters);
         HttpURLConnection connection = null;
         StringBuilder response = new StringBuilder(); // or StringBuffer if not Java 5+
         try {
             //Create connection
             connection = createConnection(requestMethod, url);
 
-            if (POST.equals(requestMethod) || PUT.equals(requestMethod))
+            if (POST.equals(requestMethod) || PUT.equals(requestMethod) || PATCH.equals(requestMethod))
                 sentPostRequest(connection, parameters);
 
             // read stream
@@ -138,7 +142,9 @@ public final class RestClient {
             }
             rd.close();
         } catch (IOException e) {
-            System.err.println("Cant connect to the server. Please try later on");
+            //System.err.println("Cant connect to the server. Please try later on");
+            System.err.println("Error reading file: " + e.getMessage());
+            e.printStackTrace();
         }
         finally {
             // close connection no matter what
@@ -176,8 +182,20 @@ public final class RestClient {
      * @return ID of the object updated
      */
     public  String put(final String collection, final String query) {
-        //this.setCONTENT_TYPE("application/json");
+        this.setCONTENT_TYPE("application/json");
         return executeHTTPRequest(PUT, collection, query);
+    }
+
+    /**
+     * PUT method, update a given object by its ID
+     * More info about the query here : https://restdb.io/docs/querying-with-the-api
+     * @param collection collection to call, with the ID of the object to update
+     * @return ID of the object updated
+     * ==== NAO FUNCIONOU PARA SUPABASE - PostREST ==========
+     */
+    public  String patch(final String collection, final String query) {
+        this.setCONTENT_TYPE("application/json");
+        return executeHTTPRequest(PATCH, collection, query);
     }
 
     /**
@@ -244,5 +262,30 @@ public final class RestClient {
         }
         return result;
     }
+
+    public JSONArray SupabaseJSONList(String sjson) {
+        JSONArray result = new JSONArray();
+        JSONParser parser = new JSONParser();
+        //JSONObject jobj = null;
+        try {
+            //jobj = (JSONObject) parser.parse(sjson);
+//            JSONObject jobj2 = (JSONObject) jobj.get(tableName);
+//            Iterator<?> iterator = jobj2.keySet().iterator();
+//            while (iterator.hasNext()) {
+//                Object key = iterator.next();
+//                jobj = (JSONObject) jobj2.get(key.toString());
+//                result.add(jobj);
+//            }
+            Sysout.s( " >> SupabaseJSONList - results : " + sjson);
+
+            result = (JSONArray) parser.parse(sjson);
+        } catch (ParseException e) {
+            //return e.getMessage();
+            //throw new RuntimeException(e);
+            Sysout.s( "ERROR:" + e.getMessage());
+        }
+        return result;
+    }
+
 }
 

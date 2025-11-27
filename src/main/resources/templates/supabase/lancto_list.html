@@ -1,0 +1,152 @@
+<!-- Import correção acentuação
+<%@ page contentType="text/html; charset=ISO-8859-1" language="java"
+pageEncoding="UTF-8" errorPage=""%>
+-->
+<!-- Import da taglib
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Cultura - list</title>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <script
+          src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script
+          src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+.bs-example {
+	margin: 20px;
+}
+</style>
+</head>
+<body>
+<h1>Lancto - from SUPABASE</h1>
+<a href="/">Voltar</a>&nbsp;||&nbsp;<a href="/slancto/addform">ADD</a>
+<div class="bs-example">
+  <table id="slanctoList" class="table table-hover">
+    <thead class="thead-light">
+    <tr>
+      <th>Código</th>
+      <th>DESCRICAO</th>
+      <th>DT.REF</th>
+      <th>UPDATE</th>
+      <th>DELETE</th>
+    </tr>
+    </thead>
+    <tbody>
+<!--
+    <c:forEach items="${culturaList}" var="cultura" varStatus="theCount">
+      <tr>
+        <td><a
+                href="${linkTo[CulturaController].edit}?id=${cultura._id}">${cultura.CulturaCodigo}</a></td>
+        <td>${cultura.CulturaDescricao}</td>
+        <td>
+//<button class="btn btn-default" data-id="${cultura._id}" data-toggle="modal" data-target="#confirm-delete">
+//  Delete
+//</button>
+ <a href="#" data-id="${cultura._id}" data-toggle="modal"
+                       data-target="#confirm-delete" class="confirm-delete"> <span
+                class="fas fa-trash"></span>
+        </a>
+      </tr>
+    </c:forEach>
+-->
+    <tr th:each="data : ${slanctoList}">
+      <td th:text="${data.id}"></td>
+      <td th:text="${data.descr}"></td>
+      <td th:text="${data.dt_ref}"></td>
+      <td>
+        <a th:href="@{/slanctoUpdForm(slanctoId=${data.id})}" class="btn btn-info">Update</a>
+      </td>
+      <td><a href="#"   th:attr="data-id=${data.id}"
+                  th:data-descr="${data.descr}"
+                  data-toggle="modal"
+                  data-target="#confirm-delete" class="confirm-delete">
+            <span class="fas fa-trash"></span>
+          </a>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+  <!-- Modal - inicio -->
+  <div class="modal fade" id="confirm-delete" tabindex="-1"
+       role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- <div id="confirm-delete" class="modal hide"> -->
+        <div class="modal-header">
+          <h3>Delete</h3>
+          <a href="#" data-dismiss="modal" aria-hidden="true" class="close">×</a>
+        </div>
+        <div class="modal-body">
+          <!--
+          <p>You are about to delete.</p>
+          <p>Do you want to proceed?</p>
+          -->
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <!-- 						<a class="btn btn-danger btn-ok">Delete</a> -->
+          <a href="#" id="btnConfirmDelete" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- Modal - fim -->
+
+  <a href="/">Voltar</a>
+  <script>
+    //TODO: Ajustar para DELETE
+			$(document).ready(function() {
+				$('#slanctoList').DataTable({
+					"order" : [ [ 0, "asc" ] ],
+					"pageLength": 25
+				});
+			});
+
+			$('.confirm-delete').on('click', function(e) {
+				e.preventDefault();
+                var descrHtml = '<p>You are about to delete.</p>';
+                descrHtml += '<p>Do you want to proceed?</p>';
+                descrHtml += '<p>Descricao: ' + $(this).data('descr'); + '</p>';
+                document.getElementsByClassName("modal-body")[0].innerHTML = descrHtml;
+
+				var id = $(this).data('id');
+				//alert(id);
+				$('#confirm-delete').data('id', id).modal('show');
+			});
+
+			$('#btnConfirmDelete').click(function() {
+				// handle deletion here
+				var delId = $('#confirm-delete').data('id');
+				var urlAction = "/slanctoDelete";
+				urlAction += "?slanctoId="+delId
+				//alert("confirm:" + id);
+				window.location.href = urlAction;
+				$('#confirm-delete').modal('hide');
+			});
+		</script>
+  <script
+          src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+</div>
+</body>
+</html>
