@@ -124,28 +124,21 @@ pageEncoding="UTF-8" errorPage=""%>
 
 			$('.confirm-delete').on('click', function(e) {
 				e.preventDefault();
-
-                // teste - nao deu certo
-                // document.getElementsByClassName("modal-body").innerHTML += 'Testing here';
                 var descrHtml = '<p>You are about to delete.</p>';
                 descrHtml += '<p>Do you want to proceed?</p>';
                 descrHtml += '<p>Descricao: ' + $(this).data('descr'); + '</p>';
                 document.getElementsByClassName("modal-body")[0].innerHTML = descrHtml;
 
-				var id = $(this).data('product_id');
+				var id = $(this).data('id');
 				//alert(id);
-				$('#confirm-delete').data('product_id', id).modal('show');
+				$('#confirm-delete').data('id', id).modal('show');
 			});
 
 			$('#btnConfirmDelete').click(function() {
 				// handle deletion here
 				var delId = $('#confirm-delete').data('id');
-				//var urlAction = "${linkTo[CulturaController].delete}";
-				//th:href="@{/culturaDelete(culturaId=${data._id})}"
-				var urlAction = "/hpeopleDelete";
-				urlAction += "?hpeopleId="+delId
-				//alert("confirm:" + id);
-				//$('[data-id='+id+']').remove();
+				var urlAction = "/hproductDelete";
+				urlAction += "?hproductId="+delId
 				window.location.href = urlAction;
 				$('#confirm-delete').modal('hide');
 			});

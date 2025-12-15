@@ -14,7 +14,7 @@ import java.util.*;
 @Component
 public class HProductDAO { //implements DAOInterface<Cultura> {
 
-    private static final String COLLECTION = "product";
+    private static final String COLLECTION = "Product";
     private int NCOUNT = 0;
     //private static restClient rest = new restClient();
 
@@ -65,16 +65,18 @@ public class HProductDAO { //implements DAOInterface<Cultura> {
 
 
     public HProduct getItem(String id) {
-        final String PREFIX = "product_by_pk";
+        final String PREFIX = "Product_by_pk"; //"product_by_pk";
         ObjectMapper objectMapper=new ObjectMapper();
         JSONParser parser = new JSONParser();
         String hpeopleItem = rest.get(COLLECTION + "/" + id);
-        Sysout.s("getItem:" + hpeopleItem);
+        Sysout.s("**> 1>>> getItem:" + hpeopleItem);
         HProduct imov = null;
         try {
             JSONObject jobj = (JSONObject) parser.parse(hpeopleItem);
             JSONObject obj = (JSONObject) jobj.get(PREFIX);
+            //JSONObject obj = (JSONObject) jobj; //.get(PREFIX);
 
+            //imov = objectMapper.readValue(jobj.toString(), HProduct.class);
             imov = objectMapper.readValue(obj.toString(), HProduct.class);
             Sysout.s(">>> id + nome : " + imov.getProduct_id() + " / " + imov.getNome());
         } catch (JsonProcessingException | ParseException e) {

@@ -18,7 +18,7 @@ public class HImovelDAO implements DAOInterface<Imovel>
 
     {
 
-    private static final String COLLECTION = "imovel";
+    private static final String COLLECTION = "Imovel";
     private int NCOUNT = 0;
     //private static restClient rest = new restClient();
 
@@ -68,7 +68,7 @@ public class HImovelDAO implements DAOInterface<Imovel>
 
 
     public Imovel getItem(String id) {
-        final String PREFIX = "imovel_by_pk";
+        final String PREFIX = "Imovel_by_pk";
         ObjectMapper objectMapper=new ObjectMapper();
         JSONParser parser = new JSONParser();
         String hpeopleItem = rest.get(COLLECTION + "/" + id);

@@ -56,8 +56,8 @@ public class HProductController {
     }
 
     @GetMapping("/hproductDelete")
-    public String hproductDelete(@RequestParam String hpeopleId) {
-         dao.delete(hpeopleId);
+    public String hproductDelete(@RequestParam String hproductId) {
+         dao.delete(hproductId);
         return "redirect:/hproductList";
     }
 
