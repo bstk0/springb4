@@ -24,7 +24,7 @@ public class HPeopleController {
         HPeople hpeople = new HPeople();
         hpeople.setId(String.valueOf(dao.getNCOUNT() + 1));
         model.addAttribute("hpeople", hpeople);
-        return "/hasura/people1_addform";
+        return "hasura/people1_addform";
     }
 
     @GetMapping("/hpeopleList")
@@ -32,7 +32,7 @@ public class HPeopleController {
         List<HPeople> hpeopleList = new ArrayList<>();
         hpeopleList = dao.getList();
         model.addAttribute("hpeopleList",hpeopleList);
-        return "/hasura/people1_list";
+        return "hasura/people1_list";
     }
 
     @PostMapping("/hpeopleAdd")
@@ -45,7 +45,7 @@ public class HPeopleController {
     public String hpeopleUpdForm(@RequestParam String hpeopleId,Model model) {
         HPeople  hPeople = dao.getItem(hpeopleId);
         model.addAttribute("hpeople", hPeople);
-        return "/hasura/people1_updform";
+        return "hasura/people1_updform";
     }
 
     @PostMapping("/hpeopleUpdate")
@@ -61,6 +61,5 @@ public class HPeopleController {
          dao.delete(hpeopleId);
         return "redirect:/hpeopleList";
     }
-
 
 }

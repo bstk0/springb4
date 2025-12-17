@@ -23,7 +23,7 @@ public class HProductController {
         HProduct hproduct = new HProduct();
         //hproduct.setProduct_id(String.valueOf(dao.getNCOUNT() + 1));
         model.addAttribute("hproduct", hproduct);
-        return "/hasura/product_addform";
+        return "hasura/product_addform";
     }
 
     @GetMapping("/hproductList")
@@ -31,7 +31,7 @@ public class HProductController {
         List<HProduct> hpeopleList = new ArrayList<>();
         hpeopleList = dao.getList();
         model.addAttribute("hproductList",hpeopleList);
-        return "/hasura/product_list";
+        return "hasura/product_list";
     }
 
     @PostMapping("/hproductAdd")
@@ -44,7 +44,7 @@ public class HProductController {
     public String hproductUpdForm(@RequestParam String hproductId,Model model) {
         HProduct  hProduct = dao.getItem(hproductId);
         model.addAttribute("hproduct", hProduct);
-        return "/hasura/product_updform";
+        return "hasura/product_updform";
     }
 
     @PostMapping("/hproductUpdate")

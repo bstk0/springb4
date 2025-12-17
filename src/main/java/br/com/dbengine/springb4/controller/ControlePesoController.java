@@ -20,14 +20,14 @@ public class ControlePesoController {
         List<ControlePeso> hpesoList = new ArrayList<>();
         hpesoList = dao.getList();
         model.addAttribute("hpesoList", hpesoList);
-        return "/hasura/controlepeso_list";
+        return "hasura/controlepeso_list";
     }
 
     @GetMapping("/controlePeso/addform")
     public String controlePesoAddForm(Model model) {
         ControlePeso hpeso = new ControlePeso();
         model.addAttribute("hpeso", hpeso);
-        return "/hasura/controlepeso_addform";
+        return "hasura/controlepeso_addform";
     }
 
     @PostMapping("/controlePesoAdd")

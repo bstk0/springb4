@@ -60,7 +60,6 @@ public class SLanctoDAO { //implements DAOInterface<Cultura> {
         JSONObject snuttgly = sLancto.upd_toJSON();
         Sysout.s(" SLanctoDAO.UPDATE >> snuttgly.toJSONString():" + snuttgly.toJSONString());
 
-
         String uri_UPDATE = COLLECTION + "?id=eq." + sLanctoId;
 
         //String reString = rest.post(uri_UPDATE, snuttgly.toJSONString());

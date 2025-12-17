@@ -22,15 +22,17 @@ public class SLanctoController {
     public String hproductAddForm(Model model) {
         SLancto objAdd = new SLancto();
         model.addAttribute("slancto", objAdd);
-        return "/supabase/lancto_addform";
+        return "supabase/lancto_addform";
     }
 
     @GetMapping("/slanctoList")
     public String slanctoList(Model model) {
+        Sysout.s(" Controller >> slanctoList");
         List<SLancto> hpeopleList = new ArrayList<>();
         hpeopleList = dao.getList();
         model.addAttribute("slanctoList",hpeopleList);
-        return "/supabase/lancto_list";
+        //return "/supabase/lancto_list";
+        return "supabase/lancto_list";
     }
 
     @PostMapping("/slanctoAdd")
@@ -43,7 +45,7 @@ public class SLanctoController {
     public String slanctoUpdForm(@RequestParam String slanctoId,Model model) {
         SLancto slancto = dao.getItem(slanctoId);
         model.addAttribute("slancto", slancto);
-        return "/supabase/lancto_updform";
+        return "supabase/lancto_updform";
     }
 
     @PostMapping("/slanctoUpdate")
@@ -58,6 +60,10 @@ public class SLanctoController {
     public String slanctoDelete(@RequestParam String slanctoId) {
          dao.delete(slanctoId);
         return "redirect:/slanctoList";
+    }
+
+    public void TestMethod() {
+        //Teste compilação 16.12.2025
     }
 
 }

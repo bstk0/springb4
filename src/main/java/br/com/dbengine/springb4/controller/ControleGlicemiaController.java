@@ -21,14 +21,14 @@ public class ControleGlicemiaController {
         List<ControleGlicemia> hgliceList = new ArrayList<>();
         hgliceList = dao.getList();
         model.addAttribute("hgliceList", hgliceList);
-        return "/hasura/controleglic_list";
+        return "hasura/controleglic_list";
     }
 
     @GetMapping("/controleglic/addform")
     public String controleGlicemiaAddForm(Model model) {
         ControleGlicemia hglic = new ControleGlicemia();
         model.addAttribute("hglic", hglic);
-        return "/hasura/controleglic_addform";
+        return "hasura/controleglic_addform";
     }
 
     @PostMapping("/controleglicAdd")
@@ -41,7 +41,7 @@ public class ControleGlicemiaController {
     public String hglicUpdForm(@RequestParam String hglicId,Model model) {
         ControleGlicemia  hglic = dao.getItem(hglicId);
         model.addAttribute("hglic", hglic);
-        return "/hasura/controleglic_updform";
+        return "hasura/controleglic_updform";
     }
 
     @PostMapping("/controleglicUpd")
