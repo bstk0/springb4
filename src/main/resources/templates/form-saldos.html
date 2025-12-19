@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- O título da página será dinâmico -->
+    <title th:text="${isEdicao} ? 'Editar Saldo' : 'Novo Saldo'">Formulário de Saldo</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; background-color: #f8f9fa; color: #212529; }
+        h1 { color: #343a40; }
+        form div { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: .5rem; font-weight: 600; }
+        select, input { display: block; width: 100%; padding: .75rem; font-size: 1rem; line-height: 1.5; color: #495057; background-color: #fff; background-clip: padding-box; border: 1px solid #ced4da; border-radius: .25rem; transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; }
+        select:focus, input:focus { border-color: #80bdff; outline: 0; box-shadow: 0 0 0 .2rem rgba(0,123,255,.25 ); }
+        button { color: #fff; background-color: #007bff; border-color: #007bff; display: inline-block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; border: 1px solid transparent; padding: .75rem 1.25rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out; }
+        button:hover { background-color: #0056b3; border-color: #0056b3; }
+        a { color: #007bff; text-decoration: none; background-color: transparent; }
+        a:hover { text-decoration: underline; }
+        hr { border: 0; height: 1px; background: #dee2e6; margin: 2rem 0; }
+    </style>
+</head>
+<body>
+
+<!-- O título H1 também será dinâmico -->
+<h1 th:text="${isEdicao} ? 'Editar Saldo' : 'Novo Saldo'"></h1>
+<p th:text="${isEdicao} ? 'Altere os dados abaixo e clique em Salvar Alterações.' : 'Preencha os dados abaixo para criar um novo saldo.'"></p>
+
+<!--
+  Ação do formulário dinâmica:
+  - Se 'isEdicao' for true, a action será POST /saldos/editar/{id}
+  - Se 'isEdicao' for false, a action será POST /saldos
+-->
+<form th:action="${isEdicao} ? @{/saldos/editar/{id}(id=${saldoId})} : @{/saldos}"
+      th:object="${formularioSaldoDTO}"
+      method="post">
+
+    <div>
+        <label for="combo-banco">Banco:</label>
+        <select id="combo-banco" th:field="*{banco}">
+            <option value="">Selecione um banco</option>
+            <option th:each="bancoOpt : ${bancos}"
+                    th:value="${bancoOpt.name()}"
+                    th:text="${bancoOpt.nome}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label for="combo-aplicacao">Tipo de Aplicação:</label>
+        <select id="combo-aplicacao" th:field="*{aplicacao}">
+            <option value="">Selecione uma aplicação</option>
+            <option th:each="tipoOpt : ${tiposAplicacao}"
+                    th:value="${tipoOpt.name()}"
+                    th:text="${tipoOpt.descricao}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label for="data">Data:</label>
+        <input type="date" id="data" th:field="*{data}" required>
+    </div>
+
+    <div>
+        <label for="valor">Valor:</label>
+        <input type="number" step="0.01" id="valor" th:field="*{valor}" required placeholder="Ex: 1234.56">
+    </div>
+
+    <div style="margin-top: 20px;">
+        <!-- Texto do botão dinâmico -->
+        <button type="submit" th:text="${isEdicao} ? 'Salvar Alterações' : 'Criar Saldo'"></button>
+    </div>
+</form>
+
+<hr>
+
+<a th:href="@{/saldos}">&#8592; Cancelar e Voltar para a Lista</a>
+
+<!-- Script para combos dependentes -->
+<script>
+    $(document).ready(function() {
+        $('#combo-banco').on('change', function() {
+            var bancoSelecionado = $(this).val();
+            var comboAplicacao = $('#combo-aplicacao');
+
+            if (!bancoSelecionado) {
+                comboAplicacao.empty().append('<option value="">Selecione um banco primeiro</option>');
+                return;
+            }
+
+            $.ajax({
+                url: '/saldos/api/tipos-por-banco', // URL corrigida com o prefixo
+                type: 'GET',
+                data: { banco: bancoSelecionado },
+                success: function(tipos) {
+                    comboAplicacao.empty().append('<option value="">Selecione uma aplicação</option>');
+                    $.each(tipos, function(index, tipo) {
+                        comboAplicacao.append($('<option>', {
+                            value: tipo.name,
+                            text: tipo.descricao
+                        }));
+                    });
+                },
+                error: function() {
+                    console.error("Erro ao buscar tipos de aplicação.");
+                    comboAplicacao.empty().append('<option value="">Erro ao carregar</option>');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

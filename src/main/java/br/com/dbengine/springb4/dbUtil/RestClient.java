@@ -5,6 +5,7 @@ import org.json.simple.parser.*;
 
 import java.io.*;
 import java.net.*;
+import java.nio.charset.*;
 import java.util.*;
 
 public final class RestClient {
@@ -94,6 +95,29 @@ public final class RestClient {
      * @throws IOException throw exception if wrong parameters or cant' open a connection
      */
     private void sentPostRequest(final HttpURLConnection connection, final String parameters) throws IOException {
+        // Habilita o envio de corpo na requisição
+        connection.setDoOutput(true);
+
+        // Usa um "try-with-resources" para garantir o fechamento automático e seguro das streams
+        try (OutputStream os = connection.getOutputStream();
+             OutputStreamWriter osw = new OutputStreamWriter(os, StandardCharsets.UTF_8);
+             BufferedWriter writer = new BufferedWriter(osw)) {
+
+            // Escreve a string de parâmetros. O OutputStreamWriter fará a conversão
+            // correta dos caracteres (incluindo acentos) para o formato de bytes UTF-8.
+            writer.write(parameters);
+
+            // Garante que todos os dados no buffer sejam enviados imediatamente.
+            writer.flush();
+        }
+    }
+
+    /*
+    2025-12-17
+    O Problema: DataOutputStream.writeBytes() não suporta UTF-8 e corrompe caracteres acentuados, quebrando a sintaxe de formatos de texto como JSON e causando erros 400 Bad Request.
+    A Solução: Para enviar texto em uma requisição HTTP usando HttpURLConnection, a forma correta e segura é usar a combinação OutputStreamWriter com StandardCharsets.UTF_8, que garante a codificação correta dos caracteres para o formato de bytes que será enviado pela rede.
+    */
+    private void sentPostRequestOld(final HttpURLConnection connection, final String parameters) throws IOException {
         DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
         wr.writeBytes(parameters);
         wr.flush();
@@ -111,11 +135,15 @@ public final class RestClient {
         return executeHTTPRequest(requestMethod,url, null);
     }
     /**
-     * Call the API, Only POST and PUT requests have parameters
-     * @param requestMethod HTTP protocol  (PUT, GET,DELETE,POST)
-     * @param url url to call
-     * @param parameters parameters to send to the POST request. otherwise null
-     * @return
+     * Executa uma requisição HTTP (GET, POST, etc.) e retorna a resposta como uma String.
+     * Este método é projetado para ser robusto, tratando corretamente a construção de URLs
+     * para GET e a codificação de corpo (body) para POST/PUT/PATCH.
+     *
+     * @param requestMethod O método HTTP a ser usado (ex: "GET", "POST").
+     * @param baseUrl       A URL base da requisição (ex: "https://api.com/produtos" ).
+     * @param parameters    Para GET, um caminho adicional ou query string (ex: "123" ou "?status=ativo").
+     *                      Para POST, o corpo da requisição (ex: uma string JSON).
+     * @return A resposta do servidor como uma String, ou uma string de erro em formato JSON.
      */
     private  String executeHTTPRequest(final String requestMethod,
                                        final String url,
@@ -162,7 +190,8 @@ public final class RestClient {
      * @return result from the server
      */
     public  String post(final String collection, final String objectToAdd) {
-        this.setCONTENT_TYPE("application/json");
+        //this.setCONTENT_TYPE("application/json");
+        this.setCONTENT_TYPE("application/json; charset=utf-8");
         return executeHTTPRequest(POST, collection, objectToAdd);
     }
 

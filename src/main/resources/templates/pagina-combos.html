@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Combos Dependentes</title>
+    <!-- Adicionando jQuery para facilitar as chamadas AJAX. Você pode usar JS puro (fetch ) se preferir. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>Combos Dependentes com Thymeleaf</h1>
+
+<div>
+    <label for="combo-banco">Selecione o Banco:</label>
+    <select id="combo-banco">
+        <!--
+          - th:value usa o nome do enum (ex: "BRADESCO"), que é o que o Spring espera receber.
+          - th:text usa o nome amigável (ex: "Bradesco").
+          - Você também poderia usar o código no value se preferir: th:value="${banco.codigo}"
+            Mas usar o nome do enum é mais seguro e legível.
+        -->
+        <option th:each="banco : ${bancos}"
+                th:value="${banco.name()}"
+                th:text="${banco.nome}">
+        </option>
+
+    </select>
+</div>
+
+
+
+
+<div>
+    <label for="combo-aplicacao">Selecione o Tipo de Aplicação:</label>
+    <select id="combo-aplicacao">
+        <option th:each="tipo : ${tiposAplicacao}"
+                th:value="${tipo.name}"
+                th:text="${tipo.descricao}">
+        </option>
+    </select>
+</div>
+
+<!-- --- O CÓDIGO JAVASCRIPT QUE FAZ A MÁGICA --- -->
+<script>
+    // Executa quando o documento HTML estiver totalmente carregado
+    $(document ).ready(function() {
+        // Adiciona um "ouvinte" para o evento de mudança no combo de bancos
+        $('#combo-banco').on('change', function() {
+            // Pega o valor do banco que foi selecionado
+            var bancoSelecionado = $(this).val();
+            console.log("Banco selecionado:", bancoSelecionado);
+
+            // Pega a referência para o combo de aplicações
+            var comboAplicacao = $('#combo-aplicacao');
+
+            // Faz a chamada AJAX para o nosso endpoint no backend
+            $.ajax({
+                url: '/api/tipos-por-banco', // A URL do nosso endpoint @ResponseBody
+                type: 'GET',
+                data: {
+                    banco: bancoSelecionado // Parâmetro da requisição: ?banco=VALOR_SELECIONADO
+                },
+                success: function(tipos) {
+                    console.log("Tipos recebidos:", tipos);
+
+                    comboAplicacao.empty();
+
+                    $.each(tipos, function(index, tipo) {
+                        comboAplicacao.append($('<option>', {
+                            // Ajustado para usar as propriedades do enum enriquecido
+                            value: tipo.name,       // ex: "CDB"
+                            text: tipo.descricao    // ex: "CDB" ou "Previdência Privada"
+                        }));
+                    });
+                },
+                error: function(error) {
+                    console.error("Erro ao buscar tipos de aplicação:", error);
+                    comboAplicacao.empty(); // Limpa o combo em caso de erro
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

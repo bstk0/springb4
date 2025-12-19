@@ -43,6 +43,7 @@ pageEncoding="UTF-8" errorPage=""%>
     <tr>
       <th>Código</th>
       <th>Nome</th>
+      <th>Descrição</th>
       <th>DT.CRIAÇÃO</th>
       <th>UPDATE</th>
       <th>DELETE</th>
@@ -69,6 +70,7 @@ pageEncoding="UTF-8" errorPage=""%>
     <tr th:each="data : ${hproductList}">
       <td th:text="${data.product_id}"></td>
       <td th:text="${data.nome}"></td>
+      <td th:text="${data.descri}"></td>
       <td th:text="${data.dt_criacao}"></td>
       <td>
         <a th:href="@{/hproductUpdForm(hproductId=${data.product_id})}" class="btn btn-info">Update</a>

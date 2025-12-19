@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.*;
 
 //@SpringBootApplication
+@PropertySource("classpath:sec/secconfig.properties")
 @SpringBootApplication  //(scanBasePackages = "br.com.dbengine.springb4")
 @ComponentScan("br.com.dbengine.springb4")
 public class Springb4Application {

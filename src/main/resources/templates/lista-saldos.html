@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Saldos</title>
+    <style>
+        /* (mesmo CSS da tabela anterior ) */
+        body { font-family: sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #dddddd; text-align: left; padding: 8px; }
+        thead { background-color: #f2f2f2; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .valor { text-align: right; }
+    </style>
+</head>
+<body>
+<h1>Saldos Atuais</h1>
+<p style="margin: 20px 0;">
+    <a th:href="@{/saldos/novo-saldo}" style="font-weight: bold; font-size: 1.1em;">
+        + Ir para o Formulário (Simulador)
+    </a>
+</p>
+
+<div th:if="${saldos.isEmpty()}">
+    <p>Nenhum saldo encontrado.</p>
+</div>
+
+<table th:if="${!saldos.isEmpty()}">
+    <thead>
+    <tr>
+        <!-- O ID agora é um UUID, talvez não seja útil para o usuário, mas vamos exibi-lo -->
+        <th>ID</th>
+        <th>Banco</th>
+        <th>Aplicação</th>
+        <th>Data do Saldo</th>
+        <th class="valor">Valor</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="saldo : ${saldos}">
+        <td th:text="${saldo.id}">uuid-goes-here</td>
+        <td th:text="${saldo.nomeBanco}">Bradesco</td>
+        <td th:text="${saldo.nomeAplicacao}">CDB</td>
+        <td th:text="${#temporals.format(saldo.data, 'dd/MM/yyyy')}">19/12/2025</td>
+        <td class="valor" th:text="${#numbers.formatCurrency(saldo.valor)}">R$ 46,33</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
