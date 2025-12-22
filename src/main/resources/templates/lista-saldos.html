@@ -16,7 +16,8 @@
 <body>
 <h1>Saldos Atuais</h1>
 <p style="margin: 20px 0;">
-    <a th:href="@{/saldos/novo-saldo}" style="font-weight: bold; font-size: 1.1em;">
+    <a href="/">Voltar</a>&nbsp;||&nbsp;
+    <a th:href="@{/saldos/novo}" style="font-weight: bold; font-size: 1.1em;">
         + Ir para o Formulário (Simulador)
     </a>
 </p>
@@ -34,6 +35,7 @@
         <th>Aplicação</th>
         <th>Data do Saldo</th>
         <th class="valor">Valor</th>
+        <th>ACTION</th>
     </tr>
     </thead>
     <tbody>
@@ -43,6 +45,7 @@
         <td th:text="${saldo.nomeAplicacao}">CDB</td>
         <td th:text="${#temporals.format(saldo.data, 'dd/MM/yyyy')}">19/12/2025</td>
         <td class="valor" th:text="${#numbers.formatCurrency(saldo.valor)}">R$ 46,33</td>
+        <td><a th:href="@{/saldos/editar/{id}(id=${saldo.id})}">Editar</a></td>
     </tr>
     </tbody>
 </table>

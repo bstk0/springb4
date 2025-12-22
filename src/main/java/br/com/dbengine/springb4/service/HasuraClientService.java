@@ -1,5 +1,6 @@
 package br.com.dbengine.springb4.service;
 
+import br.com.dbengine.springb4.dbUtil.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,15 +55,15 @@ public class HasuraClientService {
         return spec.retrieve()
                 .bodyToMono(String.class)
                 .doOnNext(responseBodyString -> {
-                    System.out.println("--- RESPOSTA CRUA DA API HASURA ---");
-                    System.out.println(responseBodyString);
-                    System.out.println("---------------------------------");
+                    Sysout.s("--- RESPOSTA CRUA DA API HASURA ---");
+                    Sysout.s(responseBodyString);
+                    Sysout.s("---------------------------------");
                 })
                 .flatMap(responseBodyString -> {
                     try {
                         return Mono.just(objectMapper.readValue(responseBodyString, responseType));
                     } catch (JsonProcessingException e) {
-                        System.err.println("### ERRO DE DESSERIALIZAÇÃO JSON ###");
+                        Sysout.s("### ERRO DE DESSERIALIZAÇÃO JSON ###");
                         e.printStackTrace();
                         return Mono.empty();
                     }

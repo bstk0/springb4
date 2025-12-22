@@ -80,39 +80,39 @@ public class SaldoController {
                 });
     }
 
+
     @PostMapping("/salvar")
     public Mono<String> salvarSaldo(@ModelAttribute FormularioSaldoDTO formularioDTO, @RequestParam(required = false) String id) {
         if (id != null && !id.isEmpty()) {
-            // --- LÓGICA DE ATUALIZAÇÃO (PUT) CORRIGIDA ---
+            // --- LÓGICA DE ATUALIZAÇÃO (UPDATE VIA POST) CORRIGIDA ---
 
-            // 1. Reutilizamos o mesmo DTO do POST para criar o objeto com os dados.
+            // 1. A URI é a de Saldos com o ID no final.
+            String uri = "/api/rest/Saldos/" + id;
+
+            // 2. Criamos o objeto interno com os novos dados.
             CreateSaldoRequestDTO saldoData = converterParaRequestDTO(formularioDTO);
 
-            // 2. Criamos um Map para aninhar os dados dentro da chave "object",
-            //    que é o que a API de update do Hasura espera.
+            // 3. Criamos o corpo da requisição com a chave "object".
             Map<String, CreateSaldoRequestDTO> requestBody = new HashMap<>();
             requestBody.put("object", saldoData);
 
-            // 3. Montamos a URI e executamos a requisição PUT com o corpo correto.
-            String uri = "/api/rest/Saldos/" + id;
-            return hasuraClient.executeAndForget(HttpMethod.PUT, uri, requestBody)
+            // 4. A chamada é um POST para a URI de update, com o corpo correto.
+            return hasuraClient.executeAndForget(HttpMethod.POST, uri, requestBody)
                     .then(Mono.just("redirect:/saldos"));
 
         } else {
-            // --- LÓGICA DE CRIAÇÃO (POST) CORRIGIDA PARA USAR A MESMA ESTRUTURA ---
-
-            // 1. Criamos o DTO com os dados.
+            // --- LÓGICA DE CRIAÇÃO (POST) ---
             CreateSaldoRequestDTO saldoData = converterParaRequestDTO(formularioDTO);
-
-            // 2. Criamos um Map para aninhar os dados dentro da chave "object".
             Map<String, CreateSaldoRequestDTO> requestBody = new HashMap<>();
             requestBody.put("object", saldoData);
 
-            // 3. Executamos a requisição POST com o corpo correto.
             return hasuraClient.executeAndForget(HttpMethod.POST, "/api/rest/Saldos", requestBody)
                     .then(Mono.just("redirect:/saldos"));
         }
     }
+
+
+
 
     @PostMapping("/deletar/{id}")
     public Mono<String> deletarSaldo(@PathVariable String id) {
