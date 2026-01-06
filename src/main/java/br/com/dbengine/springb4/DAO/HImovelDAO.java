@@ -18,16 +18,17 @@ public class HImovelDAO implements DAOInterface<Imovel>
 
     {
 
-    private static final String COLLECTION = "Imovel";
+    private static final String COLLECTION = "imovel";
+    private static final String ROOT_COLLECTION = "rep1_imovel";
     private int NCOUNT = 0;
     //private static restClient rest = new restClient();
 
 
     private static final RestClient rest = new RestClient(
-            "https://ukygdppeibetcsiohtzm.hasura.sa-east-1.nhost.run/api/rest/",
+            "https://funny-vervet-43.hasura.app/api/rest/",
             "text/plain",
             new ArrayList<String>(
-                    Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY2)
+                    Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY)
             ));
 
 
@@ -40,7 +41,8 @@ public class HImovelDAO implements DAOInterface<Imovel>
             //obj = parser.parse(resultGetAll);
             //JSONArray results = (JSONArray) (obj);
 
-            JSONArray results = rest.HasuraJSONList(resultGetAll,COLLECTION);
+            //JSONArray results = rest.HasuraJSONList(resultGetAll,COLLECTION);
+            JSONArray results = rest.HasuraJSONList(resultGetAll,ROOT_COLLECTION);
 
             Sysout.s( " >> HImovelDAO.getList - results : " + results.size());
             this.NCOUNT = results.size();
@@ -111,7 +113,7 @@ public class HImovelDAO implements DAOInterface<Imovel>
 
     private String getRequest() {
         rest.setAUTH_KEY(new ArrayList<String>(
-                Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY2)
+                Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY)
         ));
         String result = rest.get(COLLECTION);
         Sysout.s(" >> HImovelDAO - result getRequest : " + result);

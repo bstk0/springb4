@@ -20,10 +20,10 @@ public class ImovelFinanceiroController {
     //private ImovelFinanceiroDAO dao; // = new ImovelOcorrenciaDAO();
 
     @GetMapping("/imovelFinanceiroDetail")
-    public String imovelFinanceiroDetail(Model model, @RequestParam int imovelId) {
+    public String imovelFinanceiroDetail(Model model, @RequestParam int imovelId, @RequestParam String imovelDescr) {
         ImovelFinanceiro iFin = dao.getItem(String.valueOf(imovelId));
         // Descriçáo do Imovel
-        String imovelDescr = "TESTE " ; //new ImovelDAO().getTitulo(imovelId);
+//        String imovelDescr = "TESTE " ; //new ImovelDAO().getTitulo(imovelId);
 
         // Formata Datas
         iFin.setDtInicioContr(UtilsJSON.cvtUTCDateToBr(iFin.getDtInicioContr()));

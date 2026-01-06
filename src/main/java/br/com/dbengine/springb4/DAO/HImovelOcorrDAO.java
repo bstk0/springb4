@@ -18,18 +18,19 @@ import java.util.*;
 @Component
 public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia> {
 
-    private static final String COLLECTION = "ImovelOcorr"; //"imovelOcorr";
-    private static final String TABLE = "ImovelOcorr";
+    private static final String COLLECTION = "imovelocorr"; //"imovelOcorr";
+//    private static final String TABLE = "ImovelOcorr";
+    private static final String ROOT_COLLECTION = "rep1_imovelocorr";
     private int NCOUNT = 0;
     //private static restClient rest = new restClient();
     private String ImovelDescri;
 
 
     private static final RestClient rest = new RestClient(
-            "https://ukygdppeibetcsiohtzm.hasura.sa-east-1.nhost.run/api/rest/",
+            "https://funny-vervet-43.hasura.app/api/rest/",
             "text/plain",
             new ArrayList<String>(
-                    Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY2)
+                    Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY)
             ));
 
 
@@ -71,7 +72,7 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia> {
 
 
     public ImovelOcorrencia getItem(String id) {
-        final String PREFIX = "ImovelOcorr_by_pk";
+        final String PREFIX = "rep1_imovelOcorr_by_pk";
         ObjectMapper objectMapper = new ObjectMapper();
         JSONParser parser = new JSONParser();
         //2025.11.19 - teste
@@ -117,7 +118,7 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia> {
 
     private String getRequest() {
         rest.setAUTH_KEY(new ArrayList<String>(
-                Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY2)
+                Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY)
         ));
         String result = rest.get(COLLECTION);
         Sysout.s(" >> HImovelDAO - result getRequest : " + result);
@@ -126,7 +127,7 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia> {
 
     private String getRequest(String path) {
         rest.setAUTH_KEY(new ArrayList<String>(
-                Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY2)
+                Arrays.asList("x-hasura-admin-secret", Sysout.HASURA_KEY)
         ));
         String result = rest.get(path);
         Sysout.s(" 24.11 >> HImovelOcorrDAO - result getRequest : " + result);
@@ -175,9 +176,9 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia> {
         //obj = parser.parse(resultGetAll);
         //JSONArray results = (JSONArray) (obj);
 
-        JSONArray results = rest.HasuraJSONList(resultGetAll, TABLE);
+        JSONArray results = rest.HasuraJSONList(resultGetAll, ROOT_COLLECTION);
 
-        JSONObject imovel_by_pk = rest.HasuraJSONObject(resultGetAll, "imovel_by_pk");
+        JSONObject imovel_by_pk = rest.HasuraJSONObject(resultGetAll, "rep1_imovel_by_pk");
         this.setImovelDescri((String) imovel_by_pk.get("apelido"));
 
         Sysout.s(" >> HImovelFinancDAO.getList - results : " + results.size());
