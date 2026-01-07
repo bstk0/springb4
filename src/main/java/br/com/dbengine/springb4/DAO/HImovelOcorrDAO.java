@@ -72,7 +72,7 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia> {
 
 
     public ImovelOcorrencia getItem(String id) {
-        final String PREFIX = "rep1_imovelOcorr_by_pk";
+        final String PREFIX = "rep1_imovelocorr_by_pk";
         ObjectMapper objectMapper = new ObjectMapper();
         JSONParser parser = new JSONParser();
         //2025.11.19 - teste
