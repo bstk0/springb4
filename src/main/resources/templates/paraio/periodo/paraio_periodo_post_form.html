@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script>
+    /* JSON: {
+  "appid": "app:dbapp",
+  "type":"periodo",
+  "periodo": "01/2020",
+  "mes": 1,
+  "ano": 2020
+	}*/
+      $(function () {
+
+        $('form').on('submit', function (e) {
+
+          e.preventDefault();
+          
+          //var tag = $("#tag").val();
+          let periodo = $("#periodo").val();
+          // 26.01.08
+          //let mes = parseInt($("#mes").val());
+          //let ano = parseInt($("#ano").val());
+          let mes = $("#mes").val();
+          let ano = $("#ano").val();
+
+          let userDetails = {
+            "type": "periodo",
+            "mes" : mes,
+            "ano": ano,
+            "periodo": periodo
+          };
+
+          console.log(userDetails);
+
+          $.ajax({
+ 	        url : "https://paraio.com/v1/periodos",
+	        type : 'post',
+	        headers: { "Authorization": "Anonymous app:dbapp" },
+	        contentType: 'application/json',
+            data:  JSON.stringify(userDetails), //$('form').serialize(),
+            success: function () {
+              alert('form was submitted');
+            }
+          });
+
+        });
+
+      });
+      
+    </script>
+  </head>
+  <body>
+  <h1>Incluir Periodo</h1>
+    <h2><a href="/periodos">Voltar</a></h2><br>
+    <form>
+      MES <input name="mes" id="mes" placeholder="informe numero"><br>
+      ANO <input name="ano" id="ano" placeholder="informe numero"><br>
+      PERIODO <input name="periodo" id="periodo" placeholder="informe texto mm/yyyy"><br><br>
+      <input name="submit" type="submit" value="Submit">
+    </form>
+  </body>
+</html>

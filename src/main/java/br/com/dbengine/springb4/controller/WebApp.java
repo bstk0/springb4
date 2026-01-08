@@ -132,13 +132,33 @@ public class WebApp {
     //    return "teste_hash_uuid";
     //}
 
+    //PARAIO
+    @GetMapping("/periodos")
+    public String getPeriodos(Model model) {
+//        List<PeriodoDTO> periodos = new ApiController().getPeriodos();
+//        model.addAttribute("periodos", periodos);
+//        return "periodos/allPeriodos";
+        return "paraio/periodo/index";
+    }
 
-    //@GetMapping("/periodos")
-    //public String getPeriodos(Model model) {
-    //    List<PeriodoDTO> periodos = new ApiController().getPeriodos();
-    //    model.addAttribute("periodos", periodos);
-    //    return "periodos/allPeriodos";
-    //}
+    //PARAIO
+    @GetMapping("/listaperiodos")
+    public String getListaPeriodos(Model model) {
+//        List<PeriodoDTO> periodos = new ApiController().getPeriodos();
+//        model.addAttribute("periodos", periodos);
+//        return "periodos/allPeriodos";
+        return "paraio/periodo/paraio_periodos";
+    }
+
+    //PARAIO
+    @GetMapping("/formcriaperiodos")
+    public String getFormCriaPeriodos(Model model) {
+//        List<PeriodoDTO> periodos = new ApiController().getPeriodos();
+//        model.addAttribute("periodos", periodos);
+//        return "periodos/allPeriodos";
+        return "paraio/periodo/paraio_periodo_post_form";
+    }
+
 
     @GetMapping("/harper1")
     public String harper1() {
