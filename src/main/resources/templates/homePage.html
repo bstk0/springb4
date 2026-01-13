@@ -2,76 +2,82 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Springb4 - Menu Resonsivo</title>
-  <link rel="icon" type="image/x-icon" th:href="@{/img/favicon3.png}">
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!--  <script th:src="@{/js/homePage.js}" />  -->
-  <link th:href="@{/styles/homePage.css}" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Springb4 - Menu Resonsivo</title>
+    <link rel="icon" th:href="@{/img/favicon3.png}" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <!--  <script th:src="@{/js/homePage.js}" />  -->
+    <link rel="stylesheet" th:href="@{/styles/homePage.css}"/>
 </head>
 <body>
-<input type="checkbox" id="bt_menu" />
+<input id="bt_menu" type="checkbox"/>
 <label for="bt_menu">&#9776;</label>
 <nav class="menu">
-  <ul>
-    <li><a href="#"> IMOVEL </a>
-      <ul>
-        <li><a th:href="@{/imovelList}">LIST</a></li>
-        <li><a th:href="@{/imobiliariaList}">Imobiliaria</a></li>
-        <li><a th:href="@{/imovelPagtoList}">Imovel Pagtos</a></li>
-        <li><a th:href="@{/imovelOcorrEmAberto}">Imovel Occor - ABERTOS</a></li>
-      </ul>
-    </li>
-    <li><a href="#">TESTES APIs</a>
-      <ul>
-        <li><a th:href="@{/v1/countries}">Countries</a></li>
-        <li><a th:href="@{/v1/periodos}">Periodos</a></li>
-        <li><a th:href="@{/canonic1}">CANONIC 1</a></li>
-        <li><a th:href="@{/canonic1Add}">CANONIC ADD PEOPLE</a></li>
-        <li><a th:href="@{/canonic2}">CANONIC URL</a></li>
-      </ul>
-    </li>
-    <li><a href="#">Web MVC</a>
-      <ul>
-        <li><a th:href="@{/greeting}">Greeting</a></li>
-        <li><a th:href="@{/books}">Books</a></li>
-        <li><a th:href="@{/imovel}">Imovel</a></li>
-        <li><a th:href="@{/imovelhistorico}">Imovel Historico</a></li>
-        <li><a th:href="@{/periodos}">Periodos - Paraio</a></li>
-        <li><a th:href="@{/personList}">Person Management System</a></li>
-        <li><a href="#">XML</a></li>
-      </ul>
-    </li>
-      <li><a href="#">HASURA</a>
-          <ul>
-              <li><a th:href="@{/hpeopleList}">HPEOPLE-LIST</a></li>
-              <li><a th:href="@{/hproductList}">PRODUCT-LIST</a></li>
-              <li><a th:href="@{/controleGlicemiaList}">HASURA-GLICEMIA</a></li>
-              <li><a th:href="@{/controlePesoList}">HASURA-PESO</a></li>
-              <li><a th:href="@{/saldos}">NHost - SALDOS</a></li>
-          </ul>
-      </li>
-    <li><a href="#"> >> ON << </a>
-      <ul>
-          <li><a th:href="@{/culturaList}">CULTURA-LIST</a></li>
-          <li><a th:href="@{/people}">PEOPLE</a></li>
-        <li><a th:href="@{/sbox}">SBOX</a></li>
-        <li><a th:href="@{/harper1}">HARPER 1</a></li>
-        <li><a th:href="@{/datastax}">DATASTAX</a></li>
-        <li><a th:href="@{/slanctoList}">SUPABASE-LANCTO</a></li>
-      </ul>
-    </li>
-    <li><a href="#">ADMIN</a>
-      <ul>
-        <li><a th:href="@{/admin}">admin</a></li>
-        <li><a th:href="@{/geturl}">getURL</a></li>
-        <li><a th:href="@{/validaApi}">VALIDA API</a></li>
-        <li><a th:href="@{/pix}">PIX</a></li>
-        <li><a th:href="@{/versions}">VERSIONS - LOG</a></li>
-      </ul>
-    </li>
-  </ul>
+    <ul>
+        <li><a href="#"> IMOVEL </a>
+            <ul>
+                <li><a th:href="@{/imovelList}">LIST</a></li>
+                <li><a th:href="@{/imobiliariaList}">Imobiliaria</a></li>
+                <li><a th:href="@{/imovelPagtoList}">Imovel Pagtos</a></li>
+                <li><a th:href="@{/imovelOcorrEmAberto}">Imovel Occor - ABERTOS</a></li>
+            </ul>
+        </li>
+        <li><a href="#">TESTES APIs</a>
+            <ul>
+                <li><a th:href="@{/v1/countries}">Countries</a></li>
+                <li><a th:href="@{/v1/periodos}">Periodos</a></li>
+                <li><a th:href="@{/canonic1}">CANONIC 1</a></li>
+                <li><a th:href="@{/canonic1Add}">CANONIC ADD PEOPLE</a></li>
+                <li><a th:href="@{/canonic2}">CANONIC URL</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Web MVC</a>
+            <ul>
+                <li><a th:href="@{/greeting}">Greeting</a></li>
+                <li><a th:href="@{/books}">Books</a></li>
+                <li><a th:href="@{/imovel}">Imovel</a></li>
+                <li><a th:href="@{/imovelhistorico}">Imovel Historico</a></li>
+                <li><a th:href="@{/periodos}">Periodos - Paraio</a></li>
+                <li><a th:href="@{/personList}">Person Management System</a></li>
+                <li><a href="#">XML</a></li>
+            </ul>
+        </li>
+        <li><a href="#">HASURA</a>
+            <ul>
+                <li><a th:href="@{/hpeopleList}">HPEOPLE-LIST</a></li>
+                <li><a th:href="@{/hproductList}">PRODUCT-LIST</a></li>
+                <li><a th:href="@{/controleGlicemiaList}">HASURA-GLICEMIA</a></li>
+                <li><a th:href="@{/controlePesoList}">HASURA-PESO</a></li>
+                <li><a th:href="@{/saldos}">NHost - SALDOS</a></li>
+            </ul>
+        </li>
+        <li><a href="#"> >> ON << </a>
+            <ul>
+                <li><a th:href="@{/culturaList}">CULTURA-LIST</a></li>
+                <li><a th:href="@{/people}">PEOPLE</a></li>
+                <li><a th:href="@{/sbox}">SBOX</a></li>
+                <li><a th:href="@{/harper1}">HARPER 1</a></li>
+                <li><a th:href="@{/datastax}">DATASTAX</a></li>
+                <li><a th:href="@{/slanctoList}">SUPABASE-LANCTO</a></li>
+            </ul>
+        </li>
+
+        <li><a href="#"> APPWRITE </a>
+            <ul>
+                <li><a th:href="@{/fundos}">FUNDOS</a></li>
+            </ul>
+        </li>
+        <li><a href="#">ADMIN</a>
+            <ul>
+                <li><a th:href="@{/admin}">admin</a></li>
+                <li><a th:href="@{/geturl}">getURL</a></li>
+                <li><a th:href="@{/validaApi}">VALIDA API</a></li>
+                <li><a th:href="@{/pix}">PIX</a></li>
+                <li><a th:href="@{/versions}">VERSIONS - LOG</a></li>
+            </ul>
+        </li>
+    </ul>
 </nav>
 </body>
 </html>

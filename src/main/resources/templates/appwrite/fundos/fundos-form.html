@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário de Fundo</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body class="container">
+<h2 id="titulo">Novo Fundo</h2>
+
+<form id="fundoForm">
+    <input type="hidden" id="documentId">
+    <div class="form-group">
+        <label>Nome</label>
+        <input type="text" id="nome" class="form-control" maxlength="50" required>
+    </div>
+    <div class="form-group">
+        <label>Descrição</label>
+        <input type="text" id="descricao" class="form-control" maxlength="100" required>
+    </div>
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="/fundos" class="btn btn-default">Voltar</a>
+</form>
+
+<script>
+    const endpoint = 'https://nyc.cloud.appwrite.io/v1';
+    const projectId = '696669c4000ff7309206';
+    const databaseId = '696669f7001eada504ec';
+    const collectionId = 'fundos';
+
+    $(document).ready(function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        if (id) {
+            $('#titulo').text('Editar Fundo');
+            $('#documentId').val(id);
+            // Buscar dados para edição
+            $.ajax({
+                url: `${endpoint}/databases/${databaseId}/collections/${collectionId}/documents/${id}`,
+                method: 'GET',
+                headers: { 'X-Appwrite-Project': projectId,
+                           'x-appwrite-key' : 'standard_e42d42fb56fab57ca8256473a0458fcf44f4917edcda6f101f90e5ce543eba20b59e88a0ad76859b098e3c3c695ef1a54be6ba3f278ca727e74b9bd3c22dac6c1dc84a4c0e0269fe7daf1feca3934b41371a34fe7ee59e390d7bc54e5c1563dd2f8d3e66b56e954929bb6c6720e678adde63d1c917c3472df7494f0b904a67aa'
+                 },
+                success: function(doc) {
+                    $('#nome').val(doc.nome);
+                    $('#descricao').val(doc.descricao);
+                }
+            });
+        }
+
+        $('#fundoForm').submit(function(e) {
+            e.preventDefault();
+            const id = $('#documentId').val();
+            const data = {
+                data: {
+                    nome: $('#nome').val(),
+                    descricao: $('#descricao').val()
+                }
+            };
+
+            //const method = id ? 'PATCH' : 'POST';
+            const method = id ? 'PUT' : 'POST';
+            const url = id
+                ? `${endpoint}/databases/${databaseId}/collections/${collectionId}/documents/${id}`
+                : `${endpoint}/databases/${databaseId}/collections/${collectionId}/documents`;
+
+            // original : console.log( JSON.stringify(id ? data.data : { documentId: 'unique()', data: data.data }) );
+            // correto  : console.log( JSON.stringify(id ? { data: data.data } : { documentId: 'unique()', data: data.data }) );
+
+            $.ajax({
+                url: url,
+                method: method,
+                headers: {
+                    'X-Appwrite-Project': projectId,
+                    'Content-Type': 'application/json',
+                    'x-appwrite-key' : 'standard_e42d42fb56fab57ca8256473a0458fcf44f4917edcda6f101f90e5ce543eba20b59e88a0ad76859b098e3c3c695ef1a54be6ba3f278ca727e74b9bd3c22dac6c1dc84a4c0e0269fe7daf1feca3934b41371a34fe7ee59e390d7bc54e5c1563dd2f8d3e66b56e954929bb6c6720e678adde63d1c917c3472df7494f0b904a67aa'
+                },
+                data: JSON.stringify(id ? { data: data.data } : { documentId: 'unique()', data: data.data }),
+                success: function() {
+                    window.location.href = '/fundos';
+                },
+                error: function(err) {
+                    alert('Erro ao salvar: ' + err.responseJSON.message);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

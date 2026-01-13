@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Rendimentos</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body class="container">
+<h2>Rendimentos de Fundos</h2>
+
+<div class="well">
+    <div class="row">
+        <div class="col-md-8">
+            <input type="text" id="filtroFundo" class="form-control" placeholder="Filtrar por nome do fundo...">
+        </div>
+        <div class="col-md-4">
+            <button onclick="carregarRendimentos()" class="btn btn-info">Pesquisar</button>
+            <a href="form_rendimento.html" class="btn btn-primary">Novo Rendimento</a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Fundo</th>
+        <th>Mês/Ano</th>
+        <th>Qtde</th>
+        <th>Valor (R$)</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody id="lista-rendimentos"></tbody>
+</table>
+
+<script>
+    const endpoint = 'https://[SEU_ENDPOINT]/v1';
+    const projectId = '[SEU_PROJECT_ID]';
+    const databaseId = '[ID_DO_BANCO]';
+    const collectionId = '[ID_DA_COLLECTION_RENDIMENTO]';
+
+    $(document).ready(function() {
+        carregarRendimentos();
+    });
+
+    function carregarRendimentos() {
+        let filtro = $('#filtroFundo').val();
+        let url = `${endpoint}/databases/${databaseId}/collections/${collectionId}/documents`;
+
+        // Filtro de busca do Appwrite (usando Query)
+        let params = {};
+        if(filtro) {
+            // Assume que o atributo se chama "fundo"
+            params = { queries: [`search("fundo", "${filtro}")`] };
+        }
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+            data: params,
+            headers: { 'X-Appwrite-Project': projectId },
+            success: function(response) {
+                let rows = '';
+                response.documents.forEach(doc => {
+                    rows += `<tr>
+                        <td>${doc.fundo}</td>
+                        <td>${doc.mes}/${doc.ano}</td>
+                        <td>${doc.qtde}</td>
+                        <td>${doc.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</td>
+                        <td>
+                            <a href="form_rendimento.html?id=${doc.$id}" class="btn btn-warning btn-xs">Editar</a>
+                            <button onclick="deletar('${doc.$id}')" class="btn btn-danger btn-xs">Excluir</button>
+                        </td>
+                    </tr>`;
+                });
+                $('#lista-rendimentos').html(rows);
+            }
+        });
+    }
+
+    function deletar(id) {
+        if(confirm('Excluir este rendimento?')) {
+            $.ajax({
+                url: `${endpoint}/databases/${databaseId}/collections/${collectionId}/documents/${id}`,
+                method: 'DELETE',
+                headers: { 'X-Appwrite-Project': projectId },
+                success: function() { carregarRendimentos(); }
+            });
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Fundos - Appwrite</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body class="container">
+<h2>Lista de Fundos - AppWrite</h2>
+<a href="/" class="btn btn-default">Voltar</a>
+<a href="/fundos_form" class="btn btn-primary">Novo Fundo</a>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody id="lista-fundos">
+    </tbody>
+</table>
+
+<script>
+    const endpoint = 'https://nyc.cloud.appwrite.io/v1';
+    const projectId = '696669c4000ff7309206';
+    const databaseId = '696669f7001eada504ec';
+    const collectionId = 'fundos';
+
+    $(document).ready(function() {
+        carregarFundos();
+    });
+
+    function carregarFundos() {
+        $.ajax({
+            url: `${endpoint}/databases/${databaseId}/collections/${collectionId}/documents`,
+            method: 'GET',
+            headers: {
+                'X-Appwrite-Project': projectId,
+                'Content-Type': 'application/json',
+                'x-appwrite-key' : 'standard_e42d42fb56fab57ca8256473a0458fcf44f4917edcda6f101f90e5ce543eba20b59e88a0ad76859b098e3c3c695ef1a54be6ba3f278ca727e74b9bd3c22dac6c1dc84a4c0e0269fe7daf1feca3934b41371a34fe7ee59e390d7bc54e5c1563dd2f8d3e66b56e954929bb6c6720e678adde63d1c917c3472df7494f0b904a67aa'
+            },
+            success: function(response) {
+                let rows = '';
+                response.documents.forEach(doc => {
+                    rows += `<tr>
+                        <td>${doc.nome}</td>
+                        <td>${doc.descricao}</td>
+                        <td>
+                            <a href="/fundos_form?id=${doc.$id}" class="btn btn-warning btn-xs">Editar</a>
+                            <button onclick="deletarFundo('${doc.$id}')" class="btn btn-danger btn-xs">Excluir</button>
+                        </td>
+                    </tr>`;
+                });
+                $('#lista-fundos').html(rows);
+            }
+        });
+    }
+
+    function deletarFundo(id) {
+        if(confirm('Deseja excluir este registro?')) {
+            $.ajax({
+                url: `${endpoint}/databases/${databaseId}/collections/${collectionId}/documents/${id}`,
+                method: 'DELETE',
+                headers: { 'X-Appwrite-Project': projectId },
+                success: function() {
+                    carregarFundos();
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

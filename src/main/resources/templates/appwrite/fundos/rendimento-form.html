@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Rendimento</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body class="container">
+<h2 id="titulo">Novo Rendimento</h2>
+
+<form id="rendimentoForm">
+    <input type="hidden" id="docId">
+
+    <div class="form-group">
+        <label>Selecionar Fundo</label>
+        <select id="fundo" class="form-control" required>
+            <option value="">Carregando fundos...</option>
+        </select>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Mês</label>
+                <input type="number" id="mes" class="form-control" min="1" max="12" required>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Ano</label>
+                <input type="number" id="ano" class="form-control" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Quantidade</label>
+                <input type="number" id="qtde" step="any" class="form-control" required>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Valor Unitário</label>
+                <input type="number" id="valor" step="0.01" class="form-control" required>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Gravar Rendimento</button>
+    <a href="rendimentos.html" class="btn btn-default">Cancelar</a>
+</form>
+
+<script>
+    const config = {
+        project: '[SEU_PROJECT_ID]',
+        db: '[ID_DO_BANCO]',
+        colFundos: '[ID_DA_COLLECTION_FUNDOS]',
+        colRend: '[ID_DA_COLLECTION_RENDIMENTO]',
+        ep: 'https://[SEU_ENDPOINT]/v1'
+    };
+
+    $(document).ready(function() {
+        // 1. Carregar a lista de fundos para o Select
+        $.ajax({
+            url: `${config.ep}/databases/${config.db}/collections/${config.colFundos}/documents`,
+            headers: { 'X-Appwrite-Project': config.project },
+            success: function(res) {
+                let opts = '<option value="">Selecione...</option>';
+                res.documents.forEach(f => {
+                    opts += `<option value="${f.nome}">${f.nome}</option>`;
+                });
+                $('#fundo').html(opts);
+
+                // 2. Se for edição, carregar dados do rendimento após carregar o select
+                verificarEdicao();
+            }
+        });
+
+        function verificarEdicao() {
+            const id = new URLSearchParams(window.location.search).get('id');
+            if (id) {
+                $('#docId').val(id);
+                $('#titulo').text('Editar Rendimento');
+                $.ajax({
+                    url: `${config.ep}/databases/${config.db}/collections/${config.colRend}/documents/${id}`,
+                    headers: { 'X-Appwrite-Project': config.project },
+                    success: function(d) {
+                        $('#fundo').val(d.fundo);
+                        $('#mes').val(d.mes);
+                        $('#ano').val(d.ano);
+                        $('#qtde').val(d.qtde);
+                        $('#valor').val(d.valor);
+                    }
+                });
+            }
+        }
+
+        $('#rendimentoForm').submit(function(e) {
+            e.preventDefault();
+            const id = $('#docId').val();
+            const payload = {
+                data: {
+                    fundo: $('#fundo').val(),
+                    mes: parseInt($('#mes').val()),
+                    ano: parseInt($('#ano').val()),
+                    qtde: parseFloat($('#qtde').val()),
+                    valor: parseFloat($('#valor').val())
+                }
+            };
+
+            const method = id ? 'PATCH' : 'POST';
+            const url = id
+                ? `${config.ep}/databases/${config.db}/collections/${config.colRend}/documents/${id}`
+                : `${config.ep}/databases/${config.db}/collections/${config.colRend}/documents`;
+
+            $.ajax({
+                url: url,
+                method: method,
+                headers: {
+                    'X-Appwrite-Project': config.project,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(id ? payload.data : { documentId: 'unique()', data: payload.data }),
+                success: function() { window.location.href = 'rendimentos.html'; }
+            });
+        });
+    });
+</script>
+</body>
+</html>

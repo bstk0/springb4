@@ -184,6 +184,18 @@ public class WebApp {
         return "canonic1";
     }
 
+    // AppWrite - fundos
+    @GetMapping("/fundos")
+    public String fundos() {
+        return "appwrite/fundos/fundos-list";
+    }
+
+    // AppWrite - fundos
+    @GetMapping("/fundos_form")
+    public String fundos_form() {
+        return "appwrite/fundos/fundos-form";
+    }
+
     @GetMapping("/canonic2")
     public String canonic2() {
          return "canonic2";
