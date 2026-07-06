@@ -19,13 +19,14 @@ public class Imovel {
     private String status;
     private String createdAt;
     private int imobid;
+    private int ownerid;
 
     public Imovel() {
     }
 
     public Imovel(String id, int imovelId, String apelido, String tipo, String descricao,
                   String imobiliaria, String bairro,
-                  String observacoes, String status, String createdAt, int imobid) {
+                  String observacoes, String status, String createdAt, int imobid, int ownerid) {
         this.id = id;
         this.imovelId = imovelId;
         this.apelido = apelido;
@@ -37,5 +38,6 @@ public class Imovel {
         this.status = status;
         this.createdAt = createdAt;
         this.imobid = imobid;
+        this.ownerid = ownerid;
     }
 }

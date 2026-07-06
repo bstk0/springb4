@@ -41,6 +41,7 @@
         <th>Tipo</th>
         <th>Imobiliaria</th>
         <th>STATUS</th>
+        <th>OWNER</th>
         <th> $$ </th>
         <th>OCOR</th>
         <th>UPD</th>
@@ -56,6 +57,7 @@
         <td th:text="${data.tipo}"></td>
         <td th:text="${data.imobiliaria}"></td>
         <td th:style="${data.status == 'VAGO' ? 'color: red;' : 'color: black;'}" th:text="${data.status}"></td>
+        <td th:text="${data.ownerid}"></td>
         <td>
           <a th:href="@{/imovelFinanceiroDetail(imovelId=${data.imovelId},imovelDescr=${data.apelido} + ' - ' + ${data.descricao})}" class="btn btn-secondary"> + </a>
         </td>
