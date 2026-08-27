@@ -218,7 +218,8 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia> {
                 iocc.getNr_ref(),
                 iocc.getStatusFinal(),
                 iocc.getDtInicioOcorr(),
-                iocc.getDtInicioOcorr());
+                iocc.getDtUpdateOcorr(),
+                iocc.getDtFimOcorr());
         return ioccFom;
     }
 
@@ -241,8 +242,12 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia> {
                 UtilsJSON.validaAtributo(iocc.get("descricao")),
                 UtilsJSON.validaAtributo(iocc.get("nr_ref")),
                 UtilsJSON.validaAtributo(iocc.get("statusFinal")),
-                createdAt,   //JSONValidations.validaAtributo(iocc.get("createdAt")), //formattedDate,
-                updatedAt);  //JSONValidations.validaAtributo(iocc.get("updatedAt"))); //dataUpdate);
+                //27.08
+                //createdAt,   //JSONValidations.validaAtributo(iocc.get("createdAt")), //formattedDate,
+                //updatedAt);  //JSONValidations.validaAtributo(iocc.get("updatedAt"))); //dataUpdate);
+                UtilsJSON.validaAtributo(iocc.get("dtInicioOcorr")),
+                UtilsJSON.validaAtributo(iocc.get("dtUpdateOcorr")),
+                UtilsJSON.validaAtributo(iocc.get("dtFimOcorr")));
         return ioccFom;
     }
 
@@ -264,6 +269,7 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia> {
         jo.put("nr_ref", imovelOcorrencia.getNr_ref());
         jo.put("statusFinal", imovelOcorrencia.getStatusFinal());
 
+        //obtem data atual
         // Get the current date
         LocalDate currentDate = LocalDate.now();
         // Define the desired format
@@ -271,10 +277,21 @@ public class HImovelOcorrDAO implements DAOInterface<ImovelOcorrencia> {
         // Format the date
         String formattedDate = currentDate.format(formatter);
 
-        jo.put("dtInicioOcorr" , formattedDate);
+        //if (imovelOcorrencia.getDtInicioOcorr() == null) {
+        if (imovelOcorrencia.getId() == null) {
+            jo.put("dtInicioOcorr", formattedDate);
+        }
+
+        if ("FINALIZADO".equals(imovelOcorrencia.getStatusFinal() )) {
+            jo.put("dtFimOcorr", formattedDate);
+        } else {
+            jo.put("dtUpdateOcorr", formattedDate);
+        }
+
         //jo.put("updatedBy" , imovelOcorrencia.getUpdatedBy());
         //return jo;
         result.put("object", jo);
+        Sysout.s(" 27.08 ****> " + result.toJSONString());
         return result; //jo;
     }
 }

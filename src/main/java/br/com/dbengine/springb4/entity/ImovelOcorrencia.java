@@ -14,19 +14,23 @@ public class ImovelOcorrencia {
     private String statusFinal;
 
     private String dtInicioOcorr;
+    private String dtUpdateOcorr;
     private String dtFimOcorr;
 
     public ImovelOcorrencia() {
     }
 
 
-    public ImovelOcorrencia(String id, int imovelId, String descricao, String nr_ref, String statusFinal, String dtInicioOcorr, String dtFimOcorr) {
+    public ImovelOcorrencia(String id, int imovelId, String descricao, String nr_ref, String statusFinal,
+                            String dtInicioOcorr, String dtUpdateOcorr,
+                            String dtFimOcorr) {
         this.id = id;
         this.imovelId = imovelId;
         this.descricao = descricao;
         this.nr_ref = nr_ref;
         this.statusFinal = statusFinal;
         this.dtInicioOcorr = dtInicioOcorr;
+        this.dtUpdateOcorr = dtUpdateOcorr;
         this.dtFimOcorr = dtFimOcorr;
     }
 }

@@ -14,6 +14,7 @@ public class ImovelOcorrForm {
     private String statusFinal;
     private String dataCriacao;
     private String dataAtualizacao;
+    private String dataFinalizacao;
 
     public ImovelOcorrForm() {
     }
@@ -21,7 +22,8 @@ public class ImovelOcorrForm {
     public ImovelOcorrForm(String id, Integer imovelId, String descricao,
                            String nr_ref, String statusFinal,
                            String dataCriacao,
-                           String dataAtualizacao) {
+                           String dataAtualizacao,
+                           String dataFinalizacao) {
         this.id = id;
         this.imovelId = imovelId;
         this.descricao = descricao;
@@ -29,5 +31,6 @@ public class ImovelOcorrForm {
         this.statusFinal = statusFinal;
         this.dataCriacao = dataCriacao;
         this.dataAtualizacao = dataAtualizacao;
+        this.dataFinalizacao = dataFinalizacao;
     }
 }

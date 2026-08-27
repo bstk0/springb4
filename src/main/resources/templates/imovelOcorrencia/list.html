@@ -43,6 +43,7 @@
         <th>Status</th>
         <th>Create Date</th>
         <th>Update Date</th>
+        <th>Finish Date</th>
         <th>UPD</th>
         <th>DEL</th>
       </tr>
@@ -55,7 +56,8 @@
         <td style="white-space: pre;" th:text="${data.descricao}"></td>
         <td th:text="${data.statusFinal}"></td>
         <td th:text="${data.dataCriacao}"></td>
-        <td th:text="${data.dataAtualizacao}"></td>
+        <td th:text="${data.dataAtualizacao}">
+        </td><td th:text="${data.dataFinalizacao}"></td>
         <td>
           <a th:href="@{/imovelOccUpdForm(imovelOccId=${data.id})}" class="btn btn-info">Update</a>
         </td>

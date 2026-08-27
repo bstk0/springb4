@@ -121,6 +121,8 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
             ioId = UtilsJSON.validaAtributo(iocc.get("_id"));
         }
 
+        Sysout.s( " 27.08 ** create + create ");
+
         ImovelOcorrForm ioccFom = new ImovelOcorrForm(
                 ioId,
                 UtilsJSON.parseAttrToInteger(iocc.get("imovelId")),
@@ -128,6 +130,7 @@ public class ImovelOcorrenciaDAO { //implements DAOInterface<ImovelOcorrencia> {
                 UtilsJSON.validaAtributo(iocc.get("nr_ref")),
                 UtilsJSON.validaAtributo(iocc.get("statusFinal")),
                 createdAt,   //JSONValidations.validaAtributo(iocc.get("createdAt")), //formattedDate,
+                createdAt,
                 updatedAt);  //JSONValidations.validaAtributo(iocc.get("updatedAt"))); //dataUpdate);
         return ioccFom;
     }
