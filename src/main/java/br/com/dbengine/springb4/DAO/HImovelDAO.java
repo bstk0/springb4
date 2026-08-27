@@ -70,7 +70,7 @@ public class HImovelDAO implements DAOInterface<Imovel>
 
 
     public Imovel getItem(String id) {
-        final String PREFIX = "Imovel_by_pk";
+        final String PREFIX = "rep1_imovel_by_pk"; //"Imovel_by_pk";
         ObjectMapper objectMapper=new ObjectMapper();
         JSONParser parser = new JSONParser();
         String hpeopleItem = rest.get(COLLECTION + "/" + id);
@@ -197,6 +197,7 @@ public class HImovelDAO implements DAOInterface<Imovel>
 
         // upd_toJSON()
         private JSONObject upd_toJSON(Imovel imovel) {
+            JSONObject result = new JSONObject();
             JSONObject jo = new JSONObject();
 //            jo.put("id",imovel.getId());
 //            jo.put("imovelId", imovel.getImovelId());
@@ -204,11 +205,15 @@ public class HImovelDAO implements DAOInterface<Imovel>
             jo.put("descricao", imovel.getDescricao());
             jo.put("status", imovel.getStatus());
             jo.put("bairro",imovel.getBairro());
-            //jo.put("imobiliaria",imovel.getImobiliaria());
-            jo.put("imobiliaria", ImobListSingleton.getItem(imovel.getImobid()).getNome());
+            jo.put("imobiliaria",imovel.getImobiliaria());
+            // 27.08.26 - removendo teste
+            //jo.put("imobiliaria", ImobListSingleton.getItem(imovel.getImobid()).getNome());
             jo.put("tipo",imovel.getTipo());
             jo.put("observacoes",imovel.getObservacoes());
             jo.put("imobid", imovel.getImobid());
-            return jo;
+            //return jo;
+            //27.08.26
+            result.put("object", jo);
+            return result;
         }
     }

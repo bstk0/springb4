@@ -95,6 +95,7 @@ public class ImovelController {
     @GetMapping("/imovelUpdForm")
     public String imovelUpdForm(@RequestParam int imovelId,Model model) {
         Sysout.s("imovelUpdForm...");
+        Sysout.s("imovelId...:" + String.valueOf(imovelId));
         Imovel imovelUpd = new Imovel();
         imovelUpd = dao.getItem(String.valueOf(imovelId));
         //Sysout.s(" >> imovelUpdForm... " + imovelUpd.getApelido());
